@@ -1,0 +1,1 @@
+UPDATE products SET price_cents = 149000 WHERE name = 'STARZZ' AND active = true;
