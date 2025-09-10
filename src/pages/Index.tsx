@@ -145,7 +145,7 @@ const Index = () => {
                     <div className="text-muted-foreground">Weekend (2 nuits)</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">149€</div>
+                    <div className="text-3xl font-bold text-primary mb-2">199€</div>
                     <div className="text-muted-foreground">Semaine (7 nuits)</div>
                   </div>
                   <div className="text-center">

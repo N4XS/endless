@@ -97,7 +97,8 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Adresse</h3>
                     <p className="text-muted-foreground">
-                      Namur, 5000 Belgique
+                      Entrepôt : Namur, 5000 Belgique<br />
+                      Siège social : Rue Adolphe Doneux 4, 5310 Bolinne (Eghezée), Belgique
                     </p>
                   </div>
                 </div>
@@ -132,16 +133,20 @@ const Contact = () => {
             </Card>
 
 
-            {/* Carte interactive (placeholder) */}
+            {/* Carte interactive */}
             <Card className="shadow-card">
               <CardContent className="p-0">
-                <div className="h-48 bg-muted flex items-center justify-center rounded-lg">
-                  <div className="text-center text-muted-foreground">
-                    <MapPin className="w-8 h-8 mx-auto mb-2" />
-                    <p className="text-sm">Carte interactive</p>
-                    <p className="text-xs">Namur, 5000 Belgique</p>
-                  </div>
-                </div>
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2530.1234567890123!2d4.8666767!3d50.4654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDI3JzU1LjYiTiA0wrA1MSc1Ni4wIkU!5e0!3m2!1sfr!2sbe!4v1234567890123!5m2!1sfr!2sbe"
+                  width="100%"
+                  height="300"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded-lg"
+                  title="Localisation ENDLESS - Namur, Belgique"
+                ></iframe>
               </CardContent>
             </Card>
 
