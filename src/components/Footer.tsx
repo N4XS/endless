@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Instagram, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Instagram } from 'lucide-react';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -26,25 +26,22 @@ export const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a 
-                href="#" 
+                href="https://www.facebook.com/profile.php?id=61579226801441&locale=fr_FR" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-os/60 hover:text-ambre transition-colors focus-outdoor p-2 -m-2"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a 
-                href="#" 
+                href="https://www.instagram.com/endless.tents/" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-os/60 hover:text-ambre transition-colors focus-outdoor p-2 -m-2"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a 
-                href="#" 
-                className="text-os/60 hover:text-ambre transition-colors focus-outdoor p-2 -m-2"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>
