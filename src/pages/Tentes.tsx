@@ -149,7 +149,7 @@ const Tentes = () => {
         <section 
           className="relative min-h-[80vh] flex items-center justify-center overflow-hidden"
           style={{
-            backgroundImage: `url(${starzz.images[0]})`,
+            backgroundImage: `url(/images/ST1.jpg)`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'

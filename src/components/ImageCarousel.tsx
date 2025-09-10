@@ -24,13 +24,13 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
       <div className="grid lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
         {/* Thumbnails - Vertical on large screens */}
         <div className="lg:col-span-2 order-2 lg:order-1">
-          <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] scrollbar-hide">
+          <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] scrollbar-hide p-1">
             {images.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
                 className={cn(
-                  "relative flex-shrink-0 w-20 h-20 lg:w-full lg:h-24 rounded-lg overflow-hidden border-2 transition-all duration-300",
+                  "relative flex-shrink-0 w-16 h-16 lg:w-full lg:h-20 rounded-lg overflow-hidden border-2 transition-all duration-300",
                   selectedImage === index 
                     ? "border-primary shadow-hero" 
                     : "border-border hover:border-primary/50"
@@ -54,7 +54,7 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
         {/* Main Image */}
         <div className="lg:col-span-7 order-1 lg:order-2">
           <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300">
-            <div className="aspect-video">
+            <div className="aspect-square">
               <img
                 src={images[selectedImage]}
                 alt={`${productName} - Vue ${selectedImage + 1}`}
