@@ -6,6 +6,7 @@ import softshellImage from '@/assets/product-softshell-tent.jpg';
 import alpineImage from '@/assets/product-alpine-tent.jpg';
 
 // Données exemple pour les tentes de toit
+// Données exemple pour les tentes de toit
 export const products: Product[] = [
   {
     id: "starzz",
@@ -53,67 +54,6 @@ export const products: Product[] = [
       warranty: "Satisfait ou remboursé 30 jours",
       delivery: "3-5 jours ouvrables"
     }
-  },
-  {
-    id: "2", 
-    name: "Nomad Soft-Shell Familiale",
-    slug: "nomad-soft-shell-familiale",
-    price: 1899,
-    currency: "EUR",
-    category: "tent",
-    badges: ["Soft-shell", "Familiale"],
-    specs: {
-      sleeping: 4,
-      shell: "soft",
-      weightKg: 52,
-      closedSize: "140 x 110 x 25 cm",
-      openSize: "240 x 140 x 130 cm",
-      materials: ["Aluminium", "Toile Ripstop 420D"],
-      compatibility: "Barres de toit à partir de 60kg"
-    },
-    images: [
-      softshellImage,
-      softshellImage
-    ],
-    stock: "in_stock",
-    sku: "NSF-002",
-    description: "Tente de toit soft-shell spacieuse pour famille, excellent rapport qualité-prix.",
-    features: [
-      "Montage simple en 5 minutes",
-      "Double toit étanche 3000mm",
-      "Annexe optionnelle disponible",
-      "Fenêtres avec moustiquaires intégrées"
-    ]
-  },
-  {
-    id: "3",
-    name: "Alpine Compact 2P",
-    slug: "alpine-compact-2p", 
-    price: 1599,
-    currency: "EUR",
-    category: "tent",
-    badges: ["Compact", "Léger"],
-    specs: {
-      sleeping: 2,
-      shell: "hard",
-      weightKg: 45,
-      closedSize: "120 x 110 x 28 cm",
-      openSize: "210 x 120 x 125 cm",
-      materials: ["Composite ABS", "Toile technique"],
-      compatibility: "Tous véhicules"
-    },
-    images: [
-      alpineImage
-    ],
-    stock: "in_stock", 
-    sku: "AC2-003",
-    description: "Tente de toit compacte et légère, parfaite pour les couples aventuriers.",
-    features: [
-      "Le plus léger de sa catégorie",
-      "Design aérodynamique",
-      "Ouverture latérale innovante",
-      "Compatible petits véhicules"
-    ]
   }
 ];
 

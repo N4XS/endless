@@ -13,10 +13,10 @@ export const Footer = () => {
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">RT</span>
+                <span className="text-primary-foreground font-bold text-sm">E</span>
               </div>
               <span className="font-display font-bold text-xl text-ambre">
-                RoofTent Pro
+                ENDLESS
               </span>
             </Link>
             <p className="text-os/80 leading-relaxed">
@@ -55,22 +55,17 @@ export const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/tentes?filter=hard-shell" className="text-os/80 hover:text-os transition-colors">
-                  Tentes Hard-Shell
-                </Link>
-              </li>
-              <li>
-                <Link to="/tentes?filter=soft-shell" className="text-os/80 hover:text-os transition-colors">
-                  Tentes Soft-Shell
-                </Link>
-              </li>
-              <li>
-                <Link to="/accessoires" className="text-os/80 hover:text-os transition-colors">
-                  Accessoires
+                  Tente STARZZ
                 </Link>
               </li>
               <li>
                 <Link to="/location" className="text-os/80 hover:text-os transition-colors">
                   Location
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="text-os/80 hover:text-os transition-colors">
+                  FAQ
                 </Link>
               </li>
             </ul>
@@ -96,8 +91,8 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-os/80 hover:text-os transition-colors">
-                  À propos
+                <Link to="/faq" className="text-os/80 hover:text-os transition-colors">
+                  FAQ
                 </Link>
               </li>
               <li>
@@ -151,7 +146,7 @@ export const Footer = () => {
         <div className="border-t border-os/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-col sm:flex-row items-center gap-4 text-sm text-os/60">
-              <p>&copy; {currentYear} RoofTent Pro. Tous droits réservés.</p>
+              <p>&copy; {currentYear} ENDLESS. Tous droits réservés.</p>
               <div className="flex gap-4">
                 <Link to="/mentions-legales" className="hover:text-os transition-colors">
                   Mentions légales

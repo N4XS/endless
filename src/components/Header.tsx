@@ -6,11 +6,9 @@ import { cn } from '@/lib/utils';
 
 const navigation = [
   { name: 'Accueil', href: '/' },
-  { name: 'Tentes', href: '/tentes' },
-  { name: 'Accessoires', href: '/accessoires' },
+  { name: 'STARZZ', href: '/tentes' },
   { name: 'Location', href: '/location' },
-  { name: 'À propos', href: '/about' },
-  { name: 'Blog', href: '/blog' },
+  { name: 'FAQ', href: '/faq' },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -27,10 +25,10 @@ export const Header = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">RT</span>
+              <span className="text-primary-foreground font-bold text-sm">E</span>
             </div>
             <span className="font-display font-bold text-xl text-sapin">
-              RoofTent Pro
+              ENDLESS
             </span>
           </Link>
 

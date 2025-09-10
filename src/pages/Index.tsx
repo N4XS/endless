@@ -45,7 +45,7 @@ const Index = () => {
           <div className="container mx-auto container-padding">
             <div className="max-w-4xl mx-auto text-center mb-16">
               <p className="text-large text-muted-foreground leading-relaxed">
-                <strong>RoofTent Pro</strong> est né de la passion d'un belge qui rêvait d'une liberté sans limites. 
+                <strong>ENDLESS</strong> est né de la passion d'un belge qui rêvait d'une liberté sans limites. 
                 Notre mission est simple : vous offrir des tentes de toit de qualité supérieure qui transforment votre véhicule en un refuge confortable, où que vous soyez. 
                 Que vous soyez un aventurier aguerri ou un explorateur du week-end, nos merveilles s'adaptent à votre véhicule et vous permettent de vivre des expériences authentiques, en harmonie avec la nature.
               </p>
@@ -58,7 +58,7 @@ const Index = () => {
           <div className="container mx-auto container-padding">
             <div className="text-center mb-12">
               <h2 className="text-display text-sapin mb-4">
-                Pourquoi choisir RoofTent Pro ?
+                Pourquoi choisir ENDLESS ?
               </h2>
               <p className="text-large text-muted-foreground max-w-2xl mx-auto">
                 L'expertise belge au service de votre aventure

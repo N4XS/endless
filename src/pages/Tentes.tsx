@@ -78,9 +78,9 @@ const Tentes = () => {
       <main className="container mx-auto container-padding py-8">
         {/* En-tête */}
         <div className="mb-8">
-          <h1 className="text-display text-sapin mb-4">Tentes de Toit</h1>
+          <h1 className="text-display text-sapin mb-4">Tente de Toit STARZZ</h1>
           <p className="text-large text-muted-foreground">
-            Découvrez notre gamme complète de tentes de toit hard-shell et soft-shell
+            Découvrez notre tente de toit premium STARZZ pour vos aventures
           </p>
         </div>
 
@@ -184,7 +184,7 @@ const Tentes = () => {
                   Filtres
                 </Button>
                 <span className="text-sm text-muted-foreground">
-                  {sortedProducts.length} tente{sortedProducts.length > 1 ? 's' : ''} trouvée{sortedProducts.length > 1 ? 's' : ''}
+                  {sortedProducts.length} tente{sortedProducts.length > 1 ? 's' : ''} disponible{sortedProducts.length > 1 ? 's' : ''}
                 </span>
               </div>
 
