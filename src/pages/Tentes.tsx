@@ -211,23 +211,21 @@ const Tentes = () => {
         </section>
 
         {/* Caractéristiques clés */}
-        <section className="py-8 bg-os/50">
-          <div className="container mx-auto container-padding">
-            <div className="grid md:grid-cols-4 gap-6 mb-16">
-              {highlights.map((highlight, index) => (
-                <Card key={index} className="text-center shadow-card hover:shadow-hero transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="w-12 h-12 bg-gradient-sunset rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <highlight.icon className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="font-semibold text-primary mb-1">{highlight.value}</div>
-                    <div className="text-sm text-muted-foreground">{highlight.label}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+        <div className="container mx-auto container-padding">
+          <div className="grid md:grid-cols-4 gap-6 mb-16">
+            {highlights.map((highlight, index) => (
+              <Card key={index} className="text-center shadow-card hover:shadow-hero transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="w-12 h-12 bg-gradient-sunset rounded-lg flex items-center justify-center mx-auto mb-4">
+                    <highlight.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="font-semibold text-primary mb-1">{highlight.value}</div>
+                  <div className="text-sm text-muted-foreground">{highlight.label}</div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        </section>
+        </div>
 
         {/* Description détaillée */}
         <section className="py-8">
@@ -320,7 +318,7 @@ const Tentes = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                <span>info@endless-tents.be</span>
+                <span>info@endless-tents.com</span>
               </div>
             </div>
           </div>

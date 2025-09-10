@@ -103,8 +103,7 @@ export const Footer = () => {
               <div className="flex items-center gap-3">
                 <MapPin className="w-5 h-5 text-ambre flex-shrink-0" />
                 <div className="text-os/80 text-sm">
-                  Rue de l'Aventure 42<br />
-                  1000 Bruxelles
+                  Namur, 5000 Belgique
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -119,10 +118,10 @@ export const Footer = () => {
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-ambre flex-shrink-0" />
                 <a 
-                  href="mailto:info@endless-tents.be" 
+                  href="mailto:info@endless-tents.com" 
                   className="text-os/80 hover:text-os transition-colors"
                 >
-                  info@endless-tents.be
+                  info@endless-tents.com
                 </a>
               </div>
             </div>

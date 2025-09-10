@@ -97,9 +97,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Adresse</h3>
                     <p className="text-muted-foreground">
-                      Rue de l'Aventure 42<br />
-                      1000 Bruxelles<br />
-                      Belgique
+                      Namur, 5000 Belgique
                     </p>
                   </div>
                 </div>
@@ -109,10 +107,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Téléphone</h3>
                     <a 
-                      href="tel:+3221234567"
+                      href="tel:0497228743"
                       className="text-muted-foreground hover:text-sapin transition-colors"
                     >
-                      +32 2 123 45 67
+                      0497 22 87 43
                     </a>
                   </div>
                 </div>
@@ -122,10 +120,10 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a 
-                      href="mailto:info@rooftentpro.be"
+                      href="mailto:info@endless-tents.com"
                       className="text-muted-foreground hover:text-sapin transition-colors"
                     >
-                      info@rooftentpro.be
+                      info@endless-tents.com
                     </a>
                   </div>
                 </div>
@@ -141,7 +139,7 @@ const Contact = () => {
                   <div className="text-center text-muted-foreground">
                     <MapPin className="w-8 h-8 mx-auto mb-2" />
                     <p className="text-sm">Carte interactive</p>
-                    <p className="text-xs">Rue de l'Aventure 42, 1000 Bruxelles</p>
+                    <p className="text-xs">Namur, 5000 Belgique</p>
                   </div>
                 </div>
               </CardContent>

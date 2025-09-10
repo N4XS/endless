@@ -138,7 +138,7 @@ const Location = () => {
                     onChange={(e) => setSelectedProduct(e.target.value)}
                     className="w-full mt-2 p-2 border border-border rounded-md"
                   >
-                    <option value="">Laissez-nous vous conseiller</option>
+                    <option value="">STARZZ - Tente Premium</option>
                     {tents.map(tent => (
                       <option key={tent.id} value={tent.id}>
                         {tent.name} - {tent.specs.sleeping}P - {tent.specs.weightKg}kg
@@ -358,10 +358,10 @@ const Location = () => {
                     Contactez directement notre équipe
                   </p>
                   <div className="flex flex-col gap-2">
-                    <a href="tel:+3221234567" className="inline-flex items-center justify-center">
+                    <a href="tel:0497228743" className="inline-flex items-center justify-center">
                       <Button variant="outline" className="border-olive text-olive">
                         <Phone className="w-4 h-4 mr-2" />
-                        +32 2 123 45 67
+                        0497 22 87 43
                       </Button>
                     </a>
                     <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
