@@ -99,6 +99,9 @@ const Contact = () => {
                     <p className="text-muted-foreground">
                       Namur, 5000 Belgique
                     </p>
+                    <p className="text-xs text-muted-foreground/70 mt-1">
+                      L'adresse exacte de l'entrepôt vous sera communiquée lors de votre réservation
+                    </p>
                   </div>
                 </div>
 
