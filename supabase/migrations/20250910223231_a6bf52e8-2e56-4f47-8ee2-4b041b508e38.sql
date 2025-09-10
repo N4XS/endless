@@ -1,0 +1,1 @@
+UPDATE products SET specs = jsonb_set(specs, '{sleeping}', '"2 - 3"') WHERE name = 'STARZZ' AND active = true;
