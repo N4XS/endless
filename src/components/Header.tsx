@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User, LogOut, ShoppingCart } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/contexts/CartContext';
+import { fadeUp, staggerContainer } from '@/lib/motion';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const navigation = [
   { name: 'Accueil', href: '/' },
@@ -113,65 +116,76 @@ export const Header = () => {
         </div>
 
         {/* Menu mobile ouvert */}
-        {isOpen && (
-          <div className="md:hidden border-t border-border mt-2 pt-4 pb-4 space-y-2 animate-fade-in">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  "block px-3 py-2 rounded-md text-base font-medium transition-colors",
-                  isActive(item.href)
-                    ? "bg-muted text-sapin font-semibold"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <div className="pt-4 space-y-2">
-              <Link to="/location" onClick={() => setIsOpen(false)}>
-                <Button variant="outline" className="w-full border-olive text-olive">
-                  Louer une tente
-                </Button>
-              </Link>
-              <Link to="/tentes" onClick={() => setIsOpen(false)}>
-                <Button className="w-full bg-sapin hover:bg-sapin/90">
-                  Acheter une tente
-                </Button>
-              </Link>
-              <Link to="/cart" onClick={() => setIsOpen(false)}>
-                <Button variant="ghost" className="w-full justify-start text-muted-foreground">
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Panier ({totalItems})
-                </Button>
-              </Link>
-              
-              {/* Auth mobile */}
-              {user ? (
-                <Button 
-                  variant="ghost" 
-                  className="w-full justify-start text-muted-foreground"
-                  onClick={() => {
-                    setIsOpen(false);
-                    signOut();
-                  }}
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Déconnexion
-                </Button>
-              ) : (
-                <Link to="/auth" onClick={() => setIsOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start text-muted-foreground">
-                    <User className="w-4 h-4 mr-2" />
-                    Connexion
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div 
+              className="md:hidden border-t border-border mt-2 pt-4 pb-4"
+              variants={staggerContainer}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              <div className="space-y-2">
+                {navigation.map((item, index) => (
+                  <motion.div key={item.name} variants={fadeUp}>
+                    <Link
+                      to={item.href}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        "block px-3 py-2 rounded-md text-base font-medium transition-colors",
+                        isActive(item.href)
+                          ? "bg-muted text-sapin font-semibold"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+              <motion.div className="pt-4 space-y-2" variants={fadeUp}>
+                <Link to="/location" onClick={() => setIsOpen(false)}>
+                  <Button variant="outline" className="w-full border-olive text-olive">
+                    Louer une tente
                   </Button>
                 </Link>
-              )}
-            </div>
-          </div>
-        )}
+                <Link to="/tentes" onClick={() => setIsOpen(false)}>
+                  <Button className="w-full bg-sapin hover:bg-sapin/90">
+                    Acheter une tente
+                  </Button>
+                </Link>
+                <Link to="/cart" onClick={() => setIsOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    Panier ({totalItems})
+                  </Button>
+                </Link>
+                
+                {/* Auth mobile */}
+                {user ? (
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-start text-muted-foreground"
+                    onClick={() => {
+                      setIsOpen(false);
+                      signOut();
+                    }}
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Déconnexion
+                  </Button>
+                ) : (
+                  <Link to="/auth" onClick={() => setIsOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                      <User className="w-4 h-4 mr-2" />
+                      Connexion
+                    </Button>
+                  </Link>
+                )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

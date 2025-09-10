@@ -2,23 +2,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/useAuth";
 import { CartProvider } from "@/contexts/CartContext";
 import { CookieBanner } from "@/components/CookieBanner";
-import Index from "./pages/Index";
-import Tentes from "./pages/Tentes";
-import Location from "./pages/Location";
-import Contact from "./pages/Contact";
-import FAQ from '@/pages/FAQ';
-import Auth from "./pages/Auth";
-import Cart from "./pages/Cart";
-import Checkout from "./pages/Checkout";
-import PaymentSuccess from "./pages/PaymentSuccess";
-import MentionsLegales from "./pages/MentionsLegales";
-import CGV from "./pages/CGV";
-import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
-import NotFound from "./pages/NotFound";
+import { MotionWrapper } from "@/components/MotionWrapper";
+import { pageTransition } from "@/lib/motion";
+import { AnimatedRoutes } from "@/components/AnimatedRoutes";
 
 const queryClient = new QueryClient();
 
@@ -30,24 +21,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/tentes" element={<Tentes />} />
-              <Route path="/location" element={<Location />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/payment-success" element={<PaymentSuccess />} />
-              <Route path="/mentions-legales" element={<MentionsLegales />} />
-              <Route path="/cgv" element={<CGV />} />
-              <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
-              {/* Routes à venir */}
-              <Route path="/blog" element={<div>Page Blog - À venir</div>} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <AnimatedRoutes />
             <CookieBanner />
           </BrowserRouter>
         </CartProvider>

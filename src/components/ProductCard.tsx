@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingCart, Users, Weight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
+import { cardHover } from '@/lib/motion';
+import { LazyImage } from './LazyImage';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface ProductCardProps {
   product: Product;
@@ -15,6 +19,7 @@ interface ProductCardProps {
 export const ProductCard = ({ product, className }: ProductCardProps) => {
   const { addToCart } = useCart();
   const { toast } = useToast();
+  const prefersReducedMotion = useReducedMotion();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-BE', {
@@ -37,13 +42,21 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
     return shell === 'hard' ? '🛡️' : '🏕️';
   };
 
+  const CardWrapper = prefersReducedMotion ? 'div' : motion.div;
+  const cardProps = prefersReducedMotion ? {} : {
+    whileHover: cardHover,
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.3 }
+  };
+
   return (
-    <div className={cn("w-full max-w-none group", className)}>
+    <CardWrapper className={cn("w-full max-w-none group", className)} {...cardProps}>
       <div className="bg-card rounded-xl overflow-hidden shadow-card hover:shadow-hero transition-all duration-300 border border-border">
         <div className="grid md:grid-cols-12 gap-0 min-h-[400px]">
           {/* Image Section */}
           <div className="relative md:col-span-5 aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
-            <img
+            <LazyImage
               src={product.images[0]}
               alt={product.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -169,6 +182,6 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </CardWrapper>
   );
 };
