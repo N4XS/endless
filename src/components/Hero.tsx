@@ -8,7 +8,7 @@ export const Hero = () => {
       {/* Image de fond */}
       <div className="absolute inset-0">
         <img
-          src="/images/hero-tent-adventure.jpg"
+          src="/images/hero.jpg"
           alt="Aventure en tente de toit dans les Ardennes belges"
           className="w-full h-full object-cover"
         />
