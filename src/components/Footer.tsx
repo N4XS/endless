@@ -84,11 +84,10 @@ export const Footer = () => {
           <div className="space-y-4">
             <h3 className="font-display font-semibold text-ambre">Contact</h3>
             <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-ambre flex-shrink-0 mt-0.5" />
+              <div className="flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-ambre flex-shrink-0" />
                 <div className="text-os/80 text-sm">
-                  <div>Entrepôt : Namur, 5000 Belgique</div>
-                  <div className="text-xs mt-1 opacity-70">Siège : Rue Adolphe Doneux 4, 5310 Bolinne</div>
+                  Namur, 5000 Belgique
                 </div>
               </div>
               <div className="flex items-center gap-3">

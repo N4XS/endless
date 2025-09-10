@@ -97,8 +97,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Adresse</h3>
                     <p className="text-muted-foreground">
-                      Entrepôt : Namur, 5000 Belgique<br />
-                      Siège social : Rue Adolphe Doneux 4, 5310 Bolinne (Eghezée), Belgique
+                      Namur, 5000 Belgique
                     </p>
                   </div>
                 </div>
