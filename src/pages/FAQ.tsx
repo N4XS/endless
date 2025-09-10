@@ -204,9 +204,9 @@ const FAQ = () => {
             <div>
               <p className="mb-3">Nous proposons plusieurs options de livraison, uniquement lors de l'achat d'une tente :</p>
               <ul className="list-disc list-inside space-y-1 mb-3">
-                <li><strong>Livraison Belgique</strong> : 3-5 jours ouvrables</li>
+                <li><strong>Livraison Belgique</strong> : Gratuit, 3-5 jours ouvrables</li>
                 <li><strong>Livraison express</strong> : 1-2 jours ouvrables</li>
-                <li><strong>Retrait en magasin</strong> : Gratuit, disponible sous 24h après confirmation</li>
+                <li><strong>Retrait en entrepôt</strong> : Gratuit, disponible sous 24h après confirmation</li>
               </ul>
               <p>Nous livrons dans le monde entier. Les délais et les tarifs peuvent varier selon la destination.</p>
             </div>
@@ -224,7 +224,7 @@ const FAQ = () => {
                 <li>Virement bancaire</li>
                 <li>Paiement en 3 ou 4 fois sans frais (pour les commandes supérieures à 300€)</li>
               </ul>
-              <p>Tous les paiements sont sécurisés et nous ne stockons pas vos informations de carte bancaire.</p>
+              <p>Nous acceptons ce que Stripe accepte. Tous les paiements sont sécurisés et nous ne stockons pas vos informations de carte bancaire.</p>
             </div>
           )
         },

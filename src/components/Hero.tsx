@@ -62,7 +62,7 @@ export const Hero = () => {
           {/* Stats rapides */}
           <div className="flex items-center gap-8 mt-12 text-background/80">
             <div className="text-center">
-              <div className="text-2xl font-bold text-ambre">3 ans</div>
+              <div className="text-2xl font-bold text-ambre">2 ans</div>
               <div className="text-sm">Garantie</div>
             </div>
             <div className="text-center">
