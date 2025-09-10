@@ -22,9 +22,9 @@ export const products: Product[] = [
       maxLoad: "275kg"
     },
     images: [
-      hardshellImage,
-      hardshellImage,
-      hardshellImage
+      "/images/product-hardshell-tent.jpg",
+      "/images/product-hardshell-tent.jpg",
+      "/images/product-hardshell-tent.jpg"
     ],
     stock: "in_stock",
     sku: "STARZZ-001",
