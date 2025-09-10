@@ -7,7 +7,7 @@ export const products: Product[] = [
     id: "starzz",
     name: "STARZZ",
     slug: "starzz",
-    price: 1490,
+    price: 1470,
     currency: "EUR",
     category: "tent",
     badges: ["Hard-shell", "Best-seller"],
@@ -17,7 +17,7 @@ export const products: Product[] = [
       weightKg: 59,
       closedSize: "140x120x40cm",
       openSize: "140x240x125cm",
-      materials: ["Aluminium", "Poly-Coton 280rpm"],
+      materials: ["Aluminium", "Poly-Coton 280g/m²"],
       compatibility: "Barres de toit 65kg min",
       maxLoad: "275kg"
     },
@@ -38,7 +38,7 @@ export const products: Product[] = [
     sku: "STARZZ-001",
     description: "La tente de toit STARZZ a été imaginée par notre équipe passionnée par ce type de voyage. Elle allie compacité et confort pour vos escapades en couple ou entre amis. Une toile résistante et aérée en Poly-Coton de haute qualité avec une fenêtre offrant une vue sur les étoiles.",
     features: [
-      "Toile résistante et aérée en Poly-Coton de haute qualité 280rpm",
+      "Toile résistante et aérée en Poly-Coton de haute qualité 280g/m²",
       "Fenêtre offrant une vue sur les étoiles en étant protégé des éléments", 
       "Extension recouvrant l'échelle et créant une surface plus importante",
       "Plancher en aluminium, ultra résistant et léger",
@@ -53,8 +53,8 @@ export const products: Product[] = [
     ],
     technicalSpecs: {
       maxLoad: "275kg",
-      material: "Poly-Coton respirant 280rpm",
-      warranty: "Satisfait ou remboursé 30 jours",
+      material: "Poly-Coton respirant 280g/m²",
+      warranty: "Satisfait ou remboursé sous 30 jours",
       delivery: "3-5 jours ouvrables"
     }
   }
@@ -143,7 +143,7 @@ export const faqs: FAQ[] = [
   {
     id: "1",
     question: "Pourquoi choisir la tente STARZZ ?",
-    answer: "La STARZZ combine un plancher dur avec une toile souple pour un confort optimal. Elle se déploie en seulement 60 secondes et offre un confort exceptionnel pour 2-3 personnes avec ses matériaux premium (Poly-Coton 280rpm). Le matelas haute densité 8cm et la fenêtre étoiles en font la tente idéale pour le glamping.",
+    answer: "La STARZZ combine un plancher dur avec une toile souple pour un confort optimal. Elle se déploie en seulement 60 secondes et offre un confort exceptionnel pour 2-3 personnes avec ses matériaux premium (Poly-Coton 280g/m²). Le matelas haute densité 8cm et la fenêtre étoiles en font la tente idéale pour le glamping.",
     category: "choix"
   },
   {

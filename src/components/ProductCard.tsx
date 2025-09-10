@@ -20,6 +20,8 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
     return new Intl.NumberFormat('fr-BE', {
       style: 'currency',
       currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     }).format(price);
   };
 

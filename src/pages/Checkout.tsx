@@ -33,7 +33,9 @@ const Checkout = () => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-BE', {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'EUR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
     }).format(price);
   };
 
