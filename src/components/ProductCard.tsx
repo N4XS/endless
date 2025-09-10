@@ -23,11 +23,11 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
   };
 
   return (
-    <div className={cn("w-full max-w-4xl mx-auto group", className)}>
+    <div className={cn("w-full max-w-5xl mx-auto group", className)}>
       <div className="bg-card rounded-xl overflow-hidden shadow-card hover:shadow-hero transition-all duration-300 border border-border">
-        <div className="grid lg:grid-cols-2 gap-0">
+        <div className="grid md:grid-cols-2 gap-0 min-h-[400px]">
           {/* Image Section */}
-          <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
+          <div className="relative aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
             <img
               src={product.images[0]}
               alt={product.name}
@@ -65,7 +65,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
           </div>
 
           {/* Content Section */}
-          <div className="p-8 flex flex-col justify-between">
+          <div className="p-6 md:p-8 flex flex-col justify-between min-h-[400px]">
             <div className="space-y-6">
               {/* Header */}
               <div>
