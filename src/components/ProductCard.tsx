@@ -136,7 +136,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                 <Link to="/location" className="block">
                   <Button
                     variant="ghost"
-                    className="w-full text-olive hover:text-olive hover:bg-olive/10 font-medium"
+                    className="w-full text-olive-dark hover:text-olive-dark hover:bg-olive/10 font-medium"
                     size="lg"
                   >
                     Ou essayer en location d'abord →
