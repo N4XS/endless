@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { ImageCarousel } from '@/components/ImageCarousel';
 import { 
   Star, 
   Users, 
@@ -142,89 +143,69 @@ const Tentes = () => {
         {/* Section Carrousel d'images */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
-            <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-12 gap-8">
-                {/* Miniatures */}
-                <div className="lg:col-span-3 order-2 lg:order-1">
-                  <div className="grid grid-cols-4 lg:grid-cols-1 gap-3">
-                    {starzz.images.map((image, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedImage(index)}
-                        className={`relative aspect-square rounded-lg overflow-hidden border-2 transition-all ${
-                          selectedImage === index 
-                            ? 'border-primary shadow-hero' 
-                            : 'border-border hover:border-muted-foreground'
-                        }`}
-                      >
-                        <img
-                          src={image}
-                          alt={`STARZZ vue ${index + 1}`}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                
-                {/* Image principale */}
-                <div className="lg:col-span-6 order-1 lg:order-2">
-                  <div className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-hero group">
-                    <img
-                      src={starzz.images[selectedImage]}
-                      alt="Tente de toit STARZZ"
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="p-3 bg-background/95 backdrop-blur rounded-full shadow-soft">
-                        <ZoomIn className="w-5 h-5 text-muted-foreground" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Informations produit */}
-                <div className="lg:col-span-3 order-3">
-                  <Card className="shadow-card">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-primary">STARZZ</CardTitle>
-                      <p className="text-sm text-muted-foreground">TTC, frais de port non compris</p>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      <div className="text-4xl font-bold text-primary">{starzz.price}€</div>
-                      
-                      <div className="flex items-center gap-2 text-sm">
-                        <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                        <span className="text-muted-foreground">En stock</span>
-                      </div>
-                      
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4" />
-                        <span>Livraison sous 3-5 jours ouvrables</span>
-                      </div>
-                      
-                      <div className="space-y-3 pt-4 border-t">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Garantie :</span>
-                          <span>Satisfait ou remboursé 30 jours</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Expédition :</span>
-                          <span>3-5 jours ouvrables</span>
-                        </div>
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">Conditions :</span>
-                          <Link to="/cgv" className="text-primary hover:underline">CGV</Link>
-                        </div>
-                      </div>
-                      
-                      <Button className="w-full bg-primary hover:bg-primary/90" size="lg">
-                        Ajouter au panier
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
+            <div className="max-w-7xl mx-auto">
+              <ImageCarousel 
+                images={starzz.images} 
+                productName="STARZZ" 
+                className="mb-8"
+              />
+              
+              {/* Product Info Card positioned in the carousel */}
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                    document.addEventListener('DOMContentLoaded', function() {
+                      const infoSlot = document.getElementById('product-info-slot');
+                      if (infoSlot) {
+                        infoSlot.innerHTML = \`
+                          <div class="bg-card rounded-xl shadow-card border border-border p-6">
+                            <div class="space-y-6">
+                              <div>
+                                <h2 class="text-2xl font-bold text-primary mb-2">STARZZ</h2>
+                                <p class="text-sm text-muted-foreground">TTC, frais de port non compris</p>
+                              </div>
+                              
+                              <div class="text-4xl font-bold text-primary">${starzz.price}€</div>
+                              
+                              <div class="flex items-center gap-2 text-sm">
+                                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+                                <span class="text-muted-foreground">En stock</span>
+                              </div>
+                              
+                              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                  <circle cx="12" cy="12" r="10"></circle>
+                                  <polyline points="12,6 12,12 16,14"></polyline>
+                                </svg>
+                                <span>Livraison sous 3-5 jours ouvrables</span>
+                              </div>
+                              
+                              <div class="space-y-3 pt-4 border-t border-border">
+                                <div class="flex justify-between text-sm">
+                                  <span class="text-muted-foreground">Garantie :</span>
+                                  <span class="text-right">Satisfait ou remboursé<br>30 jours</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                  <span class="text-muted-foreground">Expédition :</span>
+                                  <span>3-5 jours ouvrables</span>
+                                </div>
+                                <div class="flex justify-between text-sm">
+                                  <span class="text-muted-foreground">Conditions :</span>
+                                  <a href="/cgv" class="text-primary hover:underline">CGV</a>
+                                </div>
+                              </div>
+                              
+                              <button class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 font-medium transition-colors">
+                                Ajouter au panier
+                              </button>
+                            </div>
+                          </div>
+                        \`;
+                      }
+                    });
+                  `
+                }}
+              />
             </div>
           </div>
         </section>
@@ -249,7 +230,7 @@ const Tentes = () => {
         </section>
 
         {/* Description détaillée */}
-        <section className="section-padding">
+        <section className="py-16">
           <div className="container mx-auto container-padding">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-display text-primary mb-8 text-center">

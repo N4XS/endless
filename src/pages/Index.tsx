@@ -99,6 +99,30 @@ const Index = () => {
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
+
+            {/* Service location barres de toit */}
+            <div className="mt-16 p-8 bg-gradient-nature rounded-2xl border border-border">
+              <div className="text-center">
+                <h3 className="text-headline text-primary mb-4">
+                  Location de barres de toit
+                </h3>
+                <p className="text-large text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  Pas encore de barres de toit ? Nous proposons également la location de barres de toit compatibles pour votre véhicule.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/location">
+                    <Button size="lg" className="bg-primary hover:bg-primary/90">
+                      Découvrir nos locations
+                    </Button>
+                  </Link>
+                  <Link to="/contact">
+                    <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                      Nous contacter
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

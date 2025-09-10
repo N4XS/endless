@@ -20,7 +20,7 @@ export const Footer = () => {
               </span>
             </Link>
             <p className="text-os/80 leading-relaxed">
-              Fournisseur de rêves étoilés
+              Fournisseur de reves étoilés
             </p>
             <div className="flex space-x-4">
               <a 
@@ -125,12 +125,6 @@ export const Footer = () => {
                   info@endless-tents.be
                 </a>
               </div>
-            </div>
-            <div className="pt-2">
-              <p className="text-sm text-os/60">
-                Showroom ouvert :<br />
-                Lun-Ven 9h-18h • Sam 9h-17h
-              </p>
             </div>
           </div>
         </div>
