@@ -122,19 +122,19 @@ export const Footer = () => {
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-ambre flex-shrink-0" />
                 <a 
-                  href="tel:+3221234567" 
+                  href="tel:+32497228743" 
                   className="text-os/80 hover:text-os transition-colors"
                 >
-                  +32 2 123 45 67
+                  +32 497 22 87 43
                 </a>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-ambre flex-shrink-0" />
                 <a 
-                  href="mailto:info@rooftentpro.be" 
+                  href="mailto:info@endless-tents.be" 
                   className="text-os/80 hover:text-os transition-colors"
                 >
-                  info@rooftentpro.be
+                  info@endless-tents.be
                 </a>
               </div>
             </div>

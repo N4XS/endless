@@ -12,19 +12,24 @@ import { products, testimonials, faqs } from '@/data/products';
 const Index = () => {
   const benefits = [
     {
-      icon: Zap,
-      title: "Montage Ultra-Rapide",
-      description: "De 2 à 5 minutes selon le modèle. Hard-shell automatique, soft-shell simple et efficace."
+      icon: MapPin,
+      title: "Liberté sans compromis",
+      description: "Partez quand vous voulez, où vous voulez. Avec une tente de toit RoofTent Pro, votre hébergement vous suit partout, vous offrant une liberté totale pour explorer sans contraintes."
     },
     {
       icon: Heart,
-      title: "Confort Premium", 
-      description: "Matelas haute densité inclus, toiles respirantes, finitions soignées pour un vrai lit."
+      title: "Confort exceptionnel", 
+      description: "Nos tentes sont conçues pour offrir un confort optimal, avec des matelas haute densité, une excellente isolation et une ventilation parfaite pour des nuits réparatrices sous les étoiles."
     },
     {
       icon: Shield,
-      title: "Service Belge",
-      description: "Équipe locale, showroom à Bruxelles, SAV réactif, garantie 3 ans sur toute la gamme."
+      title: "Qualité supérieure",
+      description: "Chaque tente RoofTent Pro est fabriquée avec des matériaux durables et résistants aux intempéries, conçus pour vous accompagner dans toutes vos aventures, saison après saison."
+    },
+    {
+      icon: Zap,
+      title: "Installation rapide",
+      description: "En moins de 3 minutes, déployez votre espace de vie et profitez pleinement de l'apéro face au coucher de soleil."
     }
   ];
 
@@ -34,6 +39,19 @@ const Index = () => {
       <main>
         {/* Hero Section */}
         <Hero />
+
+        {/* Section intro */}
+        <section className="section-padding">
+          <div className="container mx-auto container-padding">
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <p className="text-large text-muted-foreground leading-relaxed">
+                <strong>RoofTent Pro</strong> est né de la passion d'un belge qui rêvait d'une liberté sans limites. 
+                Notre mission est simple : vous offrir des tentes de toit de qualité supérieure qui transforment votre véhicule en un refuge confortable, où que vous soyez. 
+                Que vous soyez un aventurier aguerri ou un explorateur du week-end, nos merveilles s'adaptent à votre véhicule et vous permettent de vivre des expériences authentiques, en harmonie avec la nature.
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* Bénéfices */}
         <section className="section-padding bg-os/50">
@@ -47,7 +65,7 @@ const Index = () => {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="card-feature group">
                   <div className="w-12 h-12 bg-gradient-hero rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -216,7 +234,7 @@ const Index = () => {
                   Visiter le showroom
                 </Button>
               </Link>
-              <a href="tel:+3221234567">
+              <a href="tel:+32497228743">
                 <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-sapin">
                   Appeler maintenant
                 </Button>

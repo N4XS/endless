@@ -16,12 +16,19 @@ export interface Product {
     openSize: string;
     materials?: string[];
     compatibility?: string;
+    maxLoad?: string;
   };
   images: string[];
   stock: "in_stock" | "out_of_stock";
   sku?: string;
   description?: string;
   features?: string[];
+  technicalSpecs?: {
+    maxLoad?: string;
+    material?: string;
+    warranty?: string;
+    delivery?: string;
+  };
 }
 
 export interface RentalRequest {

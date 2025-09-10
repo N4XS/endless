@@ -8,21 +8,22 @@ import alpineImage from '@/assets/product-alpine-tent.jpg';
 // Données exemple pour les tentes de toit
 export const products: Product[] = [
   {
-    id: "1",
-    name: "Explorer Pro Hard-Shell",
-    slug: "explorer-pro-hard-shell",
-    price: 2899,
+    id: "starzz",
+    name: "STARZZ",
+    slug: "starzz",
+    price: 1790,
     currency: "EUR",
     category: "tent",
-    badges: ["Hard-shell", "Nouveau", "Best-seller"],
+    badges: ["Hard-shell", "Best-seller"],
     specs: {
-      sleeping: 3,
+      sleeping: 2,
       shell: "hard",
-      weightKg: 68,
-      closedSize: "145 x 115 x 32 cm",
-      openSize: "245 x 145 x 135 cm",
-      materials: ["Fibre de verre", "Toile Canvas 280g"],
-      compatibility: "Barres de toit universelles"
+      weightKg: 59,
+      closedSize: "140x120x40cm",
+      openSize: "140x240x125cm",
+      materials: ["Aluminium", "Poly-Coton 280rpm"],
+      compatibility: "Barres de toit 65kg min",
+      maxLoad: "275kg"
     },
     images: [
       hardshellImage,
@@ -30,14 +31,28 @@ export const products: Product[] = [
       hardshellImage
     ],
     stock: "in_stock",
-    sku: "EPH-001",
-    description: "Tente de toit hard-shell premium pour 3 personnes, montage ultra-rapide en 2 minutes.",
+    sku: "STARZZ-001",
+    description: "La tente de toit STARZZ a été imaginée par notre équipe passionnée par ce type de voyage. Elle allie compacité et confort pour vos escapades en couple ou entre amis. Une toile résistante et aérée en Poly-Coton de haute qualité avec une fenêtre offrant une vue sur les étoiles.",
     features: [
-      "Ouverture automatique assistée par ressorts à gaz",
-      "Matelas haute densité 8cm inclus",
-      "Toile respirante anti-condensation",
-      "Échelle télescopique renforcée"
-    ]
+      "Toile résistante et aérée en Poly-Coton de haute qualité 280rpm",
+      "Fenêtre offrant une vue sur les étoiles en étant protégé des éléments", 
+      "Extension recouvrant l'échelle et créant une surface plus importante",
+      "Plancher en aluminium, ultra résistant et léger",
+      "Matelas en mousse haute densité de 8cm d'épaisseur avec housse lavable",
+      "Matelas anti-condensation intégré dans la tente",
+      "Sac à chaussures pratique inclus",
+      "Plusieurs poches intérieures pour ranger vos effets personnels",
+      "Moustiquaires à toutes les fenêtres",
+      "Bâche de protection en PVC avec possibilité de la rouler",
+      "Fermetures éclairs SBS ultra résistantes",
+      "Échelle 'one-click', ajustable à la hauteur du véhicule"
+    ],
+    technicalSpecs: {
+      maxLoad: "275kg",
+      material: "Poly-Coton respirant 280rpm",
+      warranty: "Satisfait ou remboursé 30 jours",
+      delivery: "3-5 jours ouvrables"
+    }
   },
   {
     id: "2", 
@@ -156,26 +171,26 @@ export const accessories: Product[] = [
 export const testimonials: Testimonial[] = [
   {
     id: "1",
-    name: "Marc & Sarah L.",
-    location: "Bruxelles",
+    name: "Sophie et Thomas",
+    location: "Écosse",
     rating: 5,
-    comment: "Explorer Pro parfaite pour nos road trips en famille ! Montage ultra-rapide et confort exceptionnel. Service client belge au top !",
+    comment: "Notre road trip en Écosse avec la tente STARZZ a été une révélation. Installation ultra rapide, confort incroyable et liberté totale. Nous ne voyagerons plus jamais autrement !",
     date: "2024-08-15"
   },
   {
     id: "2", 
-    name: "Pierre D.",
-    location: "Liège",
+    name: "Marc",
+    location: "Photographe nature",
     rating: 5,
-    comment: "Nomad Soft-Shell depuis 2 ans, aucun problème même sous la pluie battante. Excellent investissement pour découvrir l'Europe !",
+    comment: "En tant que photographe nature, je cherchais une solution pour suivre la lumière. La tente STARZZ m'offre un confort inégalé et me permet de me réveiller aux premières lueurs, prêt à capturer l'instant parfait.",
     date: "2024-07-22" 
   },
   {
     id: "3",
-    name: "Julie & Tom", 
-    location: "Gand",
+    name: "Famille Dubois", 
+    location: "Belgique",
     rating: 5,
-    comment: "Location d'une Alpine Compact pour tester avant achat. Conquis dès le premier week-end ! Achetée 2 semaines plus tard.",
+    comment: "Avec nos deux enfants, nous redoutions les complications des vacances en camping. La tente STARZZ a transformé nos voyages en moments de pur bonheur. Simple, spacieuse et tellement pratique !",
     date: "2024-09-02"
   }
 ];
