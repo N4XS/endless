@@ -34,24 +34,6 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             
-            {/* Badges */}
-            {product.badges && product.badges.length > 0 && (
-              <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                {product.badges.map((badge, index) => (
-                  <Badge
-                    key={index}
-                    variant="default"
-                    className={cn(
-                      "text-sm px-3 py-1",
-                      badge === 'Best-seller' && "bg-ambre text-accent-foreground shadow-soft",
-                      badge === 'Hard-shell' && "bg-primary text-primary-foreground"
-                    )}
-                  >
-                    {badge}
-                  </Badge>
-                ))}
-              </div>
-            )}
 
             {/* Actions rapides */}
             <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

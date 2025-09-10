@@ -52,12 +52,6 @@ export const Header = () => {
 
           {/* CTAs desktop */}
           <div className="hidden md:flex items-center space-x-3">
-            <Link to="/contact">
-              <Button variant="ghost" size="sm" className="text-muted-foreground">
-                <Phone className="w-4 h-4 mr-2" />
-                Contact
-              </Button>
-            </Link>
             <Link to="/location">
               <Button variant="outline" size="sm" className="border-olive text-olive hover:bg-olive hover:text-olive-foreground">
                 Louer une tente

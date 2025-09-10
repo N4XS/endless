@@ -68,9 +68,6 @@ const Index = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="card-feature group">
-                  <div className="w-12 h-12 bg-gradient-hero rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <benefit.icon className="w-6 h-6 text-primary-foreground" />
-                  </div>
                   <h3 className="text-title text-primary mb-3">{benefit.title}</h3>
                   <p className="text-muted-foreground">{benefit.description}</p>
                 </div>
@@ -97,7 +94,7 @@ const Index = () => {
               </Link>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6">
               {products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
@@ -144,47 +141,6 @@ const Index = () => {
           </div>
         </section>
 
-        {/* Témoignages */}
-        <section className="section-padding">
-          <div className="container mx-auto container-padding">
-            <div className="text-center mb-12">
-              <h2 className="text-display text-primary mb-4">
-                Ils nous font confiance
-              </h2>
-              <p className="text-large text-muted-foreground">
-                L'avis de nos clients aventuriers
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {testimonials.map((testimonial) => (
-                <Card key={testimonial.id} className="shadow-card hover:shadow-hero transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-lg">{testimonial.name}</CardTitle>
-                        <p className="text-sm text-muted-foreground flex items-center">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {testimonial.location}
-                        </p>
-                      </div>
-                      <div className="flex">
-                        {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-ambre text-ambre" />
-                        ))}
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground italic">
-                      "{testimonial.comment}"
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* FAQ */}
         <section className="section-padding bg-os/50">
