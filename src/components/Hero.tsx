@@ -37,8 +37,7 @@ export const Hero = () => {
 
           {/* Sous-titre */}
           <p className="text-large text-background/90 mb-8 max-w-xl leading-relaxed">
-            Découvrez notre gamme de tentes de toit premium. 
-            Conçues en Belgique pour les aventuriers exigeants qui ne veulent pas choisir entre confort et liberté.
+            Découvrez notre tente Starzz. Pour les aventuriers qui ne veulent pas choisir entre confort et liberté.
           </p>
 
           {/* CTAs */}
@@ -63,10 +62,6 @@ export const Hero = () => {
 
           {/* Stats rapides */}
           <div className="flex items-center gap-8 mt-12 text-background/80">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-ambre">500+</div>
-              <div className="text-sm">Clients satisfaits</div>
-            </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-ambre">3 ans</div>
               <div className="text-sm">Garantie</div>

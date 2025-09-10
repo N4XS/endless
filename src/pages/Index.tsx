@@ -14,7 +14,7 @@ const Index = () => {
     {
       icon: MapPin,
       title: "Liberté sans compromis",
-      description: "Partez quand vous voulez, où vous voulez. Avec une tente de toit RoofTent Pro, votre hébergement vous suit partout, vous offrant une liberté totale pour explorer sans contraintes."
+      description: "Partez quand vous voulez, où vous voulez. Avec une tente de toit Endless, votre hébergement vous suit partout, vous offrant une liberté totale pour explorer sans contraintes."
     },
     {
       icon: Heart,
@@ -24,7 +24,7 @@ const Index = () => {
     {
       icon: Shield,
       title: "Qualité supérieure",
-      description: "Chaque tente RoofTent Pro est fabriquée avec des matériaux durables et résistants aux intempéries, conçus pour vous accompagner dans toutes vos aventures, saison après saison."
+      description: "Chaque tente Endless est fabriquée avec des matériaux durables et résistants aux intempéries, conçus pour vous accompagner dans toutes vos aventures, saison après saison."
     },
     {
       icon: Zap,
@@ -187,7 +187,7 @@ const Index = () => {
               <Link to="/contact">
                 <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
                   <MapPin className="w-5 h-5 mr-2" />
-                  Visiter le showroom
+                  Nous contacter
                 </Button>
               </Link>
               <a href="tel:+32497228743">

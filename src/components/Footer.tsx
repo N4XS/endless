@@ -20,9 +20,7 @@ export const Footer = () => {
               </span>
             </Link>
             <p className="text-os/80 leading-relaxed">
-              Spécialiste belge de la tente de toit premium. 
-              Depuis 2018, nous équipons les aventuriers exigeants 
-              avec du matériel de qualité et un service irréprochable.
+              Fournisseur de rêves étoilés
             </p>
             <div className="flex space-x-4">
               <a 
@@ -58,16 +56,6 @@ export const Footer = () => {
                   Tente STARZZ
                 </Link>
               </li>
-              <li>
-                <Link to="/location" className="text-os/80 hover:text-os transition-colors">
-                  Location
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-os/80 hover:text-os transition-colors">
-                  FAQ
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -83,6 +71,11 @@ export const Footer = () => {
               <li>
                 <Link to="/maintenance" className="text-os/80 hover:text-os transition-colors">
                   Maintenance
+                </Link>
+              </li>
+              <li>
+                <Link to="/location" className="text-os/80 hover:text-os transition-colors">
+                  Location
                 </Link>
               </li>
               <li>

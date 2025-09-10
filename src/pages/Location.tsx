@@ -358,7 +358,7 @@ const Location = () => {
           <h2 className="text-headline text-sapin mb-8 text-center">
             Nos tentes disponibles à la location
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             {tents.map(tent => (
               <ProductCard key={tent.id} product={tent} />
             ))}

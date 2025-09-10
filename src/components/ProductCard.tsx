@@ -91,8 +91,8 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     <span className="text-xl">{getShellIcon(product.specs.shell)}</span>
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground capitalize">Hard-shell Premium</div>
-                    <div className="text-sm text-muted-foreground">Installation en 2 minutes</div>
+                    <div className="font-semibold text-foreground capitalize">Installation en 2 minutes</div>
+                    <div className="text-sm text-muted-foreground">Installation rapide</div>
                   </div>
                 </div>
               </div>
