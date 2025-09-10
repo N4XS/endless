@@ -121,12 +121,12 @@ const Tentes = () => {
     {
       icon: Zap,
       title: 'Installation Express',
-      description: 'La tente se déploie en 1 minute grâce à son système innovant'
+      description: 'La tente se déploie en 60sec grâce à son système innovant'
     },
     {
       icon: Shield,
       title: 'Robustesse',
-      description: 'Matériaux haute qualité résistants aux intempéries'
+      description: 'Matériaux durables résistants aux intempéries'
     },
     {
       icon: Clock,
