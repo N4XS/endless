@@ -305,7 +305,7 @@ const Tentes = () => {
                 Commander maintenant - {starzz.price}€
               </Button>
               <Link to="/location">
-                <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
+                <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
                   Tester en location
                 </Button>
               </Link>
