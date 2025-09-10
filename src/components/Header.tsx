@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart, Phone } from 'lucide-react';
+import { Menu, X, User, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/hooks/useAuth';
 
 const navigation = [
   { name: 'Accueil', href: '/' },
@@ -15,6 +16,7 @@ const navigation = [
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user, signOut } = useAuth();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -62,6 +64,26 @@ export const Header = () => {
                 Acheter une tente
               </Button>
             </Link>
+            
+            {/* Auth buttons */}
+            {user ? (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={signOut}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Déconnexion
+              </Button>
+            ) : (
+              <Link to="/auth">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                  <User className="w-4 h-4 mr-2" />
+                  Connexion
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Menu mobile */}
@@ -102,6 +124,28 @@ export const Header = () => {
                   Acheter une tente
                 </Button>
               </Link>
+              
+              {/* Auth mobile */}
+              {user ? (
+                <Button 
+                  variant="ghost" 
+                  className="w-full justify-start text-muted-foreground"
+                  onClick={() => {
+                    setIsOpen(false);
+                    signOut();
+                  }}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Déconnexion
+                </Button>
+              ) : (
+                <Link to="/auth" onClick={() => setIsOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                    <User className="w-4 h-4 mr-2" />
+                    Connexion
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}

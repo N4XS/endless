@@ -115,9 +115,9 @@ const Index = () => {
                       Découvrir nos locations
                     </Button>
                   </Link>
-                  <Link to="/contact">
+                  <Link to="/auth">
                     <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                      Nous contacter
+                      Créer un compte
                     </Button>
                   </Link>
                 </div>
