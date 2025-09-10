@@ -138,7 +138,7 @@ const Location = () => {
                     onChange={(e) => setSelectedProduct(e.target.value)}
                     className="w-full mt-2 p-2 border border-border rounded-md"
                   >
-                    <option value="">Veuillez sélectionner</option>
+                    <option value="">STARZZ - Tente Premium</option>
                     {tents.map(tent => (
                       <option key={tent.id} value={tent.id}>
                         {tent.name} - {tent.specs.sleeping}P - {tent.specs.weightKg}kg
@@ -366,7 +366,7 @@ const Location = () => {
                     </a>
                     <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
                       <Clock className="w-4 h-4" />
-                      24/24
+                      Lun-Ven 9h-18h • Sam 9h-17h
                     </div>
                   </div>
                 </div>

@@ -143,19 +143,19 @@ export const faqs: FAQ[] = [
   {
     id: "1",
     question: "Pourquoi choisir la tente STARZZ ?",
-    answer: "La STARZZ combine le meilleur des deux mondes : un plancher dur avec une toile souple. Cette conception unique offre la robustesse d'une coque rigide tout en conservant la flexibilité d'une toile respirante. Elle se déploie en 60 secondes et offre un confort exceptionnel pour 2-3 personnes.",
+    answer: "La STARZZ est notre modèle phare qui se déploie en seulement 60 secondes. Avec sa coque rigide et ses matériaux premium (Poly-Coton 280rpm), elle offre un confort exceptionnel pour 2-3 personnes. Le matelas haute densité 8cm et la fenêtre étoiles en font la tente idéale pour le glamping.",
     category: "choix"
   },
   {
     id: "2", 
     question: "Mon véhicule peut-il supporter la tente STARZZ ?",
-    answer: "La STARZZ est compatible avec pratiquement toutes les voitures, même les citadines pas puissantes. Avec seulement 59kg, elle nécessite des barres de toit avec une capacité minimum de 65kg. Compatible avec la plupart des véhicules : citadines, berlines, SUV, 4x4 et breaks.",
+    answer: "La STARZZ pèse 59kg et nécessite des barres de toit avec une capacité dynamique minimum de 65kg. Elle est compatible avec la plupart des SUV, 4x4 et breaks équipés de barres de toit. Nous proposons un service de vérification gratuit et la location de barres de toit si nécessaire.",
     category: "technique"
   },
   {
     id: "3",
     question: "Comment fonctionne la location avant achat ?",
-    answer: "Testez la STARZZ pendant un week-end ou une semaine. Récupération dans l'entrepôt à Namur (pas de showroom), livraison possible avec installation comprise. Si elle vous plaît, le montant de la location est intégralement déduit de votre achat !",
+    answer: "Testez la STARZZ pendant un week-end (89€) ou une semaine (149€). Si elle vous plaît, le montant de la location est intégralement déduit de votre achat ! Récupération dans notre showroom près de Bruxelles ou livraison possible avec installation comprise.",
     category: "location"
   },
   {
