@@ -139,32 +139,32 @@ export const testimonials: Testimonial[] = [
 export const faqs: FAQ[] = [
   {
     id: "1",
-    question: "Quelle tente de toit choisir pour débuter ?",
-    answer: "Pour débuter, nous recommandons la Nomad Soft-Shell qui offre le meilleur rapport qualité-prix. Elle est facile à monter et convient à la plupart des véhicules. Pour plus de confort, l'Explorer Pro Hard-Shell s'ouvre automatiquement en 2 minutes.",
+    question: "Pourquoi choisir la tente STARZZ ?",
+    answer: "La STARZZ est notre modèle phare qui se déploie en seulement 60 secondes. Avec sa coque rigide et ses matériaux premium (Poly-Coton 280rpm), elle offre un confort exceptionnel pour 2-3 personnes. Le matelas haute densité 8cm et la fenêtre étoiles en font la tente idéale pour le glamping.",
     category: "choix"
   },
   {
     id: "2", 
-    question: "Mon véhicule peut-il supporter une tente de toit ?",
-    answer: "La plupart des véhicules avec barres de toit peuvent accueillir une tente. Vérifiez la charge dynamique autorisée (minimum 60kg pour nos tentes les plus légères, 75kg recommandés). Nous proposons un service de vérification gratuit.",
+    question: "Mon véhicule peut-il supporter la tente STARZZ ?",
+    answer: "La STARZZ pèse 59kg et nécessite des barres de toit avec une capacité dynamique minimum de 65kg. Elle est compatible avec la plupart des SUV, 4x4 et breaks équipés de barres de toit. Nous proposons un service de vérification gratuit et la location de barres de toit si nécessaire.",
     category: "technique"
   },
   {
     id: "3",
-    question: "Comment fonctionne la location ?",
-    answer: "Location simple : choisissez vos dates, payez en ligne avec caution. Récupération dans notre showroom près de Bruxelles ou livraison possible. Tente livrée montée sur votre véhicule avec briefing complet.",
+    question: "Comment fonctionne la location avant achat ?",
+    answer: "Testez la STARZZ pendant un week-end (89€) ou une semaine (149€). Si elle vous plaît, le montant de la location est intégralement déduit de votre achat ! Récupération dans notre showroom près de Bruxelles ou livraison possible avec installation comprise.",
     category: "location"
   },
   {
     id: "4",
-    question: "Quelle garantie sur les tentes de toit ?",
-    answer: "Toutes nos tentes bénéficient d'une garantie constructeur de 3 ans. Service après-vente assuré par notre équipe belge. Pièces détachées disponibles et réparations possibles dans notre atelier.",
+    question: "Quelles sont les garanties et le service après-vente ?",
+    answer: "Garantie & Sérénité incluse : 30 jours satisfait ou remboursé + garantie constructeur 3 ans. Service après-vente assuré par notre équipe belge. Installation comprise dans le prix et formation offerte. Pièces détachées disponibles.",
     category: "service"
   },
   {
     id: "5",
-    question: "Livraison et montage, comment ça marche ?",
-    answer: "Livraison gratuite en Belgique dès 200€. Installation possible dans notre showroom ou chez vous (supplément selon distance). Formation montage offerte avec chaque achat.",
+    question: "Quels sont les équipements inclus avec la STARZZ ?",
+    answer: "Tout est inclus : matelas haute densité 8cm avec housse lavable, matelas anti-condensation, échelle 'one-click' ajustable, sac à chaussures, moustiquaires, bâche PVC, fermetures SBS ultra-résistantes, et l'extension qui recouvre l'échelle pour plus d'espace.",
     category: "service"
   }
 ];

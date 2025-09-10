@@ -112,8 +112,8 @@ const Tentes = () => {
     },
     {
       icon: Shield,
-      label: 'Type',
-      value: 'Premium'
+      label: 'Express',
+      value: '60 secondes'
     }
   ];
 
@@ -121,11 +121,11 @@ const Tentes = () => {
     {
       icon: Zap,
       title: 'Installation Express',
-      description: 'Déployée en moins de 3 minutes grâce à son système innovant'
+      description: 'La tente se déploie en 1 minute grâce à son système innovant'
     },
     {
       icon: Shield,
-      title: 'Robustesse Premium',
+      title: 'Robustesse',
       description: 'Matériaux haute qualité résistants aux intempéries'
     },
     {
@@ -135,7 +135,7 @@ const Tentes = () => {
     },
     {
       icon: CheckCircle,
-      title: 'Garantie Sérénité',
+      title: 'Garantie & Sérénité',
       description: '30 jours satisfait ou remboursé + installation comprise'
     }
   ];

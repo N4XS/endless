@@ -84,7 +84,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     <Users className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">{product.specs.sleeping || 2}-3 personnes</div>
+                    <div className="font-semibold text-foreground">2-3 personnes</div>
                     <div className="text-sm text-muted-foreground">Capacité</div>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     <span className="text-xl">{getShellIcon(product.specs.shell)}</span>
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground capitalize">Installation en 2 minutes</div>
+                    <div className="font-semibold text-foreground capitalize">Ouverture en 60 secondes</div>
                     <div className="text-sm text-muted-foreground">Installation rapide</div>
                   </div>
                 </div>
