@@ -1,42 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
+/* Design system pour une marque belge de tentes de toit outdoor */
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Couleurs principales - Thème nature belge */
+    --sapin: 147 37% 20%;        /* #1F3E2E - Vert sapin profond */
+    --olive: 106 19% 32%;        /* #486B3E - Vert olive naturel */
+    --sable: 45 27% 76%;         /* #D9C8A9 - Beige sable chaud */
+    --os: 48 36% 96%;            /* #F7F3EC - Crème naturel */
+    --charbon: 0 0% 13%;         /* #222222 - Charbon profond */
+    --ambre: 38 78% 56%;         /* #E9A63A - Ambre chaleureux */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Système de couleurs sémantiques */
+    --background: 48 36% 96%;    /* os - fond principal */
+    --foreground: 0 0% 13%;      /* charbon - texte principal */
+
+    --card: 0 0% 100%;           /* blanc pur pour les cartes */
+    --card-foreground: 0 0% 13%; /* charbon */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 13%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 147 37% 20%;      /* sapin - CTA principal */
+    --primary-foreground: 48 36% 96%; /* os */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 106 19% 32%;    /* olive - CTA secondaire */
+    --secondary-foreground: 48 36% 96%; /* os */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 45 27% 88%;         /* sable clair */
+    --muted-foreground: 0 0% 45%; /* gris moyen */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 38 78% 56%;        /* ambre - accents */
+    --accent-foreground: 0 0% 13%; /* charbon */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 147 37% 20%;      /* sapin */
+    --success-foreground: 48 36% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 48 36% 96%;
 
-    --radius: 0.5rem;
+    --warning: 38 78% 56%;       /* ambre */
+    --warning-foreground: 0 0% 13%;
+
+    --border: 45 27% 85%;        /* sable très clair */
+    --input: 45 27% 85%;
+    --ring: 147 37% 20%;         /* sapin pour focus */
+
+    --radius: 1rem;              /* bordures arrondies 16px */
+
+    /* Gradients outdoor */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--sapin)), hsl(var(--olive)));
+    --gradient-nature: linear-gradient(180deg, hsl(var(--olive) / 0.1), hsl(var(--sable) / 0.2));
+    --gradient-sunset: linear-gradient(135deg, hsl(var(--ambre)), hsl(var(--sable)));
+
+    /* Ombres douces */
+    --shadow-soft: 0 4px 20px hsl(var(--sapin) / 0.08);
+    --shadow-card: 0 8px 32px hsl(var(--charbon) / 0.06);
+    --shadow-hero: 0 20px 60px hsl(var(--sapin) / 0.15);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s ease-out;
 
     --sidebar-background: 0 0% 98%;
 
@@ -54,44 +82,6 @@ All colors MUST be HSL.
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 }
 
 @layer base {
@@ -100,6 +90,119 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', system-ui, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  /* Conteneur principal max 1200px */
+  .container {
+    max-width: 1200px;
+  }
+}
+
+@layer components {
+  /* Boutons avec variants outdoor */
+  .btn-hero {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground px-8 py-4 rounded-lg font-semibold transition-all duration-300;
+  }
+
+  .btn-outline {
+    @apply border border-border text-foreground hover:bg-muted px-6 py-3 rounded-lg transition-all duration-200;
+  }
+
+  /* Cards avec style outdoor */
+  .card-product {
+    @apply bg-card border border-border rounded-lg overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hero)] transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .card-feature {
+    @apply bg-card border border-border rounded-lg p-6 text-center shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all duration-300;
+  }
+
+  /* Gradients utilitaires */
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .bg-gradient-nature {
+    background: var(--gradient-nature);
+  }
+
+  .bg-gradient-sunset {
+    background: var(--gradient-sunset);
+  }
+
+  /* Animations outdoor */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-scale-hover:hover {
+    transform: scale(1.02);
+  }
+
+  /* Focus states accessibles */
+  .focus-outdoor:focus {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  /* Spacing système */
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Typography scale 1.25 */
+  .text-hero {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+  }
+
+  .text-display {
+    @apply text-3xl md:text-4xl font-bold;
+  }
+
+  .text-headline {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  .text-title {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  .text-large {
+    @apply text-lg md:text-xl;
+  }
+
+  /* Couleurs utilitaires */
+  .text-sapin { color: hsl(var(--sapin)); }
+  .text-olive { color: hsl(var(--olive)); }
+  .text-ambre { color: hsl(var(--ambre)); }
+  .bg-sapin { background-color: hsl(var(--sapin)); }
+  .bg-olive { background-color: hsl(var(--olive)); }
+  .bg-sable { background-color: hsl(var(--sable)); }
+  .bg-os { background-color: hsl(var(--os)); }
+  .bg-ambre { background-color: hsl(var(--ambre)); }
+}
+
+/* Animations keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }

@@ -1,0 +1,119 @@
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, ShoppingCart, Phone } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+
+const navigation = [
+  { name: 'Accueil', href: '/' },
+  { name: 'Tentes', href: '/tentes' },
+  { name: 'Accessoires', href: '/accessoires' },
+  { name: 'Location', href: '/location' },
+  { name: 'À propos', href: '/about' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Contact', href: '/contact' },
+];
+
+export const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
+
+  return (
+    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+      <div className="container mx-auto container-padding">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-sm">RT</span>
+            </div>
+            <span className="font-display font-bold text-xl text-sapin">
+              RoofTent Pro
+            </span>
+          </Link>
+
+          {/* Navigation desktop */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={cn(
+                  "px-3 py-2 rounded-md text-sm font-medium transition-colors focus-outdoor",
+                  isActive(item.href)
+                    ? "bg-muted text-sapin font-semibold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+
+          {/* CTAs desktop */}
+          <div className="hidden md:flex items-center space-x-3">
+            <Link to="/contact">
+              <Button variant="ghost" size="sm" className="text-muted-foreground">
+                <Phone className="w-4 h-4 mr-2" />
+                Contact
+              </Button>
+            </Link>
+            <Link to="/location">
+              <Button variant="outline" size="sm" className="border-olive text-olive hover:bg-olive hover:text-olive-foreground">
+                Louer une tente
+              </Button>
+            </Link>
+            <Link to="/tentes">
+              <Button size="sm" className="bg-sapin hover:bg-sapin/90 text-primary-foreground">
+                Acheter une tente
+              </Button>
+            </Link>
+          </div>
+
+          {/* Menu mobile */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted focus-outdoor"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
+
+        {/* Menu mobile ouvert */}
+        {isOpen && (
+          <div className="md:hidden border-t border-border mt-2 pt-4 pb-4 space-y-2 animate-fade-in">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "block px-3 py-2 rounded-md text-base font-medium transition-colors",
+                  isActive(item.href)
+                    ? "bg-muted text-sapin font-semibold"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="pt-4 space-y-2">
+              <Link to="/location" onClick={() => setIsOpen(false)}>
+                <Button variant="outline" className="w-full border-olive text-olive">
+                  Louer une tente
+                </Button>
+              </Link>
+              <Link to="/tentes" onClick={() => setIsOpen(false)}>
+                <Button className="w-full bg-sapin hover:bg-sapin/90">
+                  Acheter une tente
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};

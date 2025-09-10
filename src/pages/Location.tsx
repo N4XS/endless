@@ -1,0 +1,374 @@
+import { useState } from 'react';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
+import { ProductCard } from '@/components/ProductCard';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Calendar, Clock, Shield, MapPin, Phone, CheckCircle } from 'lucide-react';
+import { products } from '@/data/products';
+
+const Location = () => {
+  const [selectedProduct, setSelectedProduct] = useState<string>('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [insurance, setInsurance] = useState(false);
+  const [annexe, setAnnexe] = useState(false);
+
+  const tents = products.filter(product => product.category === 'tent');
+
+  const calculateDays = () => {
+    if (!startDate || !endDate) return 0;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  };
+
+  const calculatePrice = () => {
+    const days = calculateDays();
+    if (days === 0) return { base: 0, insurance: 0, annexe: 0, total: 0, deposit: 0 };
+    
+    // Prix de base par jour
+    let dailyRate = 45; // Base rate
+    if (days >= 7) dailyRate = 35; // Réduction semaine
+    if (days >= 14) dailyRate = 30; // Réduction 2 semaines
+    
+    const base = days * dailyRate;
+    const insuranceCost = insurance ? days * 8 : 0;
+    const annexeCost = annexe ? days * 12 : 0;
+    const total = base + insuranceCost + annexeCost;
+    const deposit = 500; // Caution fixe
+    
+    return { base, insurance: insuranceCost, annexe: annexeCost, total, deposit };
+  };
+
+  const pricing = calculatePrice();
+  const days = calculateDays();
+
+  const steps = [
+    {
+      number: 1,
+      title: "Réservation",
+      description: "Choisissez vos dates et options en ligne"
+    },
+    {
+      number: 2, 
+      title: "Confirmation",
+      description: "Nous vous contactons pour confirmer et préparer"
+    },
+    {
+      number: 3,
+      title: "Installation",
+      description: "Récupération avec tente montée sur votre véhicule"
+    },
+    {
+      number: 4,
+      title: "Aventure",
+      description: "Partez à l'aventure en toute sérénité"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+
+      <main className="container mx-auto container-padding py-8">
+        {/* En-tête */}
+        <div className="text-center mb-12">
+          <h1 className="text-display text-sapin mb-4">Location de Tentes de Toit</h1>
+          <p className="text-large text-muted-foreground max-w-2xl mx-auto">
+            Testez nos tentes avant l'achat. Location avec service complet et installation sur votre véhicule.
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Formulaire de réservation */}
+          <div className="space-y-6">
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-sapin">
+                  <Calendar className="w-5 h-5" />
+                  Réservation
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Dates */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="start-date">Date de début</Label>
+                    <Input
+                      id="start-date"
+                      type="date"
+                      value={startDate}
+                      onChange={(e) => setStartDate(e.target.value)}
+                      min={new Date().toISOString().split('T')[0]}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="end-date">Date de fin</Label>
+                    <Input
+                      id="end-date"
+                      type="date"
+                      value={endDate}
+                      onChange={(e) => setEndDate(e.target.value)}
+                      min={startDate}
+                    />
+                  </div>
+                </div>
+
+                {days > 0 && (
+                  <div className="p-3 bg-muted rounded-lg">
+                    <p className="text-sm text-muted-foreground">
+                      Durée sélectionnée: <span className="font-semibold text-foreground">{days} jour{days > 1 ? 's' : ''}</span>
+                    </p>
+                  </div>
+                )}
+
+                {/* Sélection du modèle */}
+                <div>
+                  <Label>Modèle de tente (optionnel)</Label>
+                  <select
+                    value={selectedProduct}
+                    onChange={(e) => setSelectedProduct(e.target.value)}
+                    className="w-full mt-2 p-2 border border-border rounded-md"
+                  >
+                    <option value="">Laissez-nous vous conseiller</option>
+                    {tents.map(tent => (
+                      <option key={tent.id} value={tent.id}>
+                        {tent.name} - {tent.specs.sleeping}P - {tent.specs.weightKg}kg
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Options */}
+                <div className="space-y-3">
+                  <Label>Options supplémentaires</Label>
+                  
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="insurance"
+                      checked={insurance}
+                      onCheckedChange={(checked) => setInsurance(!!checked)}
+                    />
+                    <label htmlFor="insurance" className="text-sm flex-1">
+                      Assurance tous risques (+8€/jour)
+                      <span className="block text-xs text-muted-foreground">
+                        Couvre les dommages accidentels
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="annexe"
+                      checked={annexe}
+                      onCheckedChange={(checked) => setAnnexe(!!checked)}
+                    />
+                    <label htmlFor="annexe" className="text-sm flex-1">
+                      Annexe (+12€/jour)
+                      <span className="block text-xs text-muted-foreground">
+                        Espace de vie supplémentaire
+                      </span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Récapitulatif prix */}
+                {days > 0 && (
+                  <Card className="bg-os border-sable">
+                    <CardContent className="pt-6">
+                      <h3 className="font-semibold text-sapin mb-3">Récapitulatif</h3>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span>Location ({days} jour{days > 1 ? 's' : ''})</span>
+                          <span>{pricing.base}€</span>
+                        </div>
+                        {insurance && (
+                          <div className="flex justify-between">
+                            <span>Assurance</span>
+                            <span>{pricing.insurance}€</span>
+                          </div>
+                        )}
+                        {annexe && (
+                          <div className="flex justify-between">
+                            <span>Annexe</span>
+                            <span>{pricing.annexe}€</span>
+                          </div>
+                        )}
+                        <hr className="my-2" />
+                        <div className="flex justify-between font-semibold">
+                          <span>Total</span>
+                          <span>{pricing.total}€</span>
+                        </div>
+                        <div className="flex justify-between text-muted-foreground">
+                          <span>Caution</span>
+                          <span>{pricing.deposit}€</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* Informations contact */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="name">Nom complet *</Label>
+                    <Input id="name" placeholder="Jean Dupont" />
+                  </div>
+                  <div>
+                    <Label htmlFor="phone">Téléphone *</Label>
+                    <Input id="phone" placeholder="+32 123 45 67 89" />
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="email">Email *</Label>
+                  <Input id="email" type="email" placeholder="jean@example.com" />
+                </div>
+
+                <div>
+                  <Label htmlFor="message">Message (optionnel)</Label>
+                  <Textarea
+                    id="message"
+                    placeholder="Informations sur votre véhicule, questions particulières..."
+                    rows={3}
+                  />
+                </div>
+
+                <Button 
+                  size="lg" 
+                  className="w-full bg-olive hover:bg-olive/90"
+                  disabled={!startDate || !endDate || days === 0}
+                >
+                  Demander une réservation
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Informations et processus */}
+          <div className="space-y-6">
+            {/* Comment ça marche */}
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="text-sapin">Comment ça marche ?</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {steps.map((step, index) => (
+                    <div key={step.number} className="flex gap-4">
+                      <div className="w-8 h-8 bg-olive text-secondary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                        {step.number}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-1">{step.title}</h3>
+                        <p className="text-sm text-muted-foreground">{step.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Avantages location */}
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="text-sapin">Nos avantages</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold">Installation comprise</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Tente montée et réglée sur votre véhicule
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold">Déduction à l'achat</h4>
+                      <p className="text-sm text-muted-foreground">
+                        100% du montant déductible si vous achetez
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold">Support 24/7</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Assistance téléphonique pendant votre location
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold">Matériel inclus</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Matelas, échelle, kit de montage fournis
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Contact direct */}
+            <Card className="bg-gradient-nature border-olive">
+              <CardContent className="pt-6">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-sapin mb-2">
+                    Une question ?
+                  </h3>
+                  <p className="text-muted-foreground mb-4">
+                    Contactez directement notre équipe
+                  </p>
+                  <div className="flex flex-col gap-2">
+                    <a href="tel:+3221234567" className="inline-flex items-center justify-center">
+                      <Button variant="outline" className="border-olive text-olive">
+                        <Phone className="w-4 h-4 mr-2" />
+                        +32 2 123 45 67
+                      </Button>
+                    </a>
+                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="w-4 h-4" />
+                      Lun-Ven 9h-18h • Sam 9h-17h
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* Tentes disponibles */}
+        <section className="mt-16">
+          <h2 className="text-headline text-sapin mb-8 text-center">
+            Nos tentes disponibles à la location
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {tents.map(tent => (
+              <ProductCard key={tent.id} product={tent} />
+            ))}
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default Location;

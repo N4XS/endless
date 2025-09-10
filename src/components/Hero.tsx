@@ -1,0 +1,90 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight, Play } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import heroImage from '@/assets/hero-tent-adventure.jpg';
+
+export const Hero = () => {
+  return (
+    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+      {/* Image de fond */}
+      <div className="absolute inset-0">
+        <img
+          src={heroImage}
+          alt="Aventure en tente de toit dans les Ardennes belges"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-charbon/60 via-charbon/30 to-transparent"></div>
+      </div>
+
+      {/* Contenu */}
+      <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
+        <div className="max-w-2xl">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-background/30">
+            <div className="w-2 h-2 bg-ambre rounded-full animate-pulse"></div>
+            <span className="text-sm font-medium text-background">
+              Marque belge • Service premium • Livraison gratuite
+            </span>
+          </div>
+
+          {/* Titre principal */}
+          <h1 className="text-hero font-display text-background mb-6 leading-tight">
+            Explorez le monde avec 
+            <span className="text-ambre block md:inline md:ml-3">
+              style et confort
+            </span>
+          </h1>
+
+          {/* Sous-titre */}
+          <p className="text-large text-background/90 mb-8 max-w-xl leading-relaxed">
+            Découvrez notre gamme de tentes de toit premium. 
+            Conçues en Belgique pour les aventuriers exigeants qui ne veulent pas choisir entre confort et liberté.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center">
+            <Link to="/tentes">
+              <Button size="lg" className="bg-sapin hover:bg-sapin/90 text-primary-foreground shadow-hero group">
+                Acheter une tente
+                <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
+            
+            <Link to="/location">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="bg-background/10 backdrop-blur-sm border-background/30 text-background hover:bg-background/20 hover:text-background"
+              >
+                Louer pour un week-end
+              </Button>
+            </Link>
+          </div>
+
+          {/* Stats rapides */}
+          <div className="flex items-center gap-8 mt-12 text-background/80">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-ambre">500+</div>
+              <div className="text-sm">Clients satisfaits</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-ambre">3 ans</div>
+              <div className="text-sm">Garantie</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-ambre">48h</div>
+              <div className="text-sm">Livraison Belgique</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-background/30 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-background/50 rounded-full mt-2 animate-pulse"></div>
+        </div>
+      </div>
+    </section>
+  );
+};
