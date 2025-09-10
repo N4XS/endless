@@ -1,230 +1,288 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { ProductCard } from '@/components/ProductCard';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Filter, SlidersHorizontal } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { 
+  Star, 
+  Users, 
+  Weight, 
+  Ruler, 
+  Shield, 
+  Zap, 
+  Clock,
+  Phone,
+  Mail,
+  MapPin,
+  Truck,
+  CheckCircle
+} from 'lucide-react';
 import { products } from '@/data/products';
-import { Product, FilterState } from '@/types';
+import tentImage from '@/assets/product-hardshell-tent.jpg';
 
 const Tentes = () => {
-  const [filters, setFilters] = useState<FilterState>({
-    sleeping: [],
-    shell: [],
-    weight: [],
-    price: [0, 3000],
-  });
-  
-  const [sortBy, setSortBy] = useState('relevance');
-  const [showFilters, setShowFilters] = useState(false);
+  // Récupère uniquement la tente STARZZ
+  const starzz = products.find(product => product.name === 'STARZZ');
 
-  // Filtre les tentes uniquement
-  const tents = products.filter(product => product.category === 'tent');
+  if (!starzz) {
+    return <div>Produit non trouvé</div>;
+  }
 
-  // Applique les filtres
-  const filteredProducts = tents.filter(product => {
-    if (filters.sleeping && filters.sleeping.length > 0 && !filters.sleeping.includes(product.specs.sleeping)) {
-      return false;
+  const highlights = [
+    {
+      icon: Users,
+      label: 'Capacité',
+      value: `${starzz.specs.sleeping} personnes`
+    },
+    {
+      icon: Weight,
+      label: 'Poids',
+      value: `${starzz.specs.weightKg} kg`
+    },
+    {
+      icon: Ruler,
+      label: 'Dimensions',
+      value: starzz.specs.openSize
+    },
+    {
+      icon: Shield,
+      label: 'Type',
+      value: starzz.specs.shell === 'hard' ? 'Hard-shell' : 'Soft-shell'
     }
-    if (filters.shell && filters.shell.length > 0 && !filters.shell.includes(product.specs.shell)) {
-      return false;
-    }
-    if (filters.price && (product.price < filters.price[0] || product.price > filters.price[1])) {
-      return false;
-    }
-    return true;
-  });
+  ];
 
-  // Trie les produits
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    switch (sortBy) {
-      case 'price-asc':
-        return a.price - b.price;
-      case 'price-desc':
-        return b.price - a.price;
-      case 'weight':
-        return a.specs.weightKg - b.specs.weightKg;
-      case 'sleeping':
-        return b.specs.sleeping - a.specs.sleeping;
-      default:
-        return 0;
+  const advantages = [
+    {
+      icon: Zap,
+      title: 'Installation Express',
+      description: 'Déployée en moins de 3 minutes grâce à son système innovant'
+    },
+    {
+      icon: Shield,
+      title: 'Robustesse Premium',
+      description: 'Matériaux haute qualité résistants aux intempéries'
+    },
+    {
+      icon: Clock,
+      title: 'Durabilité',
+      description: 'Conçue pour vous accompagner saison après saison'
+    },
+    {
+      icon: CheckCircle,
+      title: 'Garantie Sérénité',
+      description: '30 jours satisfait ou remboursé + installation comprise'
     }
-  });
-
-  const handleFilterChange = (type: keyof FilterState, value: any) => {
-    setFilters(prev => ({
-      ...prev,
-      [type]: value
-    }));
-  };
-
-  const clearFilters = () => {
-    setFilters({
-      sleeping: [],
-      shell: [],
-      weight: [],
-      price: [0, 3000],
-    });
-  };
+  ];
 
   return (
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto container-padding py-8">
-        {/* En-tête */}
-        <div className="mb-8">
-          <h1 className="text-display text-sapin mb-4">Tente de Toit STARZZ</h1>
-          <p className="text-large text-muted-foreground">
-            Découvrez notre tente de toit premium STARZZ pour vos aventures
-          </p>
-        </div>
-
-        <div className="flex gap-8">
-          {/* Filtres latéraux */}
-          <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-80 space-y-6`}>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle className="text-lg">Filtres</CardTitle>
-                <Button variant="ghost" size="sm" onClick={clearFilters}>
-                  Effacer
-                </Button>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Nombre de couchages */}
-                <div>
-                  <h3 className="font-semibold mb-3">Couchages</h3>
-                  <div className="space-y-2">
-                    {[2, 3, 4].map(num => (
-                      <div key={num} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`sleeping-${num}`}
-                          checked={filters.sleeping?.includes(num)}
-                          onCheckedChange={(checked) => {
-                            const current = filters.sleeping || [];
-                            if (checked) {
-                              handleFilterChange('sleeping', [...current, num]);
-                            } else {
-                              handleFilterChange('sleeping', current.filter(n => n !== num));
-                            }
-                          }}
-                        />
-                        <label htmlFor={`sleeping-${num}`} className="text-sm">
-                          {num} personnes
-                        </label>
-                      </div>
-                    ))}
+      <main>
+        {/* Hero Section Produit */}
+        <section className="bg-gradient-hero text-primary-foreground">
+          <div className="container mx-auto container-padding">
+            <div className="grid lg:grid-cols-2 gap-12 items-center py-16">
+              <div>
+                <Badge className="bg-olive text-secondary-foreground mb-4">
+                  Tente Premium
+                </Badge>
+                <h1 className="text-hero mb-6">
+                  STARZZ
+                </h1>
+                <p className="text-large mb-8 opacity-90 leading-relaxed">
+                  La tente de toit STARZZ a été pensée dans les moindres détails pour rendre le voyage simple et agréable. 
+                  Elle allie compacité et confort pour vos escapades en couple ou entre amis.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                  <div className="text-center sm:text-left">
+                    <div className="text-4xl font-bold mb-1">{starzz.price}€</div>
+                    <div className="text-sm opacity-75">TTC, installation comprise</div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
+                      Commander maintenant
+                    </Button>
+                    <Link to="/location">
+                      <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
+                        Louer d'abord
+                      </Button>
+                    </Link>
                   </div>
                 </div>
 
-                {/* Type d'ouverture */}
-                <div>
-                  <h3 className="font-semibold mb-3">Type d'ouverture</h3>
-                  <div className="space-y-2">
-                    {['hard', 'soft'].map(type => (
-                      <div key={type} className="flex items-center space-x-2">
-                        <Checkbox
-                          id={`shell-${type}`}
-                          checked={filters.shell?.includes(type)}
-                          onCheckedChange={(checked) => {
-                            const current = filters.shell || [];
-                            if (checked) {
-                              handleFilterChange('shell', [...current, type]);
-                            } else {
-                              handleFilterChange('shell', current.filter(t => t !== type));
-                            }
-                          }}
-                        />
-                        <label htmlFor={`shell-${type}`} className="text-sm capitalize">
-                          {type === 'hard' ? 'Hard-shell' : 'Soft-shell'}
-                        </label>
-                      </div>
-                    ))}
+                <div className="flex items-center gap-6 text-sm opacity-90">
+                  <div className="flex items-center gap-2">
+                    <Truck className="w-4 h-4" />
+                    <span>Livraison 3-5 jours</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4" />
+                    <span>En stock</span>
                   </div>
                 </div>
-
-                {/* Prix */}
-                <div>
-                  <h3 className="font-semibold mb-3">Prix</h3>
-                  <div className="px-2">
-                    <Slider
-                      value={filters.price || [0, 3000]}
-                      onValueChange={(value) => handleFilterChange('price', value)}
-                      max={3000}
-                      min={0}
-                      step={100}
-                      className="w-full"
-                    />
-                    <div className="flex justify-between text-sm text-muted-foreground mt-2">
-                      <span>{filters.price?.[0] || 0}€</span>
-                      <span>{filters.price?.[1] || 3000}€</span>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </aside>
-
-          {/* Contenu principal */}
-          <div className="flex-1">
-            {/* Barre de tri */}
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden"
-                >
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filtres
-                </Button>
-                <span className="text-sm text-muted-foreground">
-                  {sortedProducts.length} tente{sortedProducts.length > 1 ? 's' : ''} disponible{sortedProducts.length > 1 ? 's' : ''}
-                </span>
               </div>
-
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-48">
-                  <SlidersHorizontal className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Trier par" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="relevance">Pertinence</SelectItem>
-                  <SelectItem value="price-asc">Prix croissant</SelectItem>
-                  <SelectItem value="price-desc">Prix décroissant</SelectItem>
-                  <SelectItem value="weight">Poids</SelectItem>
-                  <SelectItem value="sleeping">Couchages</SelectItem>
-                </SelectContent>
-              </Select>
+              
+              <div className="relative">
+                <div className="relative overflow-hidden rounded-lg shadow-hero">
+                  <img 
+                    src={starzz.images[0]} 
+                    alt="Tente STARZZ" 
+                    className="w-full h-96 object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                
+                {/* Badges flottants */}
+                <div className="absolute top-4 left-4">
+                  <Badge className="bg-olive text-secondary-foreground">
+                    ⭐ Bestseller
+                  </Badge>
+                </div>
+                <div className="absolute bottom-4 right-4">
+                  <Badge className="bg-ambre text-accent-foreground">
+                    Installation comprise
+                  </Badge>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
 
-            {/* Grille de produits */}
-            <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-              {sortedProducts.map(product => (
-                <ProductCard key={product.id} product={product} />
+        {/* Caractéristiques clés */}
+        <section className="section-padding">
+          <div className="container mx-auto container-padding">
+            <div className="grid md:grid-cols-4 gap-6 mb-16">
+              {highlights.map((highlight, index) => (
+                <Card key={index} className="text-center shadow-card hover:shadow-hero transition-shadow">
+                  <CardContent className="pt-6">
+                    <div className="w-12 h-12 bg-gradient-sunset rounded-lg flex items-center justify-center mx-auto mb-4">
+                      <highlight.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="font-semibold text-primary mb-1">{highlight.value}</div>
+                    <div className="text-sm text-muted-foreground">{highlight.label}</div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
 
-            {/* Message si aucun résultat */}
-            {sortedProducts.length === 0 && (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">🏕️</div>
-                <h3 className="text-xl font-semibold mb-2">Aucune tente trouvée</h3>
-                <p className="text-muted-foreground mb-4">
-                  Essayez d'ajuster vos filtres ou explorez toute notre gamme
-                </p>
-                <Button onClick={clearFilters} variant="outline">
-                  Effacer les filtres
-                </Button>
-              </div>
-            )}
+            {/* Galerie d'images */}
+            <div className="grid md:grid-cols-3 gap-4 mb-16">
+              {starzz.images.slice(1, 4).map((image, index) => (
+                <div key={index} className="relative overflow-hidden rounded-lg shadow-card hover:shadow-hero transition-shadow group">
+                  <img 
+                    src={image} 
+                    alt={`STARZZ vue ${index + 2}`}
+                    className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* Description détaillée */}
+        <section className="section-padding bg-os/50">
+          <div className="container mx-auto container-padding">
+            <div className="max-w-4xl mx-auto">
+              <h2 className="text-display text-primary mb-8 text-center">
+                Pourquoi choisir la STARZZ ?
+              </h2>
+              
+              <div className="grid md:grid-cols-2 gap-8 mb-12">
+                {advantages.map((advantage, index) => (
+                  <Card key={index} className="shadow-card hover:shadow-hero transition-shadow">
+                    <CardHeader>
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center">
+                          <advantage.icon className="w-5 h-5 text-primary-foreground" />
+                        </div>
+                        <CardTitle className="text-lg">{advantage.title}</CardTitle>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-muted-foreground">{advantage.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="shadow-card">
+                <CardHeader>
+                  <CardTitle className="text-xl text-primary">Description technique</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground leading-relaxed">
+                    {starzz.description}
+                  </p>
+                  
+                  <div className="grid md:grid-cols-2 gap-6 mt-6">
+                    <div>
+                      <h4 className="font-semibold mb-3 text-primary">Caractéristiques principales</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        {starzz.features.slice(0, 6).map((feature, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                            <span className="text-sm">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-3 text-primary">Équipements inclus</h4>
+                      <ul className="space-y-2 text-muted-foreground">
+                        {starzz.features.slice(6).map((feature, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                            <span className="text-sm">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Call to action */}
+        <section className="section-padding bg-gradient-hero text-primary-foreground">
+          <div className="container mx-auto container-padding text-center">
+            <h2 className="text-display mb-6">Prêt pour l'aventure ?</h2>
+            <p className="text-large mb-8 opacity-90 max-w-2xl mx-auto">
+              Rejoignez des milliers d'aventuriers qui ont fait confiance à ENDLESS pour leurs escapades.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
+                Commander maintenant - {starzz.price}€
+              </Button>
+              <Link to="/location">
+                <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
+                  Tester en location
+                </Button>
+              </Link>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-8 justify-center items-center text-sm opacity-90">
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4" />
+                <span>+32 497 22 87 43</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4" />
+                <span>info@endless-tents.be</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                <span>Showroom en Belgique</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <Footer />

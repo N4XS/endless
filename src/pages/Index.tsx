@@ -57,7 +57,7 @@ const Index = () => {
         <section className="section-padding bg-os/50">
           <div className="container mx-auto container-padding">
             <div className="text-center mb-12">
-              <h2 className="text-display text-sapin mb-4">
+              <h2 className="text-display text-primary mb-4">
                 Pourquoi choisir ENDLESS ?
               </h2>
               <p className="text-large text-muted-foreground max-w-2xl mx-auto">
@@ -71,7 +71,7 @@ const Index = () => {
                   <div className="w-12 h-12 bg-gradient-hero rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                     <benefit.icon className="w-6 h-6 text-primary-foreground" />
                   </div>
-                  <h3 className="text-title text-sapin mb-3">{benefit.title}</h3>
+                  <h3 className="text-title text-primary mb-3">{benefit.title}</h3>
                   <p className="text-muted-foreground">{benefit.description}</p>
                 </div>
               ))}
@@ -84,13 +84,13 @@ const Index = () => {
           <div className="container mx-auto container-padding">
             <div className="flex justify-between items-center mb-12">
               <div>
-                <h2 className="text-display text-sapin mb-4">Nos Tentes de Toit</h2>
+                <h2 className="text-display text-primary mb-4">Starzz</h2>
                 <p className="text-large text-muted-foreground">
                   Chaque aventure mérite son équipement
                 </p>
               </div>
               <Link to="/tentes">
-                <Button variant="outline" className="border-sapin text-sapin hover:bg-sapin hover:text-primary-foreground">
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
                   Voir toute la gamme
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
@@ -109,7 +109,7 @@ const Index = () => {
         <section className="section-padding bg-gradient-nature">
           <div className="container mx-auto container-padding">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-display text-sapin mb-6">
+              <h2 className="text-display text-primary mb-6">
                 Testez avant d'acheter
               </h2>
               <p className="text-large text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -120,15 +120,15 @@ const Index = () => {
               <div className="bg-card border border-border rounded-lg p-8 shadow-card">
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-sapin mb-2">89€</div>
+                    <div className="text-3xl font-bold text-primary mb-2">89€</div>
                     <div className="text-muted-foreground">Weekend (2 nuits)</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-sapin mb-2">149€</div>
+                    <div className="text-3xl font-bold text-primary mb-2">149€</div>
                     <div className="text-muted-foreground">Semaine (7 nuits)</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-sapin mb-2">100%</div>
+                    <div className="text-3xl font-bold text-primary mb-2">100%</div>
                     <div className="text-muted-foreground">Déductible à l'achat</div>
                   </div>
                 </div>
@@ -148,7 +148,7 @@ const Index = () => {
         <section className="section-padding">
           <div className="container mx-auto container-padding">
             <div className="text-center mb-12">
-              <h2 className="text-display text-sapin mb-4">
+              <h2 className="text-display text-primary mb-4">
                 Ils nous font confiance
               </h2>
               <p className="text-large text-muted-foreground">
@@ -191,7 +191,7 @@ const Index = () => {
           <div className="container mx-auto container-padding">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-12">
-                <h2 className="text-display text-sapin mb-4">
+                <h2 className="text-display text-primary mb-4">
                   Questions Fréquentes
                 </h2>
                 <p className="text-large text-muted-foreground">
@@ -206,7 +206,7 @@ const Index = () => {
                     value={faq.id}
                     className="bg-card border border-border rounded-lg px-6 shadow-soft"
                   >
-                    <AccordionTrigger className="text-left font-semibold text-sapin hover:text-sapin/80">
+                    <AccordionTrigger className="text-left font-semibold text-primary hover:text-primary/80">
                       {faq.question}
                     </AccordionTrigger>
                     <AccordionContent className="text-muted-foreground pt-2">
@@ -229,13 +229,13 @@ const Index = () => {
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">
-                <Button size="lg" variant="secondary" className="bg-os text-sapin hover:bg-os/90">
+                <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
                   <MapPin className="w-5 h-5 mr-2" />
                   Visiter le showroom
                 </Button>
               </Link>
               <a href="tel:+32497228743">
-                <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-sapin">
+                <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
                   Appeler maintenant
                 </Button>
               </a>

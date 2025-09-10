@@ -25,7 +25,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 13%;
 
-    --primary: 147 37% 20%;      /* sapin - CTA principal */
+    --primary: 38 78% 56%;       /* ambre - CTA principal */
     --primary-foreground: 48 36% 96%; /* os */
 
     --secondary: 106 19% 32%;    /* olive - CTA secondaire */
@@ -37,7 +37,7 @@
     --accent: 38 78% 56%;        /* ambre - accents */
     --accent-foreground: 0 0% 13%; /* charbon */
 
-    --success: 147 37% 20%;      /* sapin */
+    --success: 38 78% 56%;       /* ambre */
     --success-foreground: 48 36% 96%;
 
     --destructive: 0 84% 60%;
@@ -48,19 +48,19 @@
 
     --border: 45 27% 85%;        /* sable très clair */
     --input: 45 27% 85%;
-    --ring: 147 37% 20%;         /* sapin pour focus */
+    --ring: 38 78% 56%;          /* ambre pour focus */
 
     --radius: 1rem;              /* bordures arrondies 16px */
 
     /* Gradients outdoor */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--sapin)), hsl(var(--olive)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--ambre)), hsl(var(--olive)));
     --gradient-nature: linear-gradient(180deg, hsl(var(--olive) / 0.1), hsl(var(--sable) / 0.2));
     --gradient-sunset: linear-gradient(135deg, hsl(var(--ambre)), hsl(var(--sable)));
 
     /* Ombres douces */
-    --shadow-soft: 0 4px 20px hsl(var(--sapin) / 0.08);
+    --shadow-soft: 0 4px 20px hsl(var(--ambre) / 0.08);
     --shadow-card: 0 8px 32px hsl(var(--charbon) / 0.06);
-    --shadow-hero: 0 20px 60px hsl(var(--sapin) / 0.15);
+    --shadow-hero: 0 20px 60px hsl(var(--ambre) / 0.15);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
