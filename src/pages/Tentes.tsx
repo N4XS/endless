@@ -24,7 +24,7 @@ import {
 import { useProducts } from '@/hooks/useProducts';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
-import tentImage from '@/assets/product-hardshell-tent.jpg';
+
 
 const Tentes = () => {
   const { products, loading } = useProducts();

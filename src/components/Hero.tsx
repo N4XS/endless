@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-tent-adventure.jpg';
 
 export const Hero = () => {
   return (
@@ -9,7 +8,7 @@ export const Hero = () => {
       {/* Image de fond */}
       <div className="absolute inset-0">
         <img
-          src={heroImage}
+          src="/images/hero-tent-adventure.jpg"
           alt="Aventure en tente de toit dans les Ardennes belges"
           className="w-full h-full object-cover"
         />

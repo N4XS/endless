@@ -1,10 +1,5 @@
 import { Product, Testimonial, FAQ } from '@/types';
 
-// Images importées
-import hardshellImage from '@/assets/product-hardshell-tent.jpg';
-import softshellImage from '@/assets/product-softshell-tent.jpg';
-import alpineImage from '@/assets/product-alpine-tent.jpg';
-
 // Données exemple pour les tentes de toit
 // Données exemple pour les tentes de toit
 export const products: Product[] = [
