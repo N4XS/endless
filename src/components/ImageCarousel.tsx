@@ -54,11 +54,11 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
         {/* Main Image */}
         <div className="lg:col-span-7 order-1 lg:order-2">
           <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300">
-            <div className="aspect-[4/3] lg:aspect-[3/2]">
+            <div className="aspect-video">
               <img
                 src={images[selectedImage]}
                 alt={`${productName} - Vue ${selectedImage + 1}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
               />
             </div>
 

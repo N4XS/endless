@@ -215,7 +215,7 @@ const Index = () => {
                 </Button>
               </Link>
               <a href="tel:+32497228743">
-                <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
+                <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
                   Appeler maintenant
                 </Button>
               </a>

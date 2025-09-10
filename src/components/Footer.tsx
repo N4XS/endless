@@ -20,7 +20,7 @@ export const Footer = () => {
               </span>
             </Link>
             <p className="text-os/80 leading-relaxed">
-              Fournisseur de reves étoilés
+              Fournisseur de rêves étoilés
             </p>
             <div className="flex space-x-4">
               <a 
@@ -69,28 +69,13 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/maintenance" className="text-os/80 hover:text-os transition-colors">
-                  Maintenance
-                </Link>
-              </li>
-              <li>
                 <Link to="/location" className="text-os/80 hover:text-os transition-colors">
                   Location
                 </Link>
               </li>
               <li>
                 <Link to="/garantie" className="text-os/80 hover:text-os transition-colors">
-                  Garantie 3 ans
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-os/80 hover:text-os transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/blog" className="text-os/80 hover:text-os transition-colors">
-                  Blog & Guides
+                  Garantie
                 </Link>
               </li>
             </ul>
