@@ -43,7 +43,7 @@ const Index = () => {
         {/* Section intro */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
-            <div className="max-w-4xl mx-auto text-center mb-16">
+            <div className="max-w-4xl mx-auto text-center mb-8">
               <p className="text-large text-muted-foreground leading-relaxed">
                 <strong>ENDLESS</strong> est né de la passion d'un belge qui rêvait d'une liberté sans limites. 
                 Notre mission est simple : vous offrir des tentes de toit de qualité supérieure qui transforment votre véhicule en un refuge confortable, où que vous soyez. 

@@ -130,52 +130,9 @@ const Contact = () => {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <Clock className="w-5 h-5 text-ambre mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold mb-1">Horaires d'ouverture</h3>
-                    <div className="text-muted-foreground space-y-1">
-                      <div>Lundi - Vendredi: 9h00 - 18h00</div>
-                      <div>Samedi: 9h00 - 17h00</div>
-                      <div>Dimanche: Fermé</div>
-                    </div>
-                  </div>
-                </div>
               </CardContent>
             </Card>
 
-            {/* Showroom */}
-            <Card className="shadow-card bg-gradient-nature">
-              <CardHeader>
-                <CardTitle className="text-sapin flex items-center gap-2">
-                  <Car className="w-5 h-5" />
-                  Visitez notre showroom
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  Découvrez nos tentes en vrai, testez le montage et bénéficiez des conseils personnalisés de notre équipe.
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 bg-success rounded-full"></div>
-                    <span>Toutes nos tentes exposées</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 bg-success rounded-full"></div>
-                    <span>Test de montage possible</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 bg-success rounded-full"></div>
-                    <span>Conseils personnalisés</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <div className="w-2 h-2 bg-success rounded-full"></div>
-                    <span>Installation sur place</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
             {/* Carte interactive (placeholder) */}
             <Card className="shadow-card">

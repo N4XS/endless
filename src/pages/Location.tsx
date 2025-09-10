@@ -17,6 +17,7 @@ const Location = () => {
   const [endDate, setEndDate] = useState('');
   const [insurance, setInsurance] = useState(false);
   const [annexe, setAnnexe] = useState(false);
+  const [roofBars, setRoofBars] = useState(false);
 
   const tents = products.filter(product => product.category === 'tent');
 
@@ -40,10 +41,11 @@ const Location = () => {
     const base = days * dailyRate;
     const insuranceCost = insurance ? days * 8 : 0;
     const annexeCost = annexe ? days * 12 : 0;
-    const total = base + insuranceCost + annexeCost;
+    const roofBarsCost = roofBars ? 69 : 0; // Fixed cost per rental
+    const total = base + insuranceCost + annexeCost + roofBarsCost;
     const deposit = 500; // Caution fixe
     
-    return { base, insurance: insuranceCost, annexe: annexeCost, total, deposit };
+    return { base, insurance: insuranceCost, annexe: annexeCost, roofBars: roofBarsCost, total, deposit };
   };
 
   const pricing = calculatePrice();
@@ -176,6 +178,20 @@ const Location = () => {
                       </span>
                     </label>
                   </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="roofBars"
+                      checked={roofBars}
+                      onCheckedChange={(checked) => setRoofBars(!!checked)}
+                    />
+                    <label htmlFor="roofBars" className="text-sm flex-1">
+                      Barres de toit (+69€/location)
+                      <span className="block text-xs text-muted-foreground">
+                        Location de barres de toit compatibles
+                      </span>
+                    </label>
+                  </div>
                 </div>
 
                 {/* Récapitulatif prix */}
@@ -198,6 +214,12 @@ const Location = () => {
                           <div className="flex justify-between">
                             <span>Annexe</span>
                             <span>{pricing.annexe}€</span>
+                          </div>
+                        )}
+                        {roofBars && (
+                          <div className="flex justify-between">
+                            <span>Barres de toit</span>
+                            <span>{pricing.roofBars}€</span>
                           </div>
                         )}
                         <hr className="my-2" />

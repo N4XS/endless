@@ -211,7 +211,7 @@ const Tentes = () => {
         </section>
 
         {/* Caractéristiques clés */}
-        <section className="section-padding bg-os/50">
+        <section className="py-8 bg-os/50">
           <div className="container mx-auto container-padding">
             <div className="grid md:grid-cols-4 gap-6 mb-16">
               {highlights.map((highlight, index) => (
@@ -230,7 +230,7 @@ const Tentes = () => {
         </section>
 
         {/* Description détaillée */}
-        <section className="py-16">
+        <section className="py-8">
           <div className="container mx-auto container-padding">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-display text-primary mb-8 text-center">
