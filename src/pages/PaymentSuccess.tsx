@@ -24,13 +24,36 @@ const PaymentSuccess = () => {
 
   const verifyPayment = async (sessionId: string) => {
     try {
-      const { data, error } = await supabase.functions.invoke('verify-payment', {
-        body: { sessionId }
+      // First verify the payment
+      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-payment', {
+        body: { session_id: sessionId }
       });
 
-      if (error) throw error;
+      if (verifyError) throw verifyError;
 
-      setOrderDetails(data);
+      // If we have a guest token from localStorage (from checkout), get order details
+      const guestToken = localStorage.getItem(`guest_token_${sessionId}`);
+      if (guestToken) {
+        try {
+          const { data: orderData, error: orderError } = await supabase.functions.invoke('get-order', {
+            body: { token: guestToken }
+          });
+          
+          if (!orderError && orderData) {
+            setOrderDetails({
+              orderId: orderData.order_id,
+              status: orderData.status,
+              items: orderData.items
+            });
+          }
+          
+          // Clean up the token from localStorage
+          localStorage.removeItem(`guest_token_${sessionId}`);
+        } catch (orderError) {
+          console.warn('Could not fetch order details:', orderError);
+        }
+      }
+
       setVerificationStatus('success');
     } catch (error) {
       console.error('Payment verification error:', error);

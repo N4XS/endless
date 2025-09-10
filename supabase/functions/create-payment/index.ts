@@ -5,6 +5,15 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Max-Age": "86400",
+};
+
+// Generate secure random token for guest orders
+const generateGuestToken = () => {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
 };
 
 // Helpers
@@ -143,6 +152,9 @@ serve(async (req) => {
       cancel_url: `${origin}/payment-canceled`,
     });
 
+    // Generate guest token for order retrieval security
+    const guestToken = generateGuestToken();
+
     // Créer la commande en attente et ses items
     const { data: order, error: orderErr } = await supabaseService
       .from("orders")
@@ -155,8 +167,9 @@ serve(async (req) => {
         status: "pending",
         shipping_country: shipping_country ?? null,
         shipping_cost_cents: shippingCents,
+        guest_access_token: guestToken,
       })
-      .select("id")
+      .select("id, guest_access_token")
       .single();
     if (orderErr) throw orderErr;
 
@@ -175,7 +188,10 @@ serve(async (req) => {
     const { error: oiErr } = await supabaseService.from("order_items").insert(orderItems);
     if (oiErr) throw oiErr;
 
-    return new Response(JSON.stringify({ url: session.url }), {
+    return new Response(JSON.stringify({ 
+      url: session.url,
+      guest_token: order.guest_access_token
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });

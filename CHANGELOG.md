@@ -1,3 +1,20 @@
+# Changelog
+
+## v2.1.0 - Améliorations de Sécurité 🔒
+
+### Sécurité renforcée
+- **Token d'accès invité** : Génération de tokens cryptographiquement sécurisés pour l'accès aux commandes invitées
+- **Nouvelle fonction Edge `get-order`** : Récupération sécurisée des commandes via token (remplace l'accès par email)
+- **En-têtes CORS améliorés** : Ajout de `Access-Control-Max-Age` et méthodes HTTP autorisées
+- **Nettoyage automatique** : Suppression des tokens temporaires du localStorage après utilisation
+
+### Nouvelles fonctionnalités
+- Fonction Edge `get-order` publique pour récupérer les détails de commande de façon sécurisée
+- Migration base de données : ajout de la colonne `guest_access_token` dans `orders`
+- Gestion d'erreur améliorée pour les commandes introuvables
+
+---
+
 # Changelog - Animations Framer Motion
 
 ## Nouvelles fonctionnalités ✨

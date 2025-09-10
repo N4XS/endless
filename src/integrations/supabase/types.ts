@@ -65,6 +65,7 @@ export type Database = {
           created_at: string
           currency: string
           customer_email: string
+          guest_access_token: string | null
           id: string
           shipping_cost_cents: number | null
           shipping_country: string | null
@@ -78,6 +79,7 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_email: string
+          guest_access_token?: string | null
           id?: string
           shipping_cost_cents?: number | null
           shipping_country?: string | null
@@ -91,6 +93,7 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_email?: string
+          guest_access_token?: string | null
           id?: string
           shipping_cost_cents?: number | null
           shipping_country?: string | null
