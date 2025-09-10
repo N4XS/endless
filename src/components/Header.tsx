@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, LogOut } from 'lucide-react';
+import { Menu, X, User, LogOut, ShoppingCart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
+import { useCart } from '@/contexts/CartContext';
 
 const navigation = [
   { name: 'Accueil', href: '/' },
@@ -17,6 +19,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { user, signOut } = useAuth();
+  const { totalItems } = useCart();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -62,6 +65,18 @@ export const Header = () => {
             <Link to="/tentes">
               <Button size="sm" className="bg-sapin hover:bg-sapin/90 text-primary-foreground">
                 Acheter une tente
+              </Button>
+            </Link>
+            
+            {/* Cart Icon */}
+            <Link to="/cart" className="relative">
+              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                <ShoppingCart className="w-5 h-5" />
+                {totalItems > 0 && (
+                  <Badge className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs w-5 h-5 flex items-center justify-center p-0">
+                    {totalItems}
+                  </Badge>
+                )}
               </Button>
             </Link>
             
@@ -122,6 +137,12 @@ export const Header = () => {
               <Link to="/tentes" onClick={() => setIsOpen(false)}>
                 <Button className="w-full bg-sapin hover:bg-sapin/90">
                   Acheter une tente
+                </Button>
+              </Link>
+              <Link to="/cart" onClick={() => setIsOpen(false)}>
+                <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                  <ShoppingCart className="w-4 h-4 mr-2" />
+                  Panier ({totalItems})
                 </Button>
               </Link>
               

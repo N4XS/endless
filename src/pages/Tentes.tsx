@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
@@ -21,16 +21,77 @@ import {
   CheckCircle,
   ZoomIn
 } from 'lucide-react';
-import { products } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/hooks/use-toast';
 import tentImage from '@/assets/product-hardshell-tent.jpg';
 
 const Tentes = () => {
-  // Récupère uniquement la tente STARZZ
-  const starzz = products.find(product => product.name === 'STARZZ');
+  const { products, loading } = useProducts();
+  const { addToCart } = useCart();
+  const { toast } = useToast();
   const [selectedImage, setSelectedImage] = useState(0);
+  
+  // Get the STARZZ product from Supabase
+  const starzz = products.find(product => product.name === 'STARZZ') || products[0];
+
+  // Add event listener for the embedded button
+  useEffect(() => {
+    const handleAddToCartEvent = () => {
+      handleAddToCart();
+    };
+
+    window.addEventListener('addToCart', handleAddToCartEvent);
+    return () => window.removeEventListener('addToCart', handleAddToCartEvent);
+  }, [starzz]);
+
+  const handleAddToCart = () => {
+    if (starzz) {
+      addToCart(starzz);
+      toast({
+        title: "Produit ajouté au panier",
+        description: `${starzz.name} a été ajouté à votre panier.`
+      });
+    }
+  };
+
+  const handleBuyNow = () => {
+    if (starzz) {
+      addToCart(starzz);
+      // Navigate to checkout will be handled by the Link
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="section-padding">
+          <div className="container mx-auto container-padding">
+            <div className="text-center">
+              <div className="text-display text-primary">Chargement...</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!starzz) {
-    return <div>Produit non trouvé</div>;
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <main className="section-padding">
+          <div className="container mx-auto container-padding">
+            <div className="text-center">
+              <div className="text-display text-primary">Produit non trouvé</div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   const highlights = [
@@ -115,9 +176,11 @@ const Tentes = () => {
                   <div className="text-sm text-background/75">TTC, installation comprise</div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
-                    Commander maintenant
-                  </Button>
+                  <Link to="/checkout">
+                    <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
+                      Commander maintenant
+                    </Button>
+                  </Link>
                   <Link to="/location">
                     <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
                       Louer d'abord
@@ -154,6 +217,9 @@ const Tentes = () => {
               <script
                 dangerouslySetInnerHTML={{
                   __html: `
+                    window.handleAddToCart = function() {
+                      window.dispatchEvent(new CustomEvent('addToCart'));
+                    };
                     document.addEventListener('DOMContentLoaded', function() {
                       const infoSlot = document.getElementById('product-info-slot');
                       if (infoSlot) {
@@ -195,7 +261,7 @@ const Tentes = () => {
                                 </div>
                               </div>
                               
-                              <button class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 font-medium transition-colors">
+                              <button class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 font-medium transition-colors" onclick="window.handleAddToCart && window.handleAddToCart()">
                                 Ajouter au panier
                               </button>
                             </div>
@@ -301,9 +367,11 @@ const Tentes = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
-                Commander maintenant - {starzz.price}€
-              </Button>
+              <Link to="/checkout">
+                <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
+                  Commander maintenant - {starzz.price}€
+                </Button>
+              </Link>
               <Link to="/location">
                 <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
                   Tester en location

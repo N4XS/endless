@@ -4,6 +4,8 @@ import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { useCart } from '@/contexts/CartContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProductCardProps {
   product: Product;
@@ -11,11 +13,22 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, className }: ProductCardProps) => {
+  const { addToCart } = useCart();
+  const { toast } = useToast();
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-BE', {
       style: 'currency',
       currency: 'EUR',
     }).format(price);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    toast({
+      title: "Produit ajouté au panier",
+      description: `${product.name} a été ajouté à votre panier.`
+    });
   };
 
   const getShellIcon = (shell: 'hard' | 'soft') => {
@@ -71,7 +84,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     <Users className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">2-3 personnes</div>
+                    <div className="font-semibold text-foreground">{product.specs.sleeping || 2}-3 personnes</div>
                     <div className="text-sm text-muted-foreground">Capacité</div>
                   </div>
                 </div>
@@ -124,6 +137,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                 <Button
                   size="lg"
                   variant="outline"
+                  onClick={handleAddToCart}
                   className="px-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                   disabled={product.stock === 'out_of_stock'}
                 >
