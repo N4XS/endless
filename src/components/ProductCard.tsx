@@ -100,17 +100,12 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
               {/* Prix */}
               <div className="bg-gradient-nature rounded-lg p-6">
                 <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-4xl font-bold text-primary">
-                      {formatPrice(product.price)}
-                    </div>
-                    <div className="text-sm text-muted-foreground">TTC, installation comprise</div>
-                  </div>
-                  {product.sku && (
-                    <Badge variant="outline" className="text-xs">
-                      Réf: {product.sku}
-                    </Badge>
-                  )}
+                   <div>
+                     <div className="text-4xl font-bold text-primary">
+                       {formatPrice(product.price)}
+                     </div>
+                     <div className="text-sm text-muted-foreground">TTC, installation comprise</div>
+                   </div>
                 </div>
               </div>
             </div>

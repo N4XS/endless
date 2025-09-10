@@ -394,10 +394,10 @@ const FAQ = () => {
                       <Accordion type="single" collapsible>
                         <AccordionItem value={`faq-${section.id}-${index}`} className="border-none">
                           <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                            <div className="flex items-start gap-4 text-left">
-                              <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center flex-shrink-0 mt-1">
-                                <faq.icon className="w-5 h-5 text-primary" />
-                              </div>
+                             <div className="flex items-start gap-4 text-left">
+                               <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+                                 <faq.icon className="w-5 h-5 text-primary" />
+                               </div>
                               <div className="font-semibold text-foreground">
                                 {faq.question}
                               </div>

@@ -180,11 +180,11 @@ const Tentes = () => {
                                 <span>Livraison sous 3-5 jours ouvrables</span>
                               </div>
                               
-                              <div class="space-y-3 pt-4 border-t border-border">
-                                <div class="flex justify-between text-sm">
-                                  <span class="text-muted-foreground">Garantie :</span>
-                                  <span class="text-right">Satisfait ou remboursé<br>30 jours</span>
-                                </div>
+                               <div class="space-y-3 pt-4 border-t border-border">
+                                 <div class="flex justify-between text-sm">
+                                   <span class="text-muted-foreground">Garantie :</span>
+                                   <span class="text-right">Satisfait ou remboursé 30 jours</span>
+                                 </div>
                                 <div class="flex justify-between text-sm">
                                   <span class="text-muted-foreground">Expédition :</span>
                                   <span>3-5 jours ouvrables</span>
