@@ -28,10 +28,12 @@ export const Header = () => {
       <div className="container mx-auto container-padding">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">E</span>
-            </div>
+          <Link to="/" className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/85aa829a-09be-4004-835a-f02019132e69.png" 
+              alt="ENDLESS Logo" 
+              className="w-10 h-10 object-contain"
+            />
             <span className="font-display font-bold text-xl text-sapin">
               ENDLESS
             </span>
