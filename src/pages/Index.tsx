@@ -54,7 +54,7 @@ const Index = () => {
         </section>
 
         {/* Bénéfices */}
-        <section className="section-padding bg-os/50">
+        <section className="pb-16 pt-8 bg-os/50">
           <div className="container mx-auto container-padding">
             <div className="text-center mb-12">
               <h2 className="text-display text-primary mb-4">
