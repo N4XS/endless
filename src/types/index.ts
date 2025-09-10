@@ -9,7 +9,7 @@ export interface Product {
   category: "tent" | "accessory";
   badges?: string[];
   specs: {
-    sleeping: number;
+    sleeping: number | string;
     shell: "hard" | "soft";
     weightKg: number;
     closedSize: string;
