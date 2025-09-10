@@ -133,7 +133,7 @@ export const Footer = () => {
               </div>
             </div>
             <div className="text-sm text-os/60">
-              🇧🇪 Entreprise belge • TVA BE 0123.456.789
+              🇧🇪 Entreprise belge • TVA BE1023.197.471
             </div>
           </div>
         </div>
