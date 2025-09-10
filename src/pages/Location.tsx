@@ -31,19 +31,45 @@ const Location = () => {
 
   const calculatePrice = () => {
     const days = calculateDays();
-    if (days === 0) return { base: 0, insurance: 0, annexe: 0, total: 0, deposit: 0 };
+    if (days === 0) return { base: 0, insurance: 0, annexe: 0, roofBars: 0, total: 0, deposit: 0 };
     
-    // Prix de base par jour
-    let dailyRate = 45; // Base rate
-    if (days >= 7) dailyRate = 35; // Réduction semaine
-    if (days >= 14) dailyRate = 30; // Réduction 2 semaines
+    let base = 0;
     
-    const base = days * dailyRate;
+    // Nouvelle grille tarifaire
+    if (days >= 2 && days <= 3) {
+      // Week-end minimum
+      base = 89 + (days > 2 ? (days - 2) * 25 : 0);
+    } else if (days >= 4 && days <= 6) {
+      // Calcul au jour pour 4-6 jours
+      base = 89 + (days - 2) * 25;
+    } else if (days === 7) {
+      // Semaine fixe
+      base = 199;
+    } else if (days >= 8 && days <= 13) {
+      // Semaine + jours supplémentaires
+      base = 199 + (days - 7) * 25;
+    } else if (days === 14) {
+      // Deux semaines fixe
+      base = 349;
+    } else if (days >= 15 && days <= 29) {
+      // Deux semaines + jours supplémentaires
+      base = 349 + (days - 14) * 25;
+    } else if (days === 30) {
+      // 30 jours
+      base = 579;
+    } else if (days > 30) {
+      // Plus de 30 jours
+      base = 579 + (days - 30) * 25;
+    } else if (days === 1) {
+      // 1 jour seul (cas particulier)
+      base = 89;
+    }
+    
     const insuranceCost = insurance ? days * 8 : 0;
     const annexeCost = annexe ? days * 12 : 0;
-    const roofBarsCost = roofBars ? 69 : 0; // Fixed cost per rental
+    const roofBarsCost = roofBars ? 69 : 0;
     const total = base + insuranceCost + annexeCost + roofBarsCost;
-    const deposit = 500; // Caution fixe
+    const deposit = 500;
     
     return { base, insurance: insuranceCost, annexe: annexeCost, roofBars: roofBarsCost, total, deposit };
   };
@@ -138,7 +164,7 @@ const Location = () => {
                     onChange={(e) => setSelectedProduct(e.target.value)}
                     className="w-full mt-2 p-2 border border-border rounded-md"
                   >
-                    <option value="">STARZZ - Tente Premium</option>
+                    <option value="">Veuillez sélectionner</option>
                     {tents.map(tent => (
                       <option key={tent.id} value={tent.id}>
                         {tent.name} - {tent.specs.sleeping}P - {tent.specs.weightKg}kg
@@ -364,10 +390,10 @@ const Location = () => {
                         0497 22 87 43
                       </Button>
                     </a>
-                    <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="w-4 h-4" />
-                      Lun-Ven 9h-18h • Sam 9h-17h
-                    </div>
+                     <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                       <Clock className="w-4 h-4" />
+                       24/24
+                     </div>
                   </div>
                 </div>
               </CardContent>
