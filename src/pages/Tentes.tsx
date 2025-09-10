@@ -115,11 +115,11 @@ const Tentes = () => {
                   <div className="text-sm text-background/75">TTC, installation comprise</div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button size="lg" variant="secondary" className="bg-background text-charbon hover:bg-background/90 border-2 border-background">
+                  <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
                     Commander maintenant
                   </Button>
                   <Link to="/location">
-                    <Button size="lg" variant="outline" className="border-background text-background hover:bg-background hover:text-charbon">
+                    <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
                       Louer d'abord
                     </Button>
                   </Link>
@@ -301,11 +301,11 @@ const Tentes = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Button size="lg" variant="secondary" className="bg-background text-charbon hover:bg-background/90 border-2 border-background">
+              <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
                 Commander maintenant - {starzz.price}€
               </Button>
               <Link to="/location">
-                <Button size="lg" variant="outline" className="border-background text-background hover:bg-background hover:text-charbon">
+                <Button size="lg" variant="outline" className="border-os text-os hover:bg-os hover:text-primary">
                   Tester en location
                 </Button>
               </Link>

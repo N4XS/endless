@@ -10,7 +10,6 @@
     /* Couleurs principales - Thème nature belge */
     --sapin: 147 37% 20%;        /* #1F3E2E - Vert sapin profond */
     --olive: 49 97% 64%;         /* #FDD44F - Jaune doré principal */
-    --olive-dark: 49 80% 35%;    /* #B8941F - Olive foncé pour contraste */
     --sable: 45 27% 76%;         /* #D9C8A9 - Beige sable chaud */
     --os: 48 36% 96%;            /* #F7F3EC - Crème naturel */
     --charbon: 0 0% 13%;         /* #222222 - Charbon profond */
@@ -204,7 +203,6 @@
   /* Couleurs utilitaires */
   .text-sapin { color: hsl(var(--sapin)); }
   .text-olive { color: hsl(var(--olive)); }
-  .text-olive-dark { color: hsl(var(--olive-dark)); }
   .text-ambre { color: hsl(var(--ambre)); }
   .bg-sapin { background-color: hsl(var(--sapin)); }
   .bg-olive { background-color: hsl(var(--olive)); }
