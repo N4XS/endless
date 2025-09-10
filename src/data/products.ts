@@ -17,7 +17,7 @@ export const products: Product[] = [
     category: "tent",
     badges: ["Hard-shell", "Best-seller"],
     specs: {
-      sleeping: 2,
+      sleeping: 3,
       shell: "hard",
       weightKg: 59,
       closedSize: "140x120x40cm",

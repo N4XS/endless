@@ -23,126 +23,158 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
   };
 
   return (
-    <div className={cn("card-product group", className)}>
-      {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden">
-        <img
-          src={product.images[0]}
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-        />
-        
-        {/* Badges */}
-        {product.badges && product.badges.length > 0 && (
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1">
-            {product.badges.map((badge, index) => (
-              <Badge
-                key={index}
-                variant={badge === 'Nouveau' ? 'default' : 'secondary'}
-                className={cn(
-                  "text-xs",
-                  badge === 'Nouveau' && "bg-ambre text-ambre-foreground",
-                  badge === 'Best-seller' && "bg-sapin text-primary-foreground"
-                )}
-              >
-                {badge}
-              </Badge>
-            ))}
-          </div>
-        )}
+    <div className={cn("w-full max-w-4xl mx-auto group", className)}>
+      <div className="bg-card rounded-xl overflow-hidden shadow-card hover:shadow-hero transition-all duration-300 border border-border">
+        <div className="grid lg:grid-cols-2 gap-0">
+          {/* Image Section */}
+          <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            
+            {/* Badges */}
+            {product.badges && product.badges.length > 0 && (
+              <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                {product.badges.map((badge, index) => (
+                  <Badge
+                    key={index}
+                    variant="default"
+                    className={cn(
+                      "text-sm px-3 py-1",
+                      badge === 'Best-seller' && "bg-ambre text-accent-foreground shadow-soft",
+                      badge === 'Hard-shell' && "bg-primary text-primary-foreground"
+                    )}
+                  >
+                    {badge}
+                  </Badge>
+                ))}
+              </div>
+            )}
 
-        {/* Actions rapides */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button className="p-2 bg-background/90 backdrop-blur rounded-full shadow-soft hover:bg-background focus-outdoor">
-            <Heart className="w-4 h-4" />
-          </button>
-        </div>
-
-        {/* Stock */}
-        <div className="absolute bottom-3 right-3">
-          {product.stock === 'out_of_stock' && (
-            <Badge variant="destructive" className="text-xs">
-              Rupture
-            </Badge>
-          )}
-        </div>
-      </div>
-
-      {/* Contenu */}
-      <div className="p-4 space-y-3">
-        {/* Titre et specs rapides */}
-        <div className="space-y-2">
-          <Link
-            to={`/produit/${product.slug}`}
-            className="block group-hover:text-sapin transition-colors"
-          >
-            <h3 className="font-display font-semibold text-lg line-clamp-2">
-              {product.name}
-            </h3>
-          </Link>
-          
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Users className="w-4 h-4" />
-              <span>{product.specs.sleeping}P</span>
+            {/* Actions rapides */}
+            <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button className="p-3 bg-background/95 backdrop-blur rounded-full shadow-soft hover:bg-background hover:shadow-hero transition-all">
+                <Heart className="w-5 h-5 text-muted-foreground hover:text-destructive transition-colors" />
+              </button>
             </div>
-            <div className="flex items-center gap-1">
-              <Weight className="w-4 h-4" />
-              <span>{product.specs.weightKg}kg</span>
+
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          </div>
+
+          {/* Content Section */}
+          <div className="p-8 flex flex-col justify-between">
+            <div className="space-y-6">
+              {/* Header */}
+              <div>
+                <Link
+                  to={`/tentes`}
+                  className="block group-hover:text-primary transition-colors"
+                >
+                  <h2 className="font-display font-bold text-3xl lg:text-4xl mb-2 text-foreground">
+                    {product.name}
+                  </h2>
+                </Link>
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
+
+              {/* Specs */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                  <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
+                    <Users className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground">2-3 personnes</div>
+                    <div className="text-sm text-muted-foreground">Capacité</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
+                  <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
+                    <Weight className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground">{product.specs.weightKg}kg</div>
+                    <div className="text-sm text-muted-foreground">Poids</div>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 col-span-2">
+                  <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
+                    <span className="text-xl">{getShellIcon(product.specs.shell)}</span>
+                  </div>
+                  <div>
+                    <div className="font-semibold text-foreground capitalize">Hard-shell Premium</div>
+                    <div className="text-sm text-muted-foreground">Installation en 2 minutes</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Prix */}
+              <div className="bg-gradient-nature rounded-lg p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-4xl font-bold text-primary">
+                      {formatPrice(product.price)}
+                    </div>
+                    <div className="text-sm text-muted-foreground">TTC, installation comprise</div>
+                  </div>
+                  {product.sku && (
+                    <Badge variant="outline" className="text-xs">
+                      Réf: {product.sku}
+                    </Badge>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-1">
-              <span>{getShellIcon(product.specs.shell)}</span>
-              <span className="capitalize">{product.specs.shell}</span>
+
+            {/* Actions */}
+            <div className="space-y-4 pt-6">
+              <div className="flex gap-3">
+                <Link to="/tentes" className="flex-1">
+                  <Button
+                    size="lg"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                  >
+                    Voir les détails
+                  </Button>
+                </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="px-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                  disabled={product.stock === 'out_of_stock'}
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                </Button>
+              </div>
+
+              {/* Lien location */}
+              {product.category === 'tent' && (
+                <Link to="/location" className="block">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-olive hover:text-olive hover:bg-olive/10 font-medium"
+                    size="lg"
+                  >
+                    Ou essayer en location d'abord →
+                  </Button>
+                </Link>
+              )}
+
+              {/* Stock indicator */}
+              <div className="flex items-center gap-2 text-sm">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-muted-foreground">En stock • Livraison sous 3-5 jours</span>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Prix */}
-        <div className="flex items-baseline justify-between">
-          <div>
-            <span className="text-2xl font-bold text-sapin">
-              {formatPrice(product.price)}
-            </span>
-            <span className="text-sm text-muted-foreground ml-1">TTC</span>
-          </div>
-          {product.sku && (
-            <span className="text-xs text-muted-foreground">
-              Réf: {product.sku}
-            </span>
-          )}
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-2 pt-2">
-          <Link to={`/produit/${product.slug}`} className="flex-1">
-            <Button
-              variant="outline"
-              className="w-full border-sapin text-sapin hover:bg-sapin hover:text-primary-foreground"
-            >
-              Voir détails
-            </Button>
-          </Link>
-          <Button
-            size="icon"
-            className="bg-sapin hover:bg-sapin/90 text-primary-foreground"
-            disabled={product.stock === 'out_of_stock'}
-          >
-            <ShoppingCart className="w-4 h-4" />
-          </Button>
-        </div>
-
-        {/* Lien location si tente */}
-        {product.category === 'tent' && (
-          <Link to={`/location?product=${product.id}`}>
-            <Button
-              variant="ghost"
-              className="w-full text-olive hover:text-olive hover:bg-olive/10"
-              size="sm"
-            >
-              Ou louer ce modèle →
-            </Button>
-          </Link>
-        )}
       </div>
     </div>
   );
