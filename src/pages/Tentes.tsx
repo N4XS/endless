@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ImageCarousel } from '@/components/ImageCarousel';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
+import { LazyImage } from '@/components/LazyImage';
 import { 
   Star, 
   Users, 
@@ -136,17 +137,16 @@ const Tentes = () => {
       <Header />
       
       <main>
-        {/* Hero Section avec background image */}
-        <section 
-          className="relative min-h-[50vh] flex items-center justify-center overflow-hidden"
-          style={{
-            backgroundImage: `url(/images/ST1.jpg)`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-charbon/80 via-charbon/40 to-transparent"></div>
+        {/* Hero Section avec background image optimisé Safari */}
+        <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+          <div className="absolute inset-0">
+            <LazyImage
+              src="/images/ST1.jpg"
+              alt="STARZZ - Tente de toit premium en action"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-charbon/80 via-charbon/40 to-transparent" />
           
           <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
             <div className="max-w-2xl">
@@ -176,7 +176,6 @@ const Tentes = () => {
                   </Link>
                 </div>
               </div>
-
             </div>
           </div>
         </section>

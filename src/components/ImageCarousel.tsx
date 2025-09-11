@@ -62,28 +62,53 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
               />
             </div>
 
-            {/* Navigation Arrows */}
             <button
               onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/95 backdrop-blur rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/95 rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+              style={{
+                backdropFilter: 'blur(4px)',
+                WebkitBackdropFilter: 'blur(4px)',
+                // Fallback pour Safari ancien
+                background: 'rgba(255, 255, 255, 0.95)'
+              }}
             >
               <ChevronLeft className="w-6 h-6 text-primary mx-auto" />
             </button>
             
             <button
               onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/95 backdrop-blur rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-background/95 rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
+              style={{
+                backdropFilter: 'blur(4px)',
+                WebkitBackdropFilter: 'blur(4px)',
+                // Fallback pour Safari ancien
+                background: 'rgba(255, 255, 255, 0.95)'
+              }}
             >
               <ChevronRight className="w-6 h-6 text-primary mx-auto" />
             </button>
 
             {/* Zoom Indicator */}
-            <div className="absolute top-4 right-4 bg-background/95 backdrop-blur rounded-full p-3 shadow-soft opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute top-4 right-4 bg-background/95 rounded-full p-3 shadow-soft opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                 style={{
+                   backdropFilter: 'blur(4px)',
+                   WebkitBackdropFilter: 'blur(4px)',
+                   // Fallback pour Safari ancien
+                   background: 'rgba(255, 255, 255, 0.95)'
+                 }}
+            >
               <ZoomIn className="w-5 h-5 text-primary" />
             </div>
 
             {/* Image Counter */}
-            <div className="absolute bottom-4 left-4 bg-background/95 backdrop-blur rounded-full px-4 py-2 shadow-soft">
+            <div className="absolute bottom-4 left-4 bg-background/95 rounded-full px-4 py-2 shadow-soft"
+                 style={{
+                   backdropFilter: 'blur(4px)',
+                   WebkitBackdropFilter: 'blur(4px)',
+                   // Fallback pour Safari ancien
+                   background: 'rgba(255, 255, 255, 0.95)'
+                 }}
+            >
               <span className="text-sm font-medium text-foreground">
                 {selectedImage + 1} / {images.length}
               </span>
