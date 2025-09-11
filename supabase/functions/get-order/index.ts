@@ -75,7 +75,6 @@ serve(async (req) => {
         shipping_country,
         shipping_cost_cents,
         created_at,
-        customer_email,
         order_items (
           quantity,
           unit_price_cents,
@@ -94,6 +93,7 @@ serve(async (req) => {
 
     console.log(`[get-order] Order retrieved successfully: ${order.id}`);
 
+    // Return order data WITHOUT sensitive information like customer email
     return new Response(JSON.stringify({
       order_id: order.id,
       status: order.status,
@@ -102,7 +102,7 @@ serve(async (req) => {
       shipping_country: order.shipping_country,
       shipping_cost_cents: order.shipping_cost_cents,
       created_at: order.created_at,
-      customer_email: order.customer_email,
+      // Note: customer_email and stripe_session_id are intentionally excluded for security
       items: order.order_items
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },

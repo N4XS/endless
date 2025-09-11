@@ -2,8 +2,9 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
+// Secure CORS headers - restrict to specific domain
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://gbkpdgchdkkydpzycfkr.lovable.app",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Max-Age": "86400",
@@ -14,6 +15,17 @@ const generateGuestToken = () => {
   const array = new Uint8Array(32);
   crypto.getRandomValues(array);
   return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+};
+
+// Validate request origin for additional security
+const validateOrigin = (req: Request): boolean => {
+  const origin = req.headers.get("origin");
+  const allowedOrigins = [
+    "https://gbkpdgchdkkydpzycfkr.lovable.app",
+    "https://endless-tents.com",
+    "http://localhost:5173", // For development
+  ];
+  return !origin || allowedOrigins.includes(origin);
 };
 
 // Helpers
@@ -29,6 +41,14 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
+    // Validate request origin for additional security
+    if (!validateOrigin(req)) {
+      console.warn("[create-payment] Unauthorized origin:", req.headers.get("origin"));
+      return new Response(JSON.stringify({ error: "Unauthorized origin" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 403,
+      });
+    }
     console.log("[create-payment] Function started");
     
     // Check all required environment variables
