@@ -78,15 +78,19 @@ serve(async (req) => {
     if (!order) throw new Error("Commande introuvable pour cette session");
 
     let newStatus: "paid" | "canceled" | "failed" = "failed";
-    if (session.payment_status === "paid") newStatus = "paid";
-    else if (session.status === "canceled") newStatus = "canceled";
+    // Be stricter: require both a completed session AND a paid payment status
+    if (session.status === "complete" && session.payment_status === "paid") newStatus = "paid";
+    else if (session.status === "expired") newStatus = "canceled";
+    else if (session.status === "open") newStatus = "failed";
 
-    // Mettre à jour le statut
-    const { error: updErr } = await supabaseService
-      .from("orders")
-      .update({ status: newStatus })
-      .eq("id", order.id);
-    if (updErr) throw updErr;
+    // Update status only if it actually changed to avoid unnecessary writes
+    if (order.status !== newStatus) {
+      const { error: updErr } = await supabaseService
+        .from("orders")
+        .update({ status: newStatus })
+        .eq("id", order.id);
+      if (updErr) throw updErr;
+    }
 
     // Si payé, décrémenter le stock
     if (newStatus === "paid") {
