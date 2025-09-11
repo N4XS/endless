@@ -265,6 +265,19 @@ export type Database = {
         Args: { order_id: string; token: string }
         Returns: boolean
       }
+      get_guest_order_details: {
+        Args: { order_id: string; token: string }
+        Returns: {
+          amount_cents: number
+          created_at: string
+          currency: string
+          id: string
+          shipping_cost_cents: number
+          shipping_country: string
+          status: string
+          updated_at: string
+        }[]
+      }
       get_user_roles: {
         Args: { _user_id: string }
         Returns: {
@@ -281,6 +294,10 @@ export type Database = {
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      log_guest_order_access: {
+        Args: { order_id: string; success: boolean }
+        Returns: undefined
       }
       log_unauthorized_admin_attempt: {
         Args: Record<PropertyKey, never>

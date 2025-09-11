@@ -76,36 +76,82 @@ serve(async (req) => {
       });
     }
 
-    // Retrieve order using the secure guest token
-    const { data: order, error: orderErr } = await supabaseService
+    // Get secure order details using our protected function
+    // First find the order ID using the token, then get details
+    const { data: orderLookup, error: lookupErr } = await supabaseService
       .from("orders")
-      .select(`
-        id,
-        status,
-        amount_cents,
-        currency,
-        shipping_country,
-        shipping_cost_cents,
-        created_at,
-        order_items (
-          quantity,
-          unit_price_cents,
-          total_cents,
-          products (
-            name,
-            slug
-          )
-        )
-      `)
+      .select("id")
       .eq("guest_access_token", token)
+      .eq("user_id", null)
       .maybeSingle();
 
-    if (orderErr) throw orderErr;
-    if (!order) throw new Error("Commande introuvable ou token invalide");
+    if (lookupErr) {
+      console.error('[get-order] Order lookup error:', lookupErr);
+      throw new Error("Erreur lors de la recherche de commande");
+    }
+
+    if (!orderLookup) {
+      console.log('[get-order] No order found for token');
+      await supabaseService.rpc('log_guest_order_access', {
+        order_id: 'unknown',
+        success: false
+      });
+      throw new Error("Commande introuvable ou token invalide");
+    }
+
+    // Now get secure order details using our protected function
+    const { data: orderDetails, error: orderErr } = await supabaseService
+      .rpc('get_guest_order_details', {
+        order_id: orderLookup.id,
+        token: token
+      });
+
+    if (orderErr) {
+      console.error('[get-order] Error fetching order details:', orderErr);
+      await supabaseService.rpc('log_guest_order_access', {
+        order_id: orderLookup.id,
+        success: false
+      });
+      throw orderErr;
+    }
+
+    if (!orderDetails || orderDetails.length === 0) {
+      await supabaseService.rpc('log_guest_order_access', {
+        order_id: orderLookup.id,
+        success: false
+      });
+      throw new Error("Commande introuvable");
+    }
+
+    const order = orderDetails[0];
+    
+    // Get order items separately (these don't contain sensitive data)
+    const { data: orderItems, error: itemsErr } = await supabaseService
+      .from("order_items")
+      .select(`
+        quantity,
+        unit_price_cents,
+        total_cents,
+        products (
+          name,
+          slug
+        )
+      `)
+      .eq("order_id", order.id);
+
+    if (itemsErr) {
+      console.error('[get-order] Error fetching order items:', itemsErr);
+    }
 
     console.log(`[get-order] Order retrieved successfully: ${order.id}`);
+    
+    // Log successful access
+    await supabaseService.rpc('log_guest_order_access', {
+      order_id: order.id,
+      success: true
+    });
 
-    // Return order data WITHOUT sensitive information like customer email
+    // Return order data (all sensitive fields already excluded by secure function)
     return new Response(JSON.stringify({
       order_id: order.id,
       status: order.status,
@@ -114,8 +160,8 @@ serve(async (req) => {
       shipping_country: order.shipping_country,
       shipping_cost_cents: order.shipping_cost_cents,
       created_at: order.created_at,
-      // Note: customer_email and stripe_session_id are intentionally excluded for security
-      items: order.order_items
+      updated_at: order.updated_at,
+      items: orderItems || []
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
