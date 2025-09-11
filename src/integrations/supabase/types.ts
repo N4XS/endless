@@ -200,6 +200,10 @@ export type Database = {
         Args: { order_record: Database["public"]["Tables"]["orders"]["Row"] }
         Returns: boolean
       }
+      can_access_order_as_guest: {
+        Args: { order_id: string; token: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
