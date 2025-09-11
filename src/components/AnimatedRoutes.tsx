@@ -58,6 +58,7 @@ export const AnimatedRoutes = () => {
           <Route path="/checkout" element={<PageWrapper><Checkout /></PageWrapper>} />
           <Route path="/payment-success" element={<PageWrapper><PaymentSuccess /></PageWrapper>} />
           <Route path="/payment-cancelled" element={<PageWrapper><PaymentCancelled /></PageWrapper>} />
+          <Route path="/payment-canceled" element={<PageWrapper><PaymentCancelled /></PageWrapper>} />
           <Route path="/payment-error" element={<PageWrapper><PaymentError /></PageWrapper>} />
           <Route path="/mentions-legales" element={<PageWrapper><MentionsLegales /></PageWrapper>} />
           <Route path="/cgv" element={<PageWrapper><CGV /></PageWrapper>} />
