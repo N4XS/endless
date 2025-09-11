@@ -1,12 +1,31 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
+// Secure CORS headers - restrict to specific domain
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://gbkpdgchdkkydpzycfkr.lovable.app",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Max-Age": "86400",
 };
+
+// Input validation for guest token
+function validateGuestToken(token: any): { valid: boolean; error?: string } {
+  if (!token) {
+    return { valid: false, error: 'Guest access token is required' };
+  }
+  
+  if (typeof token !== 'string') {
+    return { valid: false, error: 'Guest access token must be a string' };
+  }
+  
+  // Basic token format validation (64 hex characters)
+  if (!/^[a-f0-9]{64}$/i.test(token)) {
+    return { valid: false, error: 'Invalid guest access token format' };
+  }
+  
+  return { valid: true };
+}
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
@@ -19,8 +38,14 @@ serve(async (req) => {
     const url = new URL(req.url);
     const token = url.searchParams.get("token");
     
-    if (!token) {
-      throw new Error("Token d'accès requis");
+    // Validate guest token
+    const validation = validateGuestToken(token);
+    if (!validation.valid) {
+      console.error('Token validation failed:', validation.error);
+      return new Response(JSON.stringify({ error: validation.error }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400,
+      });
     }
 
     // Retrieve order using the secure guest token

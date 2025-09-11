@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Loader2, AlertCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useSecureStorage } from '@/hooks/useSecureStorage';
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
+  const { getGuestToken, clearGuestToken } = useSecureStorage();
   const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
@@ -31,28 +33,22 @@ const PaymentSuccess = () => {
 
       if (verifyError) throw verifyError;
 
-      // If we have a guest token from localStorage (from checkout), get order details
-      const guestToken = localStorage.getItem(`guest_token_${sessionId}`);
-      if (guestToken) {
-        try {
-          const { data: orderData, error: orderError } = await supabase.functions.invoke('get-order', {
-            body: { token: guestToken }
-          });
-          
-          if (!orderError && orderData) {
-            setOrderDetails({
-              orderId: orderData.order_id,
-              status: orderData.status,
-              items: orderData.items
-            });
-          }
-          
-          // Clean up the token from localStorage
-          localStorage.removeItem(`guest_token_${sessionId}`);
-        } catch (orderError) {
-          console.warn('Could not fetch order details:', orderError);
+    // Try to fetch order details if we have a guest token
+    const guestToken = getGuestToken();
+    if (guestToken) {
+      try {
+        const { data: orderResult } = await supabase.functions.invoke('get-order', {
+          body: { token: guestToken }
+        });
+        
+        if (orderResult?.order_id) {
+          setOrderDetails(orderResult);
+          clearGuestToken(); // Clear token after successful retrieval
         }
+      } catch (error) {
+        console.error('Failed to fetch order details:', error);
       }
+    }
 
       setVerificationStatus('success');
     } catch (error) {
