@@ -125,7 +125,7 @@ serve(async (req) => {
     if (newStatus === "paid") {
       redirect_url = "/payment-success";
     } else if (newStatus === "canceled") {
-      redirect_url = "/payment-cancelled";
+      redirect_url = "/payment-canceled";  // Use US spelling to match Stripe's default
     } else {
       redirect_url = "/payment-error";
     }

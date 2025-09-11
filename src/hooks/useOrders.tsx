@@ -52,6 +52,7 @@ export const useOrders = () => {
           )
         `)
         .eq('user_id', user.id)
+        .eq('status', 'paid')  // Only show paid orders
         .order('created_at', { ascending: false });
 
       if (error) {
