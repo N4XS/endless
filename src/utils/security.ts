@@ -74,17 +74,16 @@ class SecurityMonitor {
   }
 
   private async reportToMonitoringService(event: SecurityEvent) {
-    // Store security events in Supabase for monitoring
+    // Store security events using edge function for security compliance
     try {
       const { supabase } = await import('@/integrations/supabase/client');
-      await supabase.from('security_logs').insert({
-        event_type: event.type,
-        user_id: event.userId || null,
-        ip_address: event.ip || null,
-        user_agent: event.userAgent || null,
-        details: event.details,
-        message: event.message || null,
-        metadata: event.metadata || {}
+      await supabase.functions.invoke('log-security-event', {
+        body: {
+          event_type: event.type,
+          details: event.details,
+          message: event.message || null,
+          metadata: event.metadata || {}
+        }
       });
     } catch (error) {
       console.error('[Security Monitor] Failed to log event:', error);
