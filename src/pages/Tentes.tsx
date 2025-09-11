@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ImageCarousel } from '@/components/ImageCarousel';
+import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { 
   Star, 
   Users, 
@@ -34,16 +35,6 @@ const Tentes = () => {
   
   // Get the STARZZ product from Supabase
   const starzz = products.find(product => product.name === 'STARZZ') || products[0];
-
-  // Add event listener for the embedded button
-  useEffect(() => {
-    const handleAddToCartEvent = () => {
-      handleAddToCart();
-    };
-
-    window.addEventListener('addToCart', handleAddToCartEvent);
-    return () => window.removeEventListener('addToCart', handleAddToCartEvent);
-  }, [starzz]);
 
   const handleAddToCart = () => {
     if (starzz) {
@@ -200,65 +191,13 @@ const Tentes = () => {
                 className="mb-8"
               />
               
-              {/* Product Info Card positioned in the carousel */}
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    window.handleAddToCart = function() {
-                      window.dispatchEvent(new CustomEvent('addToCart'));
-                    };
-                    document.addEventListener('DOMContentLoaded', function() {
-                      const infoSlot = document.getElementById('product-info-slot');
-                      if (infoSlot) {
-                        infoSlot.innerHTML = \`
-                          <div class="bg-card rounded-xl shadow-card border border-border p-6">
-                            <div class="space-y-6">
-                              <div>
-                                <h2 class="text-2xl font-bold text-primary mb-2">STARZZ</h2>
-                                <p class="text-sm text-muted-foreground">TTC, frais de port non compris</p>
-                              </div>
-                              
-                              <div class="text-4xl font-bold text-primary">${starzz.price}€</div>
-                              
-                              <div class="flex items-center gap-2 text-sm">
-                                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                <span class="text-muted-foreground">En stock</span>
-                              </div>
-                              
-                              <div class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                  <circle cx="12" cy="12" r="10"></circle>
-                                  <polyline points="12,6 12,12 16,14"></polyline>
-                                </svg>
-                                <span>Livraison sous 3-5 jours ouvrables</span>
-                              </div>
-                              
-                               <div class="space-y-3 pt-4 border-t border-border">
-                                 <div class="flex justify-between text-sm">
-                                   <span class="text-muted-foreground">Garantie :</span>
-                                   <span class="text-right">Satisfait ou remboursé 30 jours</span>
-                                 </div>
-                                <div class="flex justify-between text-sm">
-                                  <span class="text-muted-foreground">Expédition :</span>
-                                  <span>3-5 jours ouvrables</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                  <span class="text-muted-foreground">Conditions :</span>
-                                  <a href="/cgv" class="text-primary hover:underline">CGV</a>
-                                </div>
-                              </div>
-                              
-                              <button class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 font-medium transition-colors" onclick="window.handleAddToCart && window.handleAddToCart()">
-                                Ajouter au panier
-                              </button>
-                            </div>
-                          </div>
-                        \`;
-                      }
-                    });
-                  `
-                }}
-              />
+              {/* Product Info Card - Now using secure React component */}
+              <div className="mt-8">
+                <ProductInfoCard 
+                  product={starzz}
+                  onAddToCart={handleAddToCart}
+                />
+              </div>
             </div>
           </div>
         </section>
