@@ -2,7 +2,19 @@ import { useCallback } from 'react';
 
 // Secure token storage with encryption-like obfuscation
 const STORAGE_KEY = 'guest_order_token';
-const ENCRYPTION_KEY = 'starzz_secure_key_2024';
+
+// Generate a session-specific encryption key
+const generateSessionKey = (): string => {
+  const sessionId = sessionStorage.getItem('session_id') || 
+    (() => {
+      const id = crypto.randomUUID();
+      sessionStorage.setItem('session_id', id);
+      return id;
+    })();
+  return `starzz-${sessionId}-${Date.now()}`;
+};
+
+const ENCRYPTION_KEY = generateSessionKey();
 
 // Simple XOR encryption for client-side token obfuscation
 function obfuscate(text: string, key: string): string {

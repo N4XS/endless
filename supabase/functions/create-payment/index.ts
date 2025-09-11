@@ -166,18 +166,17 @@ serve(async (req) => {
     const customers = await stripe.customers.list({ email: effectiveEmail, limit: 1 });
     const customerId = customers.data[0]?.id;
 
-    const line_items = [{
-      price_data: {
-        currency: "eur",
-        product_data: { 
-          name: "STARZZ",
-          description: "140x240",
-          images: [`${origin}/images/ST1.jpg`]
+    const line_items = normalizedItems.map((it) => {
+      const p = productMap.get(it.product_id);
+      return {
+        price_data: {
+          currency: "eur",
+          product_data: { name: p.name },
+          unit_amount: p.price_cents,
         },
-        unit_amount: 147000, // 1470,00 € en centimes
-      },
-      quantity: 1,
-    }];
+        quantity: it.quantity,
+      } as any;
+    });
 
     // Optionnel: ajouter les frais de port en tant que ligne séparée si > 0
     if (shippingCents > 0) {

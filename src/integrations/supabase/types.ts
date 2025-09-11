@@ -191,6 +191,42 @@ export type Database = {
         }
         Relationships: []
       }
+      security_logs: {
+        Row: {
+          created_at: string
+          details: string
+          event_type: string
+          id: string
+          ip_address: string | null
+          message: string | null
+          metadata: Json | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          details: string
+          event_type: string
+          id?: string
+          ip_address?: string | null
+          message?: string | null
+          metadata?: Json | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          details?: string
+          event_type?: string
+          id?: string
+          ip_address?: string | null
+          message?: string | null
+          metadata?: Json | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

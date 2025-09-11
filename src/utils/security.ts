@@ -38,7 +38,7 @@ class SecurityMonitor {
       console.warn('[Security Event]', securityEvent);
     }
 
-    // In production, you might want to send to monitoring service
+    // Send to monitoring service
     this.reportToMonitoringService(securityEvent);
   }
 
@@ -73,12 +73,22 @@ class SecurityMonitor {
     return failureCount >= 5;
   }
 
-  private reportToMonitoringService(event: SecurityEvent) {
-    // In production, implement actual monitoring service integration
-    // For now, we'll just store locally
-    
-    // Example: Send to Supabase logs, external monitoring service, etc.
-    // await supabase.from('security_logs').insert(event);
+  private async reportToMonitoringService(event: SecurityEvent) {
+    // Store security events in Supabase for monitoring
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      await supabase.from('security_logs').insert({
+        event_type: event.type,
+        user_id: event.userId || null,
+        ip_address: event.ip || null,
+        user_agent: event.userAgent || null,
+        details: event.details,
+        message: event.message || null,
+        metadata: event.metadata || {}
+      });
+    } catch (error) {
+      console.error('[Security Monitor] Failed to log event:', error);
+    }
   }
 }
 
