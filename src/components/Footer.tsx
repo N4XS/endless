@@ -22,7 +22,7 @@ export const Footer = () => {
               </span>
             </Link>
             <p className="text-os/80 leading-relaxed">
-              Fournisseur de rêves étoilés
+              Fournisseur de rêves étoilés.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -52,7 +52,7 @@ export const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/tentes?filter=hard-shell" className="text-os/80 hover:text-os transition-colors">
-                  Tente STARZZ
+                  STARZZ 140x240
                 </Link>
               </li>
             </ul>

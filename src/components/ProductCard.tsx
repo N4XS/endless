@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Users, Weight } from 'lucide-react';
+import { Heart, ShoppingCart, Users, Shield, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -106,17 +106,17 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                 
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
                   <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
-                    <Weight className="w-5 h-5 text-white" />
+                    <Shield className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">{product.specs.weightKg}kg</div>
-                    <div className="text-sm text-muted-foreground">Poids</div>
+                    <div className="font-semibold text-foreground">+300 kg</div>
+                    <div className="text-sm text-muted-foreground">Résistance</div>
                   </div>
                 </div>
                 
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 col-span-2">
                   <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
-                    <span className="text-xl">{getShellIcon(product.specs.shell)}</span>
+                    <Clock className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <div className="font-semibold text-foreground capitalize">Ouverture en 60 secondes</div>

@@ -72,12 +72,12 @@ export const Hero = () => {
 
           {/* Stats rapides */}
           <ScrollReveal variants={fadeUp}>
-            <div className="flex items-center gap-8 mt-12 text-background/80">
-              <div className="text-center">
+            <div className="flex justify-between items-center mt-12 text-background/80 md:justify-start md:gap-8">
+              <div className="text-center" style={{marginLeft: "25%", transform: "translateX(-50%)"}}>
                 <div className="text-2xl font-bold text-ambre">2 ans</div>
                 <div className="text-sm">Garantie</div>
               </div>
-              <div className="text-center">
+              <div className="text-center" style={{marginLeft: "50%", transform: "translateX(-50%)"}}>
                 <div className="text-2xl font-bold text-ambre">48h</div>
                 <div className="text-sm">Livraison Belgique</div>
               </div>
@@ -87,12 +87,6 @@ export const Hero = () => {
         </ScrollReveal>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-background/30 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-background/50 rounded-full mt-2 animate-pulse"></div>
-        </div>
-      </div>
     </section>
   );
 };
