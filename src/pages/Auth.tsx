@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
+import { securityMonitor, rateLimiter, isValidEmail } from '@/utils/security';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -36,16 +37,66 @@ const Auth = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Enhanced security validation
+    if (!formData.email || !formData.password) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Veuillez remplir tous les champs requis"
+      });
+      return;
+    }
+
+    if (!isValidEmail(formData.email)) {
+      toast({
+        variant: "destructive",
+        title: "Erreur",
+        description: "Format d'email invalide"
+      });
+      return;
+    }
+
+    // Rate limiting for authentication attempts
+    const rateLimitKey = `auth_attempt_${formData.email}`;
+    
+    if (!rateLimiter.isAllowed(rateLimitKey, 5, 15 * 60 * 1000)) { // 5 attempts per 15 minutes
+      securityMonitor.logEvent({
+        type: 'rate_limit',
+        details: 'Authentication rate limit exceeded',
+        metadata: { email: formData.email, action: isLogin ? 'login' : 'signup' }
+      });
+      
+      toast({
+        variant: "destructive",
+        title: "Trop de tentatives",
+        description: "Veuillez patienter avant de réessayer"
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
       if (isLogin) {
+        securityMonitor.logEvent({
+          type: 'auth_attempt',
+          details: 'Login attempt initiated',
+          metadata: { email: formData.email, action: 'login' }
+        });
+
         const { error } = await supabase.auth.signInWithPassword({
           email: formData.email,
           password: formData.password,
         });
 
         if (error) {
+          securityMonitor.logEvent({
+            type: 'auth_failure',
+            details: 'Login failed',
+            metadata: { email: formData.email, error: error.message }
+          });
+
           if (error.message.includes('Invalid login credentials')) {
             toast({
               variant: "destructive",
@@ -60,6 +111,12 @@ const Auth = () => {
             });
           }
         } else {
+          securityMonitor.logEvent({
+            type: 'auth_success',
+            details: 'Login successful',
+            metadata: { email: formData.email }
+          });
+
           toast({
             title: "Connexion réussie",
             description: "Bienvenue sur ENDLESS !"
@@ -67,6 +124,22 @@ const Auth = () => {
           navigate('/');
         }
       } else {
+        // Signup validation
+        if (!formData.firstName || !formData.lastName) {
+          toast({
+            variant: "destructive",
+            title: "Erreur",
+            description: "Veuillez remplir tous les champs requis"
+          });
+          return;
+        }
+
+        securityMonitor.logEvent({
+          type: 'auth_attempt',
+          details: 'Signup attempt initiated',
+          metadata: { email: formData.email, action: 'signup' }
+        });
+
         const redirectUrl = `${window.location.origin}/`;
         
         const { data, error } = await supabase.auth.signUp({
@@ -83,6 +156,12 @@ const Auth = () => {
         });
 
         if (error) {
+          securityMonitor.logEvent({
+            type: 'auth_failure',
+            details: 'Signup failed',
+            metadata: { email: formData.email, error: error.message }
+          });
+
           if (error.message.includes('User already registered')) {
             toast({
               variant: "destructive",
@@ -97,6 +176,12 @@ const Auth = () => {
             });
           }
         } else {
+          securityMonitor.logEvent({
+            type: 'auth_success',
+            details: 'Signup successful',
+            metadata: { email: formData.email }
+          });
+
           toast({
             title: "Inscription réussie",
             description: "Vérifiez votre email pour confirmer votre compte."
@@ -114,12 +199,24 @@ const Auth = () => {
               });
 
             if (profileError) {
+              securityMonitor.logEvent({
+                type: 'auth_failure',
+                details: 'Profile creation failed',
+                userId: data.user.id,
+                metadata: { email: formData.email, error: profileError.message }
+              });
               console.error('Error creating profile:', profileError);
             }
           }
         }
       }
     } catch (error) {
+      securityMonitor.logEvent({
+        type: 'security_alert',
+        details: 'Unexpected auth error',
+        metadata: { email: formData.email, error: String(error) }
+      });
+
       toast({
         variant: "destructive",
         title: "Erreur",

@@ -3,11 +3,13 @@
  */
 
 export interface SecurityEvent {
-  type: 'auth_failure' | 'suspicious_activity' | 'rate_limit' | 'invalid_access';
+  type: 'auth_failure' | 'auth_success' | 'auth_attempt' | 'suspicious_activity' | 'rate_limit' | 'invalid_access' | 'data_access' | 'security_alert';
   userId?: string;
   ip?: string;
   userAgent?: string;
   details: string;
+  message?: string;
+  metadata?: Record<string, any>;
   timestamp: Date;
 }
 

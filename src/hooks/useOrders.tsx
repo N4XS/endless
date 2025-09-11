@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { securityMonitor } from '@/utils/security';
 
 export interface Order {
   id: string;
@@ -33,6 +34,15 @@ export const useOrders = () => {
 
     try {
       setLoading(true);
+      
+      // Log security event for order access
+      securityMonitor.logEvent({
+        type: 'data_access',
+        details: 'User accessing order history',
+        userId: user.id,
+        metadata: { action: 'fetch_orders', timestamp: new Date().toISOString() }
+      });
+
       const { data, error } = await supabase
         .from('orders')
         .select(`
@@ -44,7 +54,15 @@ export const useOrders = () => {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        securityMonitor.logEvent({
+          type: 'security_alert',
+          details: 'Failed to fetch orders',
+          userId: user.id,
+          metadata: { error: error.message, timestamp: new Date().toISOString() }
+        });
+        throw error;
+      }
       
       setOrders(data || []);
     } catch (err) {
