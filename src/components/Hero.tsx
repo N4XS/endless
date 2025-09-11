@@ -6,7 +6,7 @@ import { fadeUp, staggerContainer } from '@/lib/motion';
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
       {/* Image de fond */}
       <div className="absolute inset-0">
         <img
