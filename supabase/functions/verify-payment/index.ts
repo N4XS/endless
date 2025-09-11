@@ -84,7 +84,21 @@ serve(async (req) => {
       }
     }
 
-    return new Response(JSON.stringify({ order_id: order.id, status: newStatus }), {
+    // Déterminer l'URL de redirection selon le statut
+    let redirect_url = "";
+    if (newStatus === "paid") {
+      redirect_url = "/payment-success";
+    } else if (newStatus === "canceled") {
+      redirect_url = "/payment-cancelled";
+    } else {
+      redirect_url = "/payment-error";
+    }
+
+    return new Response(JSON.stringify({ 
+      order_id: order.id, 
+      status: newStatus,
+      redirect_url 
+    }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });

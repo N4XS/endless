@@ -99,9 +99,9 @@ const Checkout = () => {
         // Open Stripe checkout in a new tab
         window.open(data.url, '_blank');
         
-        // Clear cart and redirect to success page
+        // Clear cart and redirect to success page with session_id
         clearCart();
-        navigate('/payment-success');
+        navigate(`/payment-success?session_id=${data.session_id || ''}`);
         
         toast({
           title: "Redirection vers le paiement",

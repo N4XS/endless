@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { useSecureStorage } from '@/hooks/useSecureStorage';
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { getGuestToken, clearGuestToken } = useSecureStorage();
   const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [orderDetails, setOrderDetails] = useState<any>(null);
@@ -26,29 +27,43 @@ const PaymentSuccess = () => {
 
   const verifyPayment = async (sessionId: string) => {
     try {
-      // First verify the payment
-      const { data: verifyData, error: verifyError } = await supabase.functions.invoke('verify-payment', {
+      setVerificationStatus('loading');
+      
+      // Vérifier le statut du paiement
+      const { data, error } = await supabase.functions.invoke('verify-payment', {
         body: { session_id: sessionId }
       });
 
-      if (verifyError) throw verifyError;
+      if (error) throw error;
 
-    // Try to fetch order details if we have a guest token
-    const guestToken = getGuestToken();
-    if (guestToken) {
-      try {
-        const { data: orderResult } = await supabase.functions.invoke('get-order', {
-          body: { token: guestToken }
-        });
-        
-        if (orderResult?.order_id) {
-          setOrderDetails(orderResult);
-          clearGuestToken(); // Clear token after successful retrieval
-        }
-      } catch (error) {
-        console.error('Failed to fetch order details:', error);
+      // Rediriger selon le statut
+      if (data.status === 'canceled') {
+        navigate('/payment-cancelled');
+        return;
+      } else if (data.status === 'failed') {
+        navigate('/payment-error?error=Le paiement a échoué');
+        return;
+      } else if (data.status !== 'paid') {
+        navigate('/payment-error?error=Statut de paiement inattendu');
+        return;
       }
-    }
+
+      // Si le paiement est réussi, récupérer les détails de la commande
+      const guestToken = getGuestToken();
+      if (guestToken) {
+        try {
+          const { data: orderResult } = await supabase.functions.invoke('get-order', {
+            body: { token: guestToken }
+          });
+          
+          if (orderResult?.order_id) {
+            setOrderDetails(orderResult);
+            clearGuestToken(); // Clear token after successful retrieval
+          }
+        } catch (error) {
+          console.error('Failed to fetch order details:', error);
+        }
+      }
 
       setVerificationStatus('success');
     } catch (error) {

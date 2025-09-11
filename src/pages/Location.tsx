@@ -8,16 +8,139 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar, Clock, Shield, MapPin, Phone, CheckCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Calendar, Clock, Shield, MapPin, Phone, CheckCircle, Send } from 'lucide-react';
 import { products } from '@/data/products';
 
 const Location = () => {
+  const { toast } = useToast();
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [insurance, setInsurance] = useState(false);
   const [annexe, setAnnexe] = useState(false);
   const [roofBars, setRoofBars] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: ''
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmitReservation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!startDate || !endDate) {
+      toast({
+        title: "Dates requises",
+        description: "Veuillez sélectionner les dates de début et de fin.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (!formData.name || !formData.email || !formData.phone) {
+      toast({
+        title: "Informations manquantes",
+        description: "Veuillez remplir tous les champs obligatoires.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // Prepare reservation data
+      const reservationData = {
+        dates: {
+          start: startDate,
+          end: endDate,
+          days: calculateDays()
+        },
+        selectedTent: selectedProduct ? products.find(p => p.id === selectedProduct)?.name : 'Non spécifiée',
+        options: {
+          insurance,
+          annexe,
+          roofBars
+        },
+        pricing: calculatePrice(),
+        contact: formData,
+        type: 'reservation'
+      };
+
+      // Create email body
+      const emailBody = `
+Nouvelle demande de réservation de tente de toit
+
+DATES:
+- Début: ${startDate}
+- Fin: ${endDate}
+- Durée: ${calculateDays()} jour(s)
+
+MODÈLE DE TENTE:
+${reservationData.selectedTent}
+
+OPTIONS:
+- Assurance tous risques: ${insurance ? 'Oui' : 'Non'}
+- Annexe: ${annexe ? 'Oui' : 'Non'}
+- Barres de toit: ${roofBars ? 'Oui' : 'Non'}
+
+TARIFICATION:
+- Location: ${reservationData.pricing.base}€
+- Assurance: ${reservationData.pricing.insurance}€
+- Annexe: ${reservationData.pricing.annexe}€
+- Barres de toit: ${reservationData.pricing.roofBars}€
+- Total: ${reservationData.pricing.total}€
+- Caution: ${reservationData.pricing.deposit}€
+
+CONTACT:
+- Nom: ${formData.name}
+- Téléphone: ${formData.phone}
+- Email: ${formData.email}
+
+MESSAGE:
+${formData.message || 'Aucun message'}
+      `;
+
+      // For now, we'll create a mailto link since there's no contact form endpoint
+      const mailtoLink = `mailto:info@endless-tents.com?subject=Demande de réservation de tente de toit&body=${encodeURIComponent(emailBody)}`;
+      window.open(mailtoLink, '_blank');
+
+      toast({
+        title: "Demande de réservation envoyée",
+        description: "Votre client email s'est ouvert avec votre demande. Nous vous recontacterons rapidement !",
+        variant: "default"
+      });
+
+      // Reset form
+      setFormData({ name: '', phone: '', email: '', message: '' });
+      setStartDate('');
+      setEndDate('');
+      setSelectedProduct('');
+      setInsurance(false);
+      setAnnexe(false);
+      setRoofBars(false);
+
+    } catch (error) {
+      console.error('Reservation error:', error);
+      toast({
+        title: "Erreur d'envoi",
+        description: "Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const tents = products.filter(product => product.category === 'tent');
 
@@ -264,19 +387,38 @@ const Location = () => {
 
                 {/* Informations contact */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name">Nom complet *</Label>
-                    <Input id="name" placeholder="Jean Dupont" />
-                  </div>
-                  <div>
-                    <Label htmlFor="phone">Téléphone *</Label>
-                    <Input id="phone" placeholder="+32 123 45 67 89" />
-                  </div>
+                <div>
+                  <Label htmlFor="name">Nom complet *</Label>
+                  <Input 
+                    id="name" 
+                    placeholder="Jean Dupont" 
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Téléphone *</Label>
+                  <Input 
+                    id="phone" 
+                    placeholder="+32 123 45 67 89" 
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    required
+                  />
+                </div>
                 </div>
 
                 <div>
                   <Label htmlFor="email">Email *</Label>
-                  <Input id="email" type="email" placeholder="jean@example.com" />
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="jean@example.com" 
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    required
+                  />
                 </div>
 
                 <div>
@@ -285,15 +427,28 @@ const Location = () => {
                     id="message"
                     placeholder="Informations sur votre véhicule, questions particulières..."
                     rows={3}
+                    value={formData.message}
+                    onChange={(e) => handleInputChange('message', e.target.value)}
                   />
                 </div>
 
                 <Button 
                   size="lg" 
                   className="w-full bg-olive hover:bg-olive/90"
-                  disabled={!startDate || !endDate || days === 0}
+                  disabled={!startDate || !endDate || days === 0 || loading}
+                  onClick={handleSubmitReservation}
                 >
-                  Demander une réservation
+                  {loading ? (
+                    <>
+                      <Send className="w-4 h-4 mr-2 animate-pulse" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Demander une réservation
+                    </>
+                  )}
                 </Button>
               </CardContent>
             </Card>

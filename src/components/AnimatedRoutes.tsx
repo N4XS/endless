@@ -14,6 +14,8 @@ const Auth = lazy(() => import("@/pages/Auth"));
 const Cart = lazy(() => import("@/pages/Cart"));
 const Checkout = lazy(() => import("@/pages/Checkout"));
 const PaymentSuccess = lazy(() => import("@/pages/PaymentSuccess"));
+const PaymentCancelled = lazy(() => import("@/pages/PaymentCancelled"));
+const PaymentError = lazy(() => import("@/pages/PaymentError"));
 const MentionsLegales = lazy(() => import("@/pages/MentionsLegales"));
 const CGV = lazy(() => import("@/pages/CGV"));
 const PolitiqueConfidentialite = lazy(() => import("@/pages/PolitiqueConfidentialite"));
@@ -53,6 +55,8 @@ export const AnimatedRoutes = () => {
           <Route path="/cart" element={<PageWrapper><Cart /></PageWrapper>} />
           <Route path="/checkout" element={<PageWrapper><Checkout /></PageWrapper>} />
           <Route path="/payment-success" element={<PageWrapper><PaymentSuccess /></PageWrapper>} />
+          <Route path="/payment-cancelled" element={<PageWrapper><PaymentCancelled /></PageWrapper>} />
+          <Route path="/payment-error" element={<PageWrapper><PaymentError /></PageWrapper>} />
           <Route path="/mentions-legales" element={<PageWrapper><MentionsLegales /></PageWrapper>} />
           <Route path="/cgv" element={<PageWrapper><CGV /></PageWrapper>} />
           <Route path="/politique-confidentialite" element={<PageWrapper><PolitiqueConfidentialite /></PageWrapper>} />
