@@ -166,17 +166,18 @@ serve(async (req) => {
     const customers = await stripe.customers.list({ email: effectiveEmail, limit: 1 });
     const customerId = customers.data[0]?.id;
 
-    const line_items = normalizedItems.map((it) => {
-      const p = productMap.get(it.product_id);
-      return {
-        price_data: {
-          currency: "eur",
-          product_data: { name: p.name },
-          unit_amount: p.price_cents,
+    const line_items = [{
+      price_data: {
+        currency: "eur",
+        product_data: { 
+          name: "STARZZ",
+          description: "140x240",
+          images: [`${origin}/images/ST1.jpg`]
         },
-        quantity: it.quantity,
-      } as any;
-    });
+        unit_amount: 147000, // 1470,00 € en centimes
+      },
+      quantity: 1,
+    }];
 
     // Optionnel: ajouter les frais de port en tant que ligne séparée si > 0
     if (shippingCents > 0) {
@@ -197,6 +198,11 @@ serve(async (req) => {
       mode: "payment",
       success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/payment-canceled`,
+      custom_text: {
+        submit: {
+          message: "Livraison en 24–48h en Belgique"
+        }
+      }
     });
 
     // Generate guest token for order retrieval security
