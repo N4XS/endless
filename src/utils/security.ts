@@ -96,11 +96,46 @@ export const sanitizeInput = (input: string): string => {
 };
 
 /**
- * Validate email format
+ * Validate email format with improved regex and debugging
  */
 export const isValidEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+  if (!email || typeof email !== 'string') {
+    console.warn('[Email Validation] Invalid input:', email);
+    return false;
+  }
+
+  // More robust email regex that handles common email formats
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  
+  const isValid = emailRegex.test(email.trim());
+  
+  // Debug logging in development
+  if (import.meta.env.DEV && !isValid) {
+    console.warn('[Email Validation] Rejected email:', email);
+  }
+  
+  return isValid;
+};
+
+/**
+ * Validate email with HTML5 fallback
+ */
+export const isValidEmailWithFallback = (email: string): boolean => {
+  // First try our custom validation
+  if (isValidEmail(email)) {
+    return true;
+  }
+  
+  // Fallback to HTML5 validation
+  try {
+    const tempInput = document.createElement('input');
+    tempInput.type = 'email';
+    tempInput.value = email;
+    return tempInput.validity.valid;
+  } catch (error) {
+    console.warn('[Email Validation] HTML5 fallback failed:', error);
+    return false;
+  }
 };
 
 /**
