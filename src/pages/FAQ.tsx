@@ -398,9 +398,9 @@ const FAQ = () => {
                                <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
                                  <faq.icon className="w-5 h-5 text-primary" />
                                </div>
-                              <div className="font-semibold text-foreground">
-                                {faq.question}
-                              </div>
+                               <div className="font-medium text-foreground">
+                                 {faq.question}
+                               </div>
                             </div>
                           </AccordionTrigger>
                           <AccordionContent className="px-6 pb-6">

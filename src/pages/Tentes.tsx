@@ -189,12 +189,12 @@ const Tentes = () => {
                 </div>
               </div>
 
-              <div className="flex justify-between items-center text-sm text-background/90 md:justify-start md:gap-6">
-                <div className="flex items-center gap-2 text-center" style={{marginLeft: "25%", transform: "translateX(-50%)"}}>
+              <div className="relative w-full text-sm text-background/90">
+                <div className="absolute left-1/4 -translate-x-1/2 flex items-center gap-2">
                   <Truck className="w-4 h-4" />
                   <span>Livraison 3-5 jours</span>
                 </div>
-                <div className="flex items-center gap-2 text-center" style={{marginLeft: "50%", transform: "translateX(-50%)"}}>
+                <div className="absolute left-3/4 -translate-x-1/2 flex items-center gap-2">
                   <CheckCircle className="w-4 h-4" />
                   <span>En stock</span>
                 </div>
