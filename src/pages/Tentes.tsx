@@ -5,7 +5,8 @@ import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ImageCarousel } from '@/components/ImageCarousel';
+import { ResponsiveImage } from '@/components/ResponsiveImage';
+import { CarouselSnap } from '@/components/CarouselSnap';
 import { 
   Star, 
   Users, 
@@ -34,6 +35,87 @@ const Tentes = () => {
   
   // Get the STARZZ product from Supabase
   const starzz = products.find(product => product.name === 'STARZZ') || products[0];
+
+  // Images pour le carousel avec variantes optimisées
+  const carouselImages = [
+    { 
+      src: "/images/ST1.jpg", 
+      alt: "Tente STARZZ vue extérieure complète",
+      title: "Vue d'ensemble",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST2.jpg", 
+      alt: "Tente STARZZ détail montage",
+      title: "Système de montage",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST3.jpg", 
+      alt: "Tente STARZZ intérieur spacieux",
+      title: "Espace intérieur",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST4.jpg", 
+      alt: "Tente STARZZ résistance vent",
+      title: "Résistance au vent",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST5.jpg", 
+      alt: "Tente STARZZ étanchéité pluie",
+      title: "Protection pluie",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST6.jpg", 
+      alt: "Tente STARZZ aération optimale",
+      title: "Système d'aération",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST7.jpg", 
+      alt: "Tente STARZZ rangement compact",
+      title: "Rangement facile",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST8.jpg", 
+      alt: "Tente STARZZ accessoires inclus",
+      title: "Accessoires",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST9.jpg", 
+      alt: "Tente STARZZ utilisation terrain",
+      title: "Sur le terrain",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST10.jpg", 
+      alt: "Tente STARZZ qualité matériaux",
+      title: "Matériaux premium",
+      width: 1280,
+      height: 720
+    },
+    { 
+      src: "/images/ST-camp.jpg", 
+      alt: "Tente STARZZ camping sauvage",
+      title: "Camping sauvage",
+      width: 1280,
+      height: 720
+    }
+  ];
 
   // Add event listener for the embedded button
   useEffect(() => {
@@ -145,16 +227,18 @@ const Tentes = () => {
       <Header />
       
       <main>
-        {/* Hero Section avec background image */}
-        <section 
-          className="relative min-h-[80vh] flex items-center justify-center overflow-hidden"
-          style={{
-            backgroundImage: `url(/images/ST1.jpg)`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
+        {/* Hero Section avec image responsive */}
+        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+          <ResponsiveImage 
+            src="/images/ST1.jpg"
+            alt="Tente de toit STARZZ - Installation express en 60 secondes"
+            className="absolute inset-0 w-full h-full object-cover"
+            width={1920}
+            height={1080}
+            loading="eager"
+            fetchPriority="high"
+            sizes="100vw"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-charbon/80 via-charbon/40 to-transparent"></div>
           
           <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
@@ -203,75 +287,75 @@ const Tentes = () => {
           </div>
         </section>
 
-        {/* Section Carrousel d'images */}
+        {/* Section Carousel d'images */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
+            <div className="text-center mb-12">
+              <Badge variant="outline" className="mb-4">
+                Galerie Photos
+              </Badge>
+              <h2 className="text-4xl font-bold mb-4">
+                Découvrez la STARZZ en images
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Une sélection de photos pour vous montrer tous les détails de notre tente premium
+              </p>
+            </div>
+            
             <div className="max-w-7xl mx-auto">
-              <ImageCarousel 
-                images={starzz.images} 
-                productName="STARZZ" 
+              <CarouselSnap 
+                items={carouselImages}
+                peek="5vw"
+                gap={24}
+                aspectRatio="16/10"
+                showDots={true}
                 className="mb-8"
               />
               
-              {/* Product Info Card positioned in the carousel */}
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                    window.handleAddToCart = function() {
-                      window.dispatchEvent(new CustomEvent('addToCart'));
-                    };
-                    document.addEventListener('DOMContentLoaded', function() {
-                      const infoSlot = document.getElementById('product-info-slot');
-                      if (infoSlot) {
-                        infoSlot.innerHTML = \`
-                          <div class="bg-card rounded-xl shadow-card border border-border p-6">
-                            <div class="space-y-6">
-                              <div>
-                                <h2 class="text-2xl font-bold text-primary mb-2">STARZZ</h2>
-                                <p class="text-sm text-muted-foreground">TTC, frais de port non compris</p>
-                              </div>
-                              
-                              <div class="text-4xl font-bold text-primary">${starzz.price}€</div>
-                              
-                              <div class="flex items-center gap-2 text-sm">
-                                <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
-                                <span class="text-muted-foreground">En stock</span>
-                              </div>
-                              
-                              <div class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                  <circle cx="12" cy="12" r="10"></circle>
-                                  <polyline points="12,6 12,12 16,14"></polyline>
-                                </svg>
-                                <span>Livraison sous 3-5 jours ouvrables</span>
-                              </div>
-                              
-                               <div class="space-y-3 pt-4 border-t border-border">
-                                 <div class="flex justify-between text-sm">
-                                   <span class="text-muted-foreground">Garantie :</span>
-                                   <span class="text-right">Satisfait ou remboursé 30 jours</span>
-                                 </div>
-                                <div class="flex justify-between text-sm">
-                                  <span class="text-muted-foreground">Expédition :</span>
-                                  <span>3-5 jours ouvrables</span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                  <span class="text-muted-foreground">Conditions :</span>
-                                  <a href="/cgv" class="text-primary hover:underline">CGV</a>
-                                </div>
-                              </div>
-                              
-                              <button class="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-11 rounded-md px-8 font-medium transition-colors" onclick="window.handleAddToCart && window.handleAddToCart()">
-                                Ajouter au panier
-                              </button>
-                            </div>
-                          </div>
-                        \`;
-                      }
-                    });
-                  `
-                }}
-              />
+              {/* Informations produit sous le carousel */}
+              <div className="bg-card rounded-xl shadow-card border border-border p-6 max-w-2xl mx-auto">
+                <div className="space-y-6">
+                  <div>
+                    <h2 className="text-2xl font-bold text-primary mb-2">STARZZ</h2>
+                    <p className="text-sm text-muted-foreground">TTC, frais de port non compris</p>
+                  </div>
+                  
+                  <div className="text-4xl font-bold text-primary">{starzz.price}€</div>
+                  
+                  <div className="flex items-center gap-2 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                    <span className="text-muted-foreground">En stock</span>
+                  </div>
+                  
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Clock className="w-4 h-4" />
+                    <span>Livraison sous 3-5 jours ouvrables</span>
+                  </div>
+                  
+                  <div className="space-y-3 pt-4 border-t border-border">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Garantie :</span>
+                      <span className="text-right">Satisfait ou remboursé 30 jours</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Expédition :</span>
+                      <span>3-5 jours ouvrables</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Conditions :</span>
+                      <Link to="/cgv" className="text-primary hover:underline">CGV</Link>
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    className="w-full touch-target" 
+                    onClick={handleAddToCart}
+                    size="lg"
+                  >
+                    Ajouter au panier
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
         </section>
