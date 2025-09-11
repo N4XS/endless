@@ -189,16 +189,6 @@ const Tentes = () => {
                 </div>
               </div>
 
-              <div className="relative w-full text-sm text-background/90">
-                <div className="absolute left-1/4 -translate-x-1/2 flex items-center gap-2">
-                  <Truck className="w-4 h-4" />
-                  <span>Livraison 3-5 jours</span>
-                </div>
-                <div className="absolute left-3/4 -translate-x-1/2 flex items-center gap-2">
-                  <CheckCircle className="w-4 h-4" />
-                  <span>En stock</span>
-                </div>
-              </div>
             </div>
           </div>
         </section>
