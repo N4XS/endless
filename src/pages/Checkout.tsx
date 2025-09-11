@@ -96,17 +96,8 @@ const Checkout = () => {
           storeGuestToken(data.guest_token);
         }
         
-        // Open Stripe checkout in a new tab
-        window.open(data.url, '_blank');
-        
-        // Clear cart and redirect to success page with session_id
-        clearCart();
-        navigate(`/payment-success?session_id=${data.session_id || ''}`);
-        
-        toast({
-          title: "Redirection vers le paiement",
-          description: "Une nouvelle fenêtre s'est ouverte pour finaliser votre commande."
-        });
+        // Redirect to Stripe checkout
+        window.location.href = data.url;
       } else {
         throw new Error('Aucune URL de paiement reçue');
       }

@@ -20,10 +20,10 @@ const PaymentSuccess = () => {
     if (sessionId) {
       verifyPayment(sessionId);
     } else {
-      // If no session_id, assume success for direct navigation
-      setVerificationStatus('success');
+      // If no session_id, redirect to home as this is not a valid success page
+      navigate('/');
     }
-  }, [searchParams]);
+  }, [searchParams, navigate]);
 
   const verifyPayment = async (sessionId: string) => {
     try {
