@@ -70,19 +70,6 @@ export const Hero = () => {
             </div>
           </ScrollReveal>
 
-          {/* Stats rapides */}
-          <ScrollReveal variants={fadeUp}>
-            <div className="relative w-full mt-12 text-background/80">
-              <div className="absolute left-1/4 -translate-x-1/2 text-center">
-                <div className="text-2xl font-bold text-ambre">2 ans</div>
-                <div className="text-sm">Garantie</div>
-              </div>
-              <div className="absolute left-3/4 -translate-x-1/2 text-center">
-                <div className="text-2xl font-bold text-ambre">48h</div>
-                <div className="text-sm">Livraison Belgique</div>
-              </div>
-            </div>
-          </ScrollReveal>
           </div>
         </ScrollReveal>
       </div>

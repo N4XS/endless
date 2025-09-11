@@ -20,10 +20,10 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
   };
 
   return (
-    <div className={cn("w-full", className)}>
-      <div className="grid lg:grid-cols-12 gap-8 max-w-7xl mx-auto">
-        {/* Thumbnails - Vertical on large screens */}
-        <div className="lg:col-span-2 order-2 lg:order-1">
+    <div className={cn("w-full overflow-hidden", className)}>
+      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 w-full min-w-0">
+        {/* Thumbnails - Horizontal on mobile, Vertical on large screens */}
+        <div className="lg:col-span-2 order-2 lg:order-1 w-full min-w-0">
           <div className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto lg:max-h-[600px] scrollbar-hide p-1">
             {images.map((image, index) => (
               <button
@@ -52,9 +52,9 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
         </div>
 
         {/* Main Image */}
-        <div className="lg:col-span-7 order-1 lg:order-2">
-          <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300">
-            <div className="aspect-[4/3] w-full max-w-full">
+        <div className="lg:col-span-7 order-1 lg:order-2 w-full min-w-0">
+          <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300 w-full">
+            <div className="aspect-[4/3] w-full">
               <img
                 src={images[selectedImage]}
                 alt={`${productName} - Vue ${selectedImage + 1}`}
@@ -92,8 +92,8 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
         </div>
 
         {/* Product Info Slot - Sticky on large screens */}
-        <div className="lg:col-span-3 order-3">
-          <div className="lg:sticky lg:top-8" id="product-info-slot">
+        <div className="lg:col-span-3 order-3 w-full min-w-0">
+          <div className="lg:sticky lg:top-8 w-full" id="product-info-slot">
             {/* This will be populated by the parent component */}
           </div>
         </div>
