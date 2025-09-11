@@ -2,12 +2,23 @@ import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import Stripe from "https://esm.sh/stripe@14.21.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 
-// Secure CORS headers - restrict to specific domain
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "https://gbkpdgchdkkydpzycfkr.lovable.app",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Max-Age": "86400",
+// Generate dynamic CORS headers based on request origin
+const getCorsHeaders = (req: Request) => {
+  const origin = req.headers.get("origin");
+  const allowedOrigins = [
+    "https://gbkpdgchdkkydpzycfkr.lovable.app",
+    "https://endless-tents.com",
+    "http://localhost:5173", // For development
+  ];
+  
+  const allowedOrigin = allowedOrigins.includes(origin || "") ? origin : allowedOrigins[0];
+  
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Max-Age": "86400",
+  };
 };
 
 // Generate secure random token for guest orders
@@ -38,6 +49,7 @@ const computeShippingCostCents = (country?: string) => {
 };
 
 serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req);
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
