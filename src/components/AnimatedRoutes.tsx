@@ -17,6 +17,7 @@ const PaymentSuccess = lazy(() => import("@/pages/PaymentSuccess"));
 const MentionsLegales = lazy(() => import("@/pages/MentionsLegales"));
 const CGV = lazy(() => import("@/pages/CGV"));
 const PolitiqueConfidentialite = lazy(() => import("@/pages/PolitiqueConfidentialite"));
+const Garantie = lazy(() => import("@/pages/Garantie"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -55,6 +56,7 @@ export const AnimatedRoutes = () => {
           <Route path="/mentions-legales" element={<PageWrapper><MentionsLegales /></PageWrapper>} />
           <Route path="/cgv" element={<PageWrapper><CGV /></PageWrapper>} />
           <Route path="/politique-confidentialite" element={<PageWrapper><PolitiqueConfidentialite /></PageWrapper>} />
+          <Route path="/garantie" element={<PageWrapper><Garantie /></PageWrapper>} />
           <Route path="/blog" element={<PageWrapper><div>Page Blog - À venir</div></PageWrapper>} />
           <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
         </Routes>

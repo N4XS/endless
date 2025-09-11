@@ -204,7 +204,7 @@ const Index = () => {
           <div className="container mx-auto container-padding text-center">
             <h2 className="text-display mb-4">Besoin d'un conseil ?</h2>
             <p className="text-large mb-8 opacity-90 max-w-2xl mx-auto">
-              Notre équipe d'experts vous aide à choisir la tente parfaite pour votre véhicule et vos aventures.
+              Notre équipe vous aide à planifier votre première aventure.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

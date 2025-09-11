@@ -159,9 +159,6 @@ const Tentes = () => {
           
           <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
             <div className="max-w-2xl">
-              <Badge className="bg-olive text-secondary-foreground mb-4">
-                Tente Premium
-              </Badge>
               <h1 className="text-hero font-display text-background mb-6 leading-tight">
                 STARZZ
               </h1>

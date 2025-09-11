@@ -6,7 +6,7 @@ import { fadeUp, staggerContainer } from '@/lib/motion';
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-4 md:pt-0 pb-6 md:pb-0">
       {/* Image de fond */}
       <div className="absolute inset-0">
         <img
@@ -23,7 +23,7 @@ export const Hero = () => {
           <div className="max-w-2xl">
           {/* Badge */}
           <ScrollReveal variants={fadeUp}>
-            <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-background/30">
+            <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6 mt-4 md:mt-0 border border-background/30">
               <div className="w-2 h-2 bg-ambre rounded-full animate-pulse"></div>
               <span className="text-sm font-medium text-background">
                 Marque belge • Garantie 2 ans • Livraison en 48H
