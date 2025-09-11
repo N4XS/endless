@@ -29,12 +29,27 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
+    console.log("[create-payment] Function started");
+    
+    // Check all required environment variables
     const stripeSecret = Deno.env.get("STRIPE_SECRET_KEY");
-    if (!stripeSecret) throw new Error("Stripe secret key missing. Configure STRIPE_SECRET_KEY in Supabase secrets.");
-
     const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-    const SUPABASE_ANON = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? "";
+    const SUPABASE_ANON = Deno.env.get("SUPABASE_ANON_KEY") ?? "";
     const SUPABASE_SERVICE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+
+    const missingVars = [];
+    if (!stripeSecret) missingVars.push("STRIPE_SECRET_KEY");
+    if (!SUPABASE_URL) missingVars.push("SUPABASE_URL");
+    if (!SUPABASE_ANON) missingVars.push("SUPABASE_ANON_KEY");
+    if (!SUPABASE_SERVICE) missingVars.push("SUPABASE_SERVICE_ROLE_KEY");
+
+    if (missingVars.length > 0) {
+      const errorMsg = `Missing required environment variables: ${missingVars.join(", ")}`;
+      console.error("[create-payment] ERROR:", errorMsg);
+      throw new Error(errorMsg);
+    }
+
+    console.log("[create-payment] Environment variables validated");
 
     const supabaseAnon = createClient(SUPABASE_URL, SUPABASE_ANON);
     const supabaseService = createClient(SUPABASE_URL, SUPABASE_SERVICE, { auth: { persistSession: false } });

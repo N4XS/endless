@@ -35,13 +35,29 @@ serve(async (req) => {
     const SUPABASE_SERVICE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
     const supabaseService = createClient(SUPABASE_URL, SUPABASE_SERVICE, { auth: { persistSession: false } });
 
+    // Parse token from URL params or JSON body
+    let token: string | null = null;
+    
+    // Try URL params first
     const url = new URL(req.url);
-    const token = url.searchParams.get("token");
+    token = url.searchParams.get("token");
+    
+    // If not in URL, try JSON body
+    if (!token && req.method === "POST") {
+      try {
+        const body = await req.json();
+        token = body.token;
+      } catch (e) {
+        console.log("[get-order] Could not parse JSON body, using URL token only");
+      }
+    }
+    
+    console.log(`[get-order] Received token: ${token ? "present" : "missing"}`);
     
     // Validate guest token
     const validation = validateGuestToken(token);
     if (!validation.valid) {
-      console.error('Token validation failed:', validation.error);
+      console.error('[get-order] Token validation failed:', validation.error);
       return new Response(JSON.stringify({ error: validation.error }), {
         headers: { ...corsHeaders, "Content-Type": "application/json" },
         status: 400,

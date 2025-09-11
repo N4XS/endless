@@ -90,6 +90,12 @@ const Checkout = () => {
       if (error) throw error;
 
       if (data?.url) {
+        // Store guest token if provided for order tracking
+        if (data.guest_token) {
+          console.log('Storing guest token for order tracking');
+          storeGuestToken(data.guest_token);
+        }
+        
         // Open Stripe checkout in a new tab
         window.open(data.url, '_blank');
         
