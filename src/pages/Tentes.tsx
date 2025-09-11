@@ -147,7 +147,7 @@ const Tentes = () => {
       <main>
         {/* Hero Section avec background image */}
         <section 
-          className="relative min-h-[80vh] flex items-center justify-center overflow-hidden"
+          className="relative min-h-[50vh] flex items-center justify-center overflow-hidden"
           style={{
             backgroundImage: `url(/images/ST1.jpg)`,
             backgroundSize: 'cover',
