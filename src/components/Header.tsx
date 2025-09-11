@@ -87,23 +87,12 @@ export const Header = () => {
             
             {/* Auth buttons */}
             {user ? (
-              <div className="flex items-center space-x-2">
-                <Link to="/mon-compte">
-                  <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                    <User className="w-4 h-4 mr-2" />
-                    Mon Espace
-                  </Button>
-                </Link>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  onClick={signOut}
-                  className="text-muted-foreground hover:text-foreground"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Déconnexion
+              <Link to="/mon-compte">
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                  <User className="w-4 h-4 mr-2" />
+                  Mon Espace
                 </Button>
-              </div>
+              </Link>
             ) : (
               <Link to="/auth">
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
@@ -171,25 +160,12 @@ export const Header = () => {
                 
                 {/* Auth mobile */}
                 {user ? (
-                  <div className="space-y-2">
-                    <Link to="/mon-compte" onClick={() => setIsOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start text-muted-foreground">
-                        <User className="w-4 h-4 mr-2" />
-                        Mon Espace
-                      </Button>
-                    </Link>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start text-muted-foreground"
-                      onClick={() => {
-                        setIsOpen(false);
-                        signOut();
-                      }}
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Déconnexion
+                  <Link to="/mon-compte" onClick={() => setIsOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start text-muted-foreground">
+                      <User className="w-4 h-4 mr-2" />
+                      Mon Espace
                     </Button>
-                  </div>
+                  </Link>
                 ) : (
                   <Link to="/auth" onClick={() => setIsOpen(false)}>
                     <Button variant="ghost" className="w-full justify-start text-muted-foreground">

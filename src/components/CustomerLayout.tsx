@@ -2,15 +2,16 @@ import { useAuth } from '@/hooks/useAuth';
 import { Navigate } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
-import { User, ShoppingBag, Settings } from 'lucide-react';
+import { User, ShoppingBag, Settings, LogOut } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 interface CustomerLayoutProps {
   children: React.ReactNode;
 }
 
 export const CustomerLayout = ({ children }: CustomerLayoutProps) => {
-  const { user, loading } = useAuth();
+  const { user, loading, signOut } = useAuth();
 
   if (loading) {
     return (
@@ -73,6 +74,18 @@ export const CustomerLayout = ({ children }: CustomerLayoutProps) => {
                   </NavLink>
                 ))}
               </nav>
+              
+              {/* Logout button */}
+              <div className="pt-4 border-t border-border">
+                <Button
+                  variant="ghost"
+                  onClick={signOut}
+                  className="w-full justify-start text-muted-foreground hover:text-foreground hover:bg-muted"
+                >
+                  <LogOut className="mr-3 h-4 w-4" />
+                  Déconnexion
+                </Button>
+              </div>
             </div>
           </div>
 
