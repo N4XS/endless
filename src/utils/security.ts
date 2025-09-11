@@ -99,7 +99,7 @@ export const sanitizeInput = (input: string): string => {
  * Validate email format
  */
 export const isValidEmail = (email: string): boolean => {
-  const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
