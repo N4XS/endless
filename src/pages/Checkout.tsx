@@ -74,7 +74,7 @@ const Checkout = () => {
     try {
       // Prepare items for the payment API
       const paymentItems = items.map(item => ({
-        productId: item.product.id,
+        product_id: item.product.id,
         quantity: item.quantity
       }));
 
@@ -82,8 +82,8 @@ const Checkout = () => {
       const { data, error } = await supabase.functions.invoke('create-payment', {
         body: {
           items: paymentItems,
-          shippingCountry: formData.country,
-          customerEmail: formData.email
+          shipping_country: formData.country,
+          customer_email: formData.email
         }
       });
 
