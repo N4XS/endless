@@ -38,8 +38,8 @@ const FAQ = () => {
           question: 'Que faut-il prévoir pour pouvoir installer la tente de toit STARZZ sur mon véhicule ?',
           answer: (
             <div>
-              <p className="mb-3">La seule chose dont vous avez besoin est une paire de barres de toit. Nous vous recommandons des barres de toit ayant une <strong>charge dynamique minimale de 75kg</strong>.</p>
-              <p className="mb-3">La distance minimale entre les <strong>fixations</strong> de vos barres de toit doit être de <strong>75cm</strong>.</p>
+              <p className="mb-3">La seule chose dont vous avez besoin est une paire de barres de toit (disponible en location). Nous vous recommandons des barres de toit ayant une charge dynamique minimale de 75kg mais 65kg est suffisant.</p>
+              <p className="mb-3">La distance minimale entre les fixations de vos barres de toit doit être de 75cm.</p>
               <p>N'hésitez pas à nous envoyer un e-mail si vous souhaitez des informations spécifiques concernant votre véhicule.</p>
             </div>
           )
@@ -83,7 +83,7 @@ const FAQ = () => {
                 <li>Fixez les écrous sur les boulons en U et serrez-les fermement</li>
                 <li>Vérifiez que la tente est solidement fixée avant de prendre la route</li>
               </ol>
-              <p>Nous fournissons un manuel d'installation détaillé avec chaque tente, et des vidéos tutorielles sont disponibles sur notre site web.</p>
+              <p>Nous fournissons un manuel d'installation détaillé avec chaque tente.</p>
             </div>
           )
         }
@@ -202,11 +202,11 @@ const FAQ = () => {
           question: 'Quels sont les délais et frais de livraison ?',
           answer: (
             <div>
-              <p className="mb-3">Nous proposons plusieurs options de livraison, uniquement lors de l'achat d'une tente :</p>
+              <p className="mb-3">Nous proposons plusieurs options de livraison :</p>
               <ul className="list-disc list-inside space-y-1 mb-3">
-                <li><strong>Livraison Belgique</strong> : Gratuit, 3-5 jours ouvrables</li>
-                <li><strong>Livraison express</strong> : 1-2 jours ouvrables</li>
+                <li><strong>Livraison Belgique</strong> : Gratuit , 24 - 48h ouvrables</li>
                 <li><strong>Retrait en entrepôt</strong> : Gratuit, disponible sous 24h après confirmation</li>
+                <li><strong>Livraison Europe</strong> : Personnalisée, temps de livraison variable.</li>
               </ul>
               <p>Nous livrons dans le monde entier. Les délais et les tarifs peuvent varier selon la destination.</p>
             </div>
@@ -320,12 +320,8 @@ const FAQ = () => {
           question: 'La location inclut-elle une assurance ?',
           answer: (
             <div>
-              <p className="mb-3">Notre tarif de location standard n'inclut pas d'assurance spécifique, mais nous proposons deux options :</p>
-              <ul className="list-disc list-inside space-y-1 mb-3">
-                <li><strong>Option tranquillité</strong> (+10€/jour) : Couvre les dommages accidentels mineurs et modérés</li>
-                <li><strong>Option sérénité totale</strong> (+15€/jour) : Couvre tous les dommages sauf en cas de négligence manifeste</li>
-              </ul>
-              <p className="mb-3">Ces options réduisent considérablement le montant de la caution et vous permettent de profiter de votre aventure l'esprit tranquille.</p>
+              <p className="mb-3">Notre tarif de location standard n'inclut pas d'assurance spécifique, mais nous proposons une option tranquillité (+8€/jour) : Couvre les dommages accidentels mineurs et modérés</p>
+              <p className="mb-3">Cette option réduis considérablement le montant de la caution et vous permet de profiter de votre aventure l'esprit tranquille.</p>
               <p>Vérifiez également si votre assurance habitation ou carte bancaire offre une couverture pour les équipements de loisirs loués.</p>
             </div>
           )
