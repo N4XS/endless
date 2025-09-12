@@ -149,19 +149,19 @@ export const faqs: FAQ[] = [
   {
     id: "2", 
     question: "Mon véhicule peut-il supporter la tente STARZZ ?",
-    answer: "La STARZZ est compatible avec pratiquement toutes les voitures, même les citadines pas puissantes. Elle pèse 59kg et nécessite des barres de toit avec une capacité dynamique minimum de 65kg. Nous proposons un service de vérification gratuit et la location de barres de toit si nécessaire.",
+    answer: "Oui, le toit de la voiture peut être suffisamment solide pour une tente de toit, à condition de respecter les charges indiquées par le constructeur. Distinguez bien la charge dynamique (véhicule en mouvement) de la charge statique (véhicule à l'arrêt). La charge dynamique acceptée se situe souvent entre 50 et 100 kg. Nos tentes pèsent 65 kg : assurez-vous donc que la charge dynamique de votre toit est d'au moins 65 kg. À l'arrêt, la charge statique admissible est bien plus élevée ; la structure du toit est en réalité conçue pour supporter le véhicule en position renversée.",
     category: "technique"
   },
   {
     id: "3",
     question: "Comment fonctionne la location avant achat ?",
-    answer: "Testez la STARZZ avec nos nouveaux tarifs attractifs. Si elle vous plaît, le montant de la location est intégralement déduit de votre achat ! Récupération dans notre entrepôt à Namur (pas de showroom), ou livraison possible avec installation comprise.",
+    answer: "Testez la STARZZ avec nos nouveaux tarifs attractifs. Si elle vous plaît, le montant de la location est intégralement déduit de votre achat ! Récupération dans notre entrepôt à Namur (pas de showroom), ou livraison possible en Belgique avec installation comprise.",
     category: "location"
   },
   {
     id: "4",
     question: "Quelles sont les garanties et le service après-vente ?",
-    answer: "Garantie & Sérénité incluse : 30 jours satisfait ou remboursé + garantie constructeur 3 ans. Service après-vente assuré par notre équipe belge. Installation comprise dans le prix et formation offerte. Pièces détachées disponibles.",
+    answer: "Garantie & Sérénité incluse : 30 jours satisfait ou remboursé + garantie constructeur 2 ans. Service après-vente assuré par notre équipe belge. Installation comprise dans le prix et formation offerte. Pièces détachées disponibles.",
     category: "service"
   },
   {

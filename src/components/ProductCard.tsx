@@ -119,7 +119,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     <Clock className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground capitalize">Ouverture en 60 secondes</div>
+                    <div className="font-semibold text-foreground capitalize">ouverture en 60 secondes</div>
                     <div className="text-sm text-muted-foreground">Installation rapide</div>
                   </div>
                 </div>

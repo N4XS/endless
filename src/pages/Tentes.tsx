@@ -171,7 +171,7 @@ const Tentes = () => {
                   </Link>
                   <Link to="/location">
                     <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
-                      Louer d'abord
+                      Louer pour mon aventure
                     </Button>
                   </Link>
                 </div>
