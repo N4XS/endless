@@ -134,7 +134,7 @@ const Index = () => {
                 Testez avant d'acheter
               </h2>
               <p className="text-large text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Louez une tente de toit pour un week-end et découvrez le plaisir du camping en altitude. 
+                Louez une tente de toit pour mon aventure et découvrez le plaisir du camping en altitude. 
                 Si elle vous plaît, déduisez le montant de la location de votre achat !
               </p>
               

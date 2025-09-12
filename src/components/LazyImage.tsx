@@ -51,7 +51,7 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
           />
         )}
         <img
-          src={shouldLoad ? src : undefined}
+          src={src}
           alt={alt}
           width={width}
           height={height}
