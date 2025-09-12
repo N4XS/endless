@@ -42,7 +42,8 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
     return (
       <div className={cn("relative overflow-hidden", className)}>
         {!isLoaded && !isError && (
-          <div className="absolute inset-0 bg-muted/50" 
+          <div className="absolute inset-0 bg-muted/50 pointer-events-none" 
+               aria-hidden="true"
                style={{
                  background: 'linear-gradient(90deg, hsl(var(--muted)) 25%, hsl(var(--muted)/0.5) 50%, hsl(var(--muted)) 75%)',
                  backgroundSize: '200% 100%',
@@ -51,10 +52,14 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
           />
         )}
         <img
+          key={src}
           src={src}
           alt={alt}
           width={width}
           height={height}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           className={cn(
             "w-full h-full object-cover transition-opacity duration-500",
             isLoaded ? "opacity-100" : "opacity-0",
@@ -67,9 +72,7 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
             imageRendering: 'auto',
             backfaceVisibility: 'hidden',
             //@ts-ignore - WebKit propriétés pour Safari
-            WebkitBackfaceVisibility: 'hidden',
-            //@ts-ignore - WebKit propriétés pour Safari  
-            WebkitImageSmoothing: true
+            WebkitBackfaceVisibility: 'hidden'
           }}
         />
         {isError && (
@@ -88,11 +91,13 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
         <div className="absolute inset-0 bg-muted animate-pulse" />
       )}
       <motion.img
+        key={src}
         src={src}
         alt={alt}
         width={width}
         height={height}
         loading="lazy"
+        decoding="async"
         className={cn(
           "w-full h-full object-cover transition-opacity duration-300",
           isLoaded ? "opacity-100" : "opacity-0",

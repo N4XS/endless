@@ -37,9 +37,14 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
                 )}
               >
                 <img
+                  key={image}
                   src={image}
                   alt={`${productName} vue ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  onError={() => console.warn('Image vignette introuvable:', image)}
                 />
                 {selectedImage === index && (
                   <div className="absolute inset-0 bg-primary/20 flex items-center justify-center">
@@ -56,9 +61,14 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
           <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300 w-full">
             <div className="aspect-[4/3] w-full">
               <img
+                key={images[selectedImage]}
                 src={images[selectedImage]}
                 alt={`${productName} - Vue ${selectedImage + 1}`}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
                 className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                onError={() => console.error('Image principale introuvable:', images[selectedImage])}
               />
             </div>
 
