@@ -28,7 +28,7 @@ export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) 
         
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Clock className="w-4 h-4" />
-          <span>Livraison sous 3-5 jours ouvrables</span>
+          <span>Livraison sous 24-48 heures ouvrables</span>
         </div>
         
         <div className="space-y-3 pt-4 border-t border-border">
@@ -38,7 +38,7 @@ export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) 
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Expédition :</span>
-            <span>3-5 jours ouvrables</span>
+            <span>24-48 heures ouvrables</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Conditions :</span>
