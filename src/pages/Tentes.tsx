@@ -103,8 +103,8 @@ const Tentes = () => {
       value: starzz.specs.openSize
     },
     {
-      icon: Shield,
-      label: 'Express',
+      icon: Clock,
+      label: 'Temps',
       value: '60 secondes'
     }
   ];
@@ -113,7 +113,7 @@ const Tentes = () => {
     {
       icon: Zap,
       title: 'Installation Express',
-      description: 'La tente se déploie en 60sec grâce à son système innovant'
+      description: 'La tente se déploie en 60 secondes grâce à son système innovant'
     },
     {
       icon: Shield,

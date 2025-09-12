@@ -176,7 +176,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
               {/* Stock indicator */}
               <div className="flex items-center gap-2 text-sm">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-muted-foreground">En stock • Livraison sous 3-5 jours</span>
+                <span className="text-muted-foreground">En stock • 24-48h ouvrables</span>
               </div>
             </div>
           </div>
