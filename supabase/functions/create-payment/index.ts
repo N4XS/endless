@@ -231,6 +231,13 @@ serve(async (req) => {
       }
     });
 
+    console.log("[create-payment] Stripe session created successfully:", {
+      sessionId: session.id,
+      url: session.url,
+      mode: session.mode,
+      status: session.status
+    });
+
     // Generate guest token for order retrieval security
     const guestToken = generateGuestToken();
 

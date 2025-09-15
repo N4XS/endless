@@ -11,6 +11,7 @@ import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
 import { useSecureStorage } from '@/hooks/useSecureStorage';
 import { supabase } from '@/integrations/supabase/client';
+import { detectBrowser } from '@/utils/browser';
 import { Loader2 } from 'lucide-react';
 
 const Checkout = () => {
@@ -96,8 +97,33 @@ const Checkout = () => {
           storeGuestToken(data.guest_token);
         }
         
-        // Redirect to Stripe checkout
-        window.location.href = data.url;
+        console.log('Redirecting to Stripe checkout:', data.url);
+        
+        // Mobile-optimized redirect strategy
+        const { isMobile } = detectBrowser();
+        
+        if (isMobile) {
+          console.log('Mobile device detected, using mobile-optimized redirect');
+          // For mobile, use a more reliable approach
+          setTimeout(() => {
+            window.location.replace(data.url);
+          }, 100);
+        } else {
+          // Enhanced desktop compatibility for Stripe redirect
+          try {
+            // Try window.open first (better for some browsers)
+            const popup = window.open(data.url, '_self');
+            
+            // Fallback to window.location if popup fails
+            if (!popup) {
+              console.log('Popup blocked, using location.href fallback');
+              window.location.href = data.url;
+            }
+          } catch (redirectError) {
+            console.error('Redirect failed, trying direct assignment:', redirectError);
+            window.location.href = data.url;
+          }
+        }
       } else {
         throw new Error('Aucune URL de paiement reçue');
       }
@@ -216,7 +242,7 @@ const Checkout = () => {
                       {loading ? (
                         <>
                           <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                          Création de la session...
+                          Redirection vers Stripe...
                         </>
                       ) : (
                         'Procéder au paiement'
@@ -226,6 +252,11 @@ const Checkout = () => {
                     <div className="mt-4 text-xs text-muted-foreground text-center">
                       <p>Paiement sécurisé par Stripe</p>
                       <p>Vous serez redirigé vers notre plateforme de paiement sécurisée</p>
+                      {detectBrowser().isMobile && (
+                        <p className="text-orange-600 mt-2">
+                          📱 Sur mobile: autorisez les redirections si demandé
+                        </p>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
