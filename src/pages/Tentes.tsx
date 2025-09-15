@@ -5,7 +5,7 @@ import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ImageCarousel } from '@/components/ImageCarousel';
+import { SwiperCarousel } from '@/components/SwiperCarousel';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
 import { 
@@ -184,7 +184,7 @@ const Tentes = () => {
         <section className="section-padding">
           <div className="container mx-auto container-padding">
             <div className="max-w-7xl mx-auto">
-              <ImageCarousel 
+              <SwiperCarousel 
                 images={starzz.images} 
                 productName="STARZZ" 
                 className="mb-8"
