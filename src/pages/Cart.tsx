@@ -93,7 +93,10 @@ const Cart = () => {
                           {item.product.name}
                         </h3>
                         <p className="text-sm text-muted-foreground mb-4">
-                          {item.product.description?.substring(0, 100)}...
+                          {item.product.specs ? 
+                            `Ouverte: ${item.product.specs.openSize} • Fermée: ${item.product.specs.closedSize}` 
+                            : 'Dimensions non disponibles'
+                          }
                         </p>
                         
                         {/* Quantity Controls */}
