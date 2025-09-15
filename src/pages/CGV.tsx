@@ -33,8 +33,8 @@ const CGV = () => {
               <CardContent className="p-6">
                 <h2 className="font-display text-2xl font-semibold text-foreground mb-4">2. Produits & Services</h2>
                 <ul className="list-disc list-inside space-y-2 text-foreground">
-                  <li><strong>Produits</strong> : tentes de toit, barres de toit.</li>
-                  <li><strong>Location</strong> : tentes de toit [avec/sans accessoires — préciser si nécessaire].</li>
+                  <li><strong>Produits</strong> : tentes de toit.</li>
+                  <li><strong>Location</strong> : tentes de toit avec accessoires, barres de toit.</li>
                   <li><strong>Services</strong> : montage & démontage (sur rendez‑vous).</li>
                 </ul>
                 <p className="text-foreground mt-4">
