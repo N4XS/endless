@@ -163,8 +163,10 @@ const Checkout = () => {
                       </Select>
                     </div>
 
-                    <div className="pt-4 text-sm text-muted-foreground">
-                      <p>* L'adresse de livraison complète sera demandée lors du paiement avec Stripe.</p>
+                    <div className="pt-4 p-3 bg-primary/10 rounded-lg border border-primary/20">
+                      <p className="text-sm text-foreground">
+                        ✓ L'adresse de livraison complète sera collectée de manière sécurisée par Stripe lors du paiement.
+                      </p>
                     </div>
                   </CardContent>
                 </Card>

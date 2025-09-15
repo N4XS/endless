@@ -197,6 +197,10 @@ serve(async (req) => {
       mode: "payment",
       success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/payment-canceled`,
+      shipping_address_collection: {
+        allowed_countries: ['FR', 'BE', 'CH', 'LU', 'DE', 'IT', 'ES', 'PT', 'NL'],
+      },
+      billing_address_collection: 'required',
       custom_text: {
         submit: {
           message: "Livraison en 24–48h en Belgique"

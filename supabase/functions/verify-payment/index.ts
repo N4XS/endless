@@ -85,9 +85,23 @@ serve(async (req) => {
 
     // Update status only if it actually changed to avoid unnecessary writes
     if (order.status !== newStatus) {
+      // Extract shipping details from Stripe session for paid orders
+      const updateData: any = { status: newStatus };
+      
+      if (newStatus === "paid" && session.shipping_details?.address) {
+        const shippingDetails = session.shipping_details;
+        updateData.shipping_name = shippingDetails.name;
+        updateData.shipping_address_line1 = shippingDetails.address.line1;
+        updateData.shipping_address_line2 = shippingDetails.address.line2;
+        updateData.shipping_city = shippingDetails.address.city;
+        updateData.shipping_postal_code = shippingDetails.address.postal_code;
+        updateData.shipping_state = shippingDetails.address.state;
+        updateData.shipping_phone = shippingDetails.phone;
+      }
+
       const { error: updErr } = await supabaseService
         .from("orders")
-        .update({ status: newStatus })
+        .update(updateData)
         .eq("id", order.id);
       if (updErr) throw updErr;
     }
