@@ -109,7 +109,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     <Shield className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <div className="font-semibold text-foreground">+300 kg</div>
+                    <div className="font-semibold text-foreground">350kg</div>
                     <div className="text-sm text-muted-foreground">Résistance</div>
                   </div>
                 </div>
