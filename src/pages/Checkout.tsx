@@ -12,7 +12,8 @@ import { useToast } from '@/hooks/use-toast';
 import { useSecureStorage } from '@/hooks/useSecureStorage';
 import { supabase } from '@/integrations/supabase/client';
 import { detectBrowser } from '@/utils/browser';
-import { Loader2 } from 'lucide-react';
+import { SafariPaymentFallback } from '@/components/SafariPaymentFallback';
+import { Loader2, Smartphone, AlertTriangle } from 'lucide-react';
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
@@ -20,6 +21,9 @@ const Checkout = () => {
   const { storeGuestToken } = useSecureStorage();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [showSafariFallback, setShowSafariFallback] = useState(false);
+  const [stripeUrl, setStripeUrl] = useState<string>('');
+  const [redirectAttempts, setRedirectAttempts] = useState(0);
   const [formData, setFormData] = useState({
     email: '',
     country: 'BE'
@@ -47,6 +51,69 @@ const Checkout = () => {
       ...prev,
       [field]: value
     }));
+  };
+
+  // Stratégie de redirection optimisée pour Safari
+  const performStripeRedirect = (url: string) => {
+    const browserInfo = detectBrowser();
+    console.log('Browser detection:', browserInfo);
+    console.log('Attempting redirect to:', url);
+    
+    setStripeUrl(url);
+    setRedirectAttempts(prev => prev + 1);
+    
+    if (browserInfo.isSafariMobile) {
+      console.log('Safari mobile detected - using optimized strategy');
+      
+      // Pour Safari mobile, essayer plusieurs méthodes en séquence
+      try {
+        // Méthode 1: redirection directe immédiate
+        window.location.assign(url);
+      } catch (error) {
+        console.log('Direct assignment failed, trying replace:', error);
+        
+        setTimeout(() => {
+          try {
+            window.location.replace(url);
+          } catch (replaceError) {
+            console.log('Replace failed, showing manual fallback:', replaceError);
+            setShowSafariFallback(true);
+          }
+        }, 100);
+      }
+      
+      // Timeout pour détecter si la redirection a échoué
+      setTimeout(() => {
+        if (!document.hidden) {
+          console.log('Safari redirect timeout - showing fallback');
+          setShowSafariFallback(true);
+        }
+      }, 2000);
+      
+    } else if (browserInfo.isSafari) {
+      console.log('Desktop Safari detected');
+      // Safari desktop : méthode simple
+      window.location.href = url;
+      
+    } else if (browserInfo.isMobile) {
+      console.log('Other mobile browser detected');
+      // Autres navigateurs mobiles
+      setTimeout(() => {
+        window.location.replace(url);
+      }, 100);
+      
+    } else {
+      console.log('Desktop browser detected');
+      // Navigateurs desktop
+      window.location.href = url;
+    }
+  };
+
+  const retryRedirect = () => {
+    setShowSafariFallback(false);
+    if (stripeUrl) {
+      performStripeRedirect(stripeUrl);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -97,31 +164,10 @@ const Checkout = () => {
           storeGuestToken(data.guest_token);
         }
         
-        console.log('Redirecting to Stripe checkout:', data.url);
+        console.log('Stripe checkout URL received:', data.url);
         
-        // Safari-optimized redirect strategy
-        const { isMobile, isSafari } = detectBrowser();
-        
-        if (isSafari) {
-          console.log('Safari detected, using Safari-optimized redirect');
-          // Safari requires direct window.location assignment
-          // No setTimeout or window.open, just direct redirect
-          window.location.href = data.url;
-        } else if (isMobile) {
-          console.log('Non-Safari mobile device detected');
-          // For other mobile browsers, use replace
-          setTimeout(() => {
-            window.location.replace(data.url);
-          }, 100);
-        } else {
-          // Desktop browsers
-          try {
-            window.location.href = data.url;
-          } catch (redirectError) {
-            console.error('Redirect failed:', redirectError);
-            window.location.href = data.url;
-          }
-        }
+        // Utiliser la nouvelle stratégie de redirection
+        performStripeRedirect(data.url);
       } else {
         throw new Error('Aucune URL de paiement reçue');
       }
@@ -247,12 +293,47 @@ const Checkout = () => {
                       )}
                     </Button>
 
+                    {showSafariFallback && stripeUrl && (
+                      <div className="mt-4">
+                        <SafariPaymentFallback 
+                          stripeUrl={stripeUrl} 
+                          onRetry={retryRedirect}
+                        />
+                      </div>
+                    )}
+
                     <div className="mt-4 text-xs text-muted-foreground text-center">
                       <p>Paiement sécurisé par Stripe</p>
                       <p>Vous serez redirigé vers notre plateforme de paiement sécurisée</p>
-                      {detectBrowser().isMobile && (
-                        <p className="text-orange-600 mt-2">
-                          📱 Sur mobile: autorisez les redirections si demandé
+                      
+                      {(() => {
+                        const browserInfo = detectBrowser();
+                        if (browserInfo.isSafariMobile) {
+                          return (
+                            <div className="mt-2 p-2 bg-orange-50 rounded border border-orange-200">
+                              <div className="flex items-center gap-1 justify-center mb-1">
+                                <Smartphone className="w-3 h-3 text-orange-600" />
+                                <span className="text-orange-700 font-medium">Safari Mobile</span>
+                              </div>
+                              <p className="text-orange-600 text-xs">
+                                Autorisez les redirections si demandé
+                              </p>
+                            </div>
+                          );
+                        } else if (browserInfo.isMobile) {
+                          return (
+                            <p className="text-blue-600 mt-2 flex items-center justify-center gap-1">
+                              <Smartphone className="w-3 h-3" />
+                              Mobile: autorisez les redirections si demandé
+                            </p>
+                          );
+                        }
+                        return null;
+                      })()}
+                      
+                      {redirectAttempts > 0 && (
+                        <p className="text-xs text-gray-500 mt-1">
+                          Tentatives de redirection: {redirectAttempts}
                         </p>
                       )}
                     </div>

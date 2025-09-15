@@ -4,7 +4,7 @@ import { Product, Testimonial, FAQ } from '@/types';
 // Données exemple pour les tentes de toit
 export const products: Product[] = [
   {
-    id: "starzz",
+    id: "6805191a-5757-4d22-92e0-cc9709dc6d8b",
     name: "STARZZ",
     slug: "starzz",
     price: 1470,

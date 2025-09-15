@@ -22,6 +22,7 @@ const PolitiqueConfidentialite = lazy(() => import("@/pages/PolitiqueConfidentia
 const Garantie = lazy(() => import("@/pages/Garantie"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const MyOrders = lazy(() => import("@/pages/MyOrders"));
+const MobileDiagnostic = lazy(() => import("@/pages/MobileDiagnostic"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -66,7 +67,7 @@ export const AnimatedRoutes = () => {
           <Route path="/garantie" element={<PageWrapper><Garantie /></PageWrapper>} />
           <Route path="/mon-compte" element={<PageWrapper><Dashboard /></PageWrapper>} />
           <Route path="/mon-compte/commandes" element={<PageWrapper><MyOrders /></PageWrapper>} />
-          <Route path="/blog" element={<PageWrapper><div>Page Blog - À venir</div></PageWrapper>} />
+          <Route path="/mobile-diagnostic" element={<PageWrapper><MobileDiagnostic /></PageWrapper>} />
           <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
         </Routes>
       </Suspense>

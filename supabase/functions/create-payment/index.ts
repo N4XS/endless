@@ -152,22 +152,34 @@ serve(async (req) => {
       const pid = isUUID(String(i.product_id ?? i.id ?? ""))
         ? String(i.product_id ?? i.id)
         : undefined;
-      const bySlug = !pid ? (products.find((p) => p.slug === i.slug)?.id) : undefined;
-      const finalId = pid ?? bySlug;
       
-      console.log(`[create-payment] Item ${index} - pid:`, pid, "bySlug:", bySlug, "finalId:", finalId);
+      // Enhanced product lookup - try by ID first, then by slug from both product_id and slug fields
+      let product = pid ? productMap.get(pid) : undefined;
       
-      if (!finalId) {
+      if (!product) {
+        // Try to find by slug using product_id field
+        const searchSlug = String(i.product_id || i.slug || "");
+        product = products.find((p) => p.slug === searchSlug);
+      }
+      
+      console.log(`[create-payment] Item ${index} - pid:`, pid, "searchSlug:", String(i.product_id || i.slug || ""), "product found:", !!product);
+      
+      if (!product) {
         console.error(`[create-payment] Product not found for item ${index}:`, {
           product_id: i.product_id,
-          id: i.id,
+          id: i.id, 
           slug: i.slug,
+          searchAttempts: {
+            byId: pid,
+            bySlug: String(i.product_id || i.slug || "")
+          },
           availableProducts: products.map(p => ({ id: p.id, slug: p.slug, name: p.name }))
         });
         throw new Error("Produit introuvable");
       }
+      
       const qty = Math.max(1, Number(i.quantity || 1));
-      return { product_id: finalId, quantity: qty };
+      return { product_id: product.id, quantity: qty };
     });
 
     let subtotalCents = 0;
