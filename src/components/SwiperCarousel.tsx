@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { LazyImage } from '@/components/LazyImage';
+import type { Swiper as SwiperType } from 'swiper';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -18,8 +19,7 @@ interface SwiperCarouselProps {
 }
 
 export const SwiperCarousel = ({ images, productName, className }: SwiperCarouselProps) => {
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
+  const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
 
   return (
     <div className={cn("w-full", className)}>
@@ -46,10 +46,7 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
-              navigation={{
-                prevEl: prevRef.current,
-                nextEl: nextRef.current,
-              }}
+              navigation={false}
               pagination={{
                 clickable: true,
                 bulletClass: 'swiper-pagination-bullet !bg-muted-foreground/30 !w-3 !h-3',
@@ -57,12 +54,7 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
               }}
               loop={true}
               className="!pb-16 expo-swiper"
-              onBeforeInit={(swiper) => {
-                // @ts-ignore
-                swiper.params.navigation.prevEl = prevRef.current;
-                // @ts-ignore  
-                swiper.params.navigation.nextEl = nextRef.current;
-              }}
+              onSwiper={setSwiperInstance}
             >
               {images.map((image, index) => (
                 <SwiperSlide key={index} className="!w-[280px] sm:!w-[320px] lg:!w-[380px]">
@@ -90,14 +82,14 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
 
             {/* Custom Navigation Buttons */}
             <button
-              ref={prevRef}
+              onClick={() => swiperInstance?.slidePrev()}
               className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-background/95 backdrop-blur-sm rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-110"
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-primary mx-auto" />
             </button>
             
             <button
-              ref={nextRef}
+              onClick={() => swiperInstance?.slideNext()}
               className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-background/95 backdrop-blur-sm rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-110"
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-primary mx-auto" />
