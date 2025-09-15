@@ -90,7 +90,7 @@ const Tentes = () => {
     {
       icon: Users,
       label: 'Capacité',
-      value: `${starzz.specs.sleeping} personnes`
+      value: '2-3 personnes (350 KG)'
     },
     {
       icon: Weight,
