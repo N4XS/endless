@@ -99,28 +99,26 @@ const Checkout = () => {
         
         console.log('Redirecting to Stripe checkout:', data.url);
         
-        // Mobile-optimized redirect strategy
-        const { isMobile } = detectBrowser();
+        // Safari-optimized redirect strategy
+        const { isMobile, isSafari } = detectBrowser();
         
-        if (isMobile) {
-          console.log('Mobile device detected, using mobile-optimized redirect');
-          // For mobile, use a more reliable approach
+        if (isSafari) {
+          console.log('Safari detected, using Safari-optimized redirect');
+          // Safari requires direct window.location assignment
+          // No setTimeout or window.open, just direct redirect
+          window.location.href = data.url;
+        } else if (isMobile) {
+          console.log('Non-Safari mobile device detected');
+          // For other mobile browsers, use replace
           setTimeout(() => {
             window.location.replace(data.url);
           }, 100);
         } else {
-          // Enhanced desktop compatibility for Stripe redirect
+          // Desktop browsers
           try {
-            // Try window.open first (better for some browsers)
-            const popup = window.open(data.url, '_self');
-            
-            // Fallback to window.location if popup fails
-            if (!popup) {
-              console.log('Popup blocked, using location.href fallback');
-              window.location.href = data.url;
-            }
+            window.location.href = data.url;
           } catch (redirectError) {
-            console.error('Redirect failed, trying direct assignment:', redirectError);
+            console.error('Redirect failed:', redirectError);
             window.location.href = data.url;
           }
         }
