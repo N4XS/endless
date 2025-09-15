@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Thumbs } from 'swiper/modules';
+import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { LazyImage } from '@/components/LazyImage';
@@ -9,7 +9,7 @@ import { LazyImage } from '@/components/LazyImage';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import 'swiper/css/thumbs';
+import 'swiper/css/effect-coverflow';
 
 interface SwiperCarouselProps {
   images: string[];
@@ -23,35 +23,40 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
 
   return (
     <div className={cn("w-full", className)}>
-      <div className="flex flex-col lg:grid lg:grid-cols-12 gap-4 lg:gap-8 w-full">
+      <div className="flex flex-col gap-6 w-full">
         
-        {/* Main Swiper - Triple Slider */}
-        <div className="lg:col-span-9 order-1 w-full">
+        {/* Main Expo Swiper */}
+        <div className="w-full">
           <div className="relative group">
             <Swiper
-              modules={[Navigation, Pagination]}
-              spaceBetween={16}
-              slidesPerView={1}
+              modules={[Navigation, Pagination, EffectCoverflow, Autoplay]}
+              effect="coverflow"
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView="auto"
+              coverflowEffect={{
+                rotate: 15,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: true,
+              }}
+              autoplay={{
+                delay: 4000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+              }}
               navigation={{
                 prevEl: prevRef.current,
                 nextEl: nextRef.current,
               }}
               pagination={{
                 clickable: true,
-                bulletClass: 'swiper-pagination-bullet !bg-muted-foreground/50',
-                bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary'
+                bulletClass: 'swiper-pagination-bullet !bg-muted-foreground/30 !w-3 !h-3',
+                bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary !w-4 !h-4'
               }}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 16,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 20,
-                },
-              }}
-              className="!pb-12"
+              loop={true}
+              className="!pb-16 expo-swiper"
               onBeforeInit={(swiper) => {
                 // @ts-ignore
                 swiper.params.navigation.prevEl = prevRef.current;
@@ -60,14 +65,23 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
               }}
             >
               {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <div className="bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300">
-                    <div className="aspect-square w-full">
+                <SwiperSlide key={index} className="!w-[280px] sm:!w-[320px] lg:!w-[380px]">
+                  <div className="bg-gradient-to-br from-background to-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-all duration-500 group/slide">
+                    <div className="aspect-square w-full relative">
                       <LazyImage
                         src={image}
                         alt={`${productName} - Vue ${index + 1}`}
-                        className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
+                        className="w-full h-full object-cover object-center transition-all duration-700 group-hover/slide:scale-110"
                       />
+                      {/* Overlay gradient for better visual hierarchy */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover/slide:opacity-100 transition-opacity duration-500"></div>
+                      
+                      {/* Image counter badge */}
+                      <div className="absolute top-4 right-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 opacity-0 group-hover/slide:opacity-100 transition-opacity duration-300">
+                        <span className="text-xs font-medium text-foreground">
+                          {index + 1}/{images.length}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </SwiperSlide>
@@ -77,60 +91,54 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
             {/* Custom Navigation Buttons */}
             <button
               ref={prevRef}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-background/95 rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
-              style={{
-                backdropFilter: 'blur(4px)',
-                WebkitBackdropFilter: 'blur(4px)',
-              }}
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-background/95 backdrop-blur-sm rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-110"
             >
-              <ChevronLeft className="w-6 h-6 text-primary mx-auto" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-primary mx-auto" />
             </button>
             
             <button
               ref={nextRef}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-background/95 rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-0 group-hover:opacity-100 hover:scale-110"
-              style={{
-                backdropFilter: 'blur(4px)',
-                WebkitBackdropFilter: 'blur(4px)',
-              }}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 sm:w-12 sm:h-12 bg-background/95 backdrop-blur-sm rounded-full border border-border shadow-soft hover:shadow-hero transition-all duration-300 opacity-70 hover:opacity-100 hover:scale-110"
             >
-              <ChevronRight className="w-6 h-6 text-primary mx-auto" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-primary mx-auto" />
             </button>
           </div>
         </div>
 
-        {/* Product Info Slot - Sticky on large screens */}
-        <div className="lg:col-span-3 order-2 w-full">
-          <div className="lg:sticky lg:top-8 w-full" id="product-info-slot">
+        {/* Product Info Card - Responsive positioning */}
+        <div className="w-full">
+          <div className="max-w-md mx-auto lg:max-w-none" id="product-info-slot">
             {/* This will be populated by the parent component */}
           </div>
         </div>
       </div>
 
-      {/* Thumbnails Row */}
-      <div className="mt-6 w-full">
-        <div className="flex gap-2 overflow-x-auto scrollbar-hide p-1">
-          {images.slice(0, 8).map((image, index) => (
-            <div
-              key={index}
-              className="relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-border hover:border-primary/50 transition-colors duration-300"
-            >
-              <LazyImage
-                src={image}
-                alt={`${productName} miniature ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-          {images.length > 8 && (
-            <div className="flex-shrink-0 w-16 h-16 rounded-lg bg-muted border-2 border-border flex items-center justify-center">
-              <span className="text-xs font-medium text-muted-foreground">
-                +{images.length - 8}
-              </span>
-            </div>
-          )}
+      {/* Thumbnails Navigation - Enhanced for mobile */}
+      <div className="w-full">
+        <div className="max-w-4xl mx-auto">
+          <h3 className="text-sm font-medium text-muted-foreground mb-3 text-center">
+            Galerie complète ({images.length} photos)
+          </h3>
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide p-2 justify-center">
+            {images.map((image, index) => (
+              <div
+                key={index}
+                className="relative flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden border-2 border-border hover:border-primary/70 transition-all duration-300 cursor-pointer group"
+              >
+                <LazyImage
+                  src={image}
+                  alt={`${productName} miniature ${index + 1}`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-xs font-bold text-white">{index + 1}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
     </div>
   );
 };

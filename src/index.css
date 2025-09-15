@@ -240,3 +240,27 @@
   box-shadow: 0 10px 30px -10px rgba(233, 166, 58, 0.3);
   box-shadow: 0 10px 30px -10px hsl(var(--ambre) / 0.3);
 }
+
+/* SwiperJS Expo Slider Custom Styles */
+.expo-swiper .swiper-slide {
+  transition: all 0.3s ease;
+}
+
+.expo-swiper .swiper-slide:not(.swiper-slide-active) {
+  filter: brightness(0.8) saturate(0.8);
+}
+
+.expo-swiper .swiper-slide-active {
+  filter: brightness(1) saturate(1);
+}
+
+.expo-swiper .swiper-pagination {
+  bottom: 0 !important;
+}
+
+@media (max-width: 640px) {
+  .expo-swiper .swiper-slide {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
