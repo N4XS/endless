@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { detectBrowser, getImageOptimizations } from '@/utils/browser';
 
 interface LazyImageProps {
   src: string;
@@ -10,8 +11,9 @@ interface LazyImageProps {
   height?: number;
 }
 
-// Détection Safari pour optimisations spécifiques
-const isSafari = typeof window !== 'undefined' && /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+// Détection navigateur et optimisations
+const { isSafari, isIOS } = detectBrowser();
+const { useLazyLoading, safariOptimizations } = getImageOptimizations();
 
 // Support du lazy loading natif
 const supportsLazyLoading = typeof HTMLImageElement !== 'undefined' && 'loading' in HTMLImageElement.prototype;
@@ -19,7 +21,8 @@ const supportsLazyLoading = typeof HTMLImageElement !== 'undefined' && 'loading'
 export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(!supportsLazyLoading || isSafari);
+  const [retryCount, setRetryCount] = useState(0);
+  const [shouldLoad, setShouldLoad] = useState(!useLazyLoading || isSafari);
 
   useEffect(() => {
     // Pour Safari, on évite le lazy loading natif qui peut poser problème
@@ -30,11 +33,24 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
   }, [shouldLoad]);
 
   const handleLoad = () => {
+    console.log(`✅ Image loaded successfully: ${src}`);
     setIsLoaded(true);
+    setIsError(false);
   };
 
-  const handleError = () => {
-    setIsError(true);
+  const handleError = (error: any) => {
+    console.error(`❌ Image failed to load: ${src}`, error);
+    
+    // Retry logic for Safari
+    if (isSafari && retryCount < 2) {
+      console.log(`🔄 Retrying image load (attempt ${retryCount + 1}): ${src}`);
+      setTimeout(() => {
+        setRetryCount(prev => prev + 1);
+        setIsError(false);
+      }, 1000 * (retryCount + 1));
+    } else {
+      setIsError(true);
+    }
   };
 
   // Utilisation d'une image normale pour Safari avec optimisations
@@ -52,7 +68,7 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
           />
         )}
         <img
-          key={src}
+          key={`${src}-${retryCount}`}
           src={src}
           alt={alt}
           width={width}
@@ -68,11 +84,9 @@ export const LazyImage = ({ src, alt, className, width, height }: LazyImageProps
           onLoad={handleLoad}
           onError={handleError}
           style={{
-            // Optimisations Safari
-            imageRendering: 'auto',
-            backfaceVisibility: 'hidden',
-            //@ts-ignore - WebKit propriétés pour Safari
-            WebkitBackfaceVisibility: 'hidden'
+            ...safariOptimizations,
+            // Force Safari to re-render on retry
+            transform: retryCount > 0 ? `translateZ(0)` : undefined
           }}
         />
         {isError && (
