@@ -34,7 +34,7 @@ export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) 
         <div className="space-y-3 pt-4 border-t border-border">
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Garantie :</span>
-            <span className="text-right">Satisfait ou remboursé 30 jours</span>
+            <span className="text-right">Garantie constructeur 2 ans</span>
           </div>
           <div className="flex justify-between text-sm">
             <span className="text-muted-foreground">Expédition :</span>

@@ -54,7 +54,7 @@ export const products: Product[] = [
     technicalSpecs: {
       maxLoad: "275kg",
       material: "Poly-Coton respirant 280g/m²",
-      warranty: "Satisfait ou remboursé sous 30 jours",
+      warranty: "Garantie constructeur 2 ans",
       delivery: "3-5 jours ouvrables"
     }
   }
@@ -161,7 +161,7 @@ export const faqs: FAQ[] = [
   {
     id: "4",
     question: "Quelles sont les garanties et le service après-vente ?",
-    answer: "Garantie & Sérénité incluse : 30 jours satisfait ou remboursé + garantie constructeur 2 ans. Service après-vente assuré par notre équipe belge. Installation comprise dans le prix et formation offerte. Pièces détachées disponibles.",
+    answer: "Garantie & Sérénité incluse : garantie constructeur 2 ans. Service après-vente assuré par notre équipe belge. Installation comprise dans le prix et formation offerte. Pièces détachées disponibles.",
     category: "service"
   },
   {

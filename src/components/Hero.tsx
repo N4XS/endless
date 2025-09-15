@@ -64,7 +64,7 @@ export const Hero = () => {
                   variant="outline" 
                   className="bg-background/10 backdrop-blur-sm border-background/30 text-background hover:bg-background/20 hover:text-background"
                 >
-                  Louer pour mon aventure
+                  Louer pour votre aventure
                 </Button>
               </Link>
             </div>

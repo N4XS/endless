@@ -13,11 +13,6 @@ const Garantie = () => {
       description: "Tous nos produits sont couverts par une garantie fabricant de 2 ans contre les défauts de fabrication."
     },
     {
-      icon: Clock,
-      title: "30 jours satisfait ou remboursé",
-      description: "Vous avez 30 jours pour tester votre tente. Si elle ne vous convient pas, nous la reprenons."
-    },
-    {
       icon: CheckCircle,
       title: "Service après-vente réactif",
       description: "Notre équipe belge vous accompagne pour toute question ou problème technique."
@@ -46,7 +41,7 @@ const Garantie = () => {
         {/* Garanties principales */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
-            <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="grid md:grid-cols-2 gap-8 mb-16">
               {guaranteeFeatures.map((feature, index) => (
                 <Card key={index} className="text-center shadow-card hover:shadow-hero transition-shadow">
                   <CardHeader>
@@ -100,17 +95,6 @@ const Garantie = () => {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-primary mb-3">Satisfait ou remboursé (30 jours)</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Vous disposez de 30 jours calendaires à compter de la réception de votre tente pour la tester. 
-                      Si elle ne répond pas à vos attentes, nous vous remboursons intégralement.
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      Conditions : la tente doit être retournée dans son état d'origine avec tous ses accessoires et son emballage.
-                    </p>
-                  </div>
-
-                  <div>
                     <h3 className="text-lg font-semibold text-primary mb-3">Exclusions</h3>
                     <p className="text-muted-foreground mb-2">La garantie ne couvre pas :</p>
                     <ul className="space-y-1 text-muted-foreground text-sm">
@@ -137,6 +121,7 @@ const Garantie = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Link to="/contact">
                 <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
+                  <Mail className="w-5 h-5 mr-2" />
                   Nous contacter
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>

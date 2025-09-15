@@ -4,7 +4,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { CheckCircle, Loader2, AlertCircle } from 'lucide-react';
+import { CheckCircle, Loader2, AlertCircle, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useSecureStorage } from '@/hooks/useSecureStorage';
 
@@ -156,6 +156,7 @@ const PaymentSuccess = () => {
                 </Link>
                 <Link to="/contact">
                   <Button variant="outline">
+                    <Mail className="w-4 h-4 mr-2" />
                     Nous contacter
                   </Button>
                 </Link>

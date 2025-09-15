@@ -128,7 +128,7 @@ const Tentes = () => {
     {
       icon: CheckCircle,
       title: 'Garantie & Sérénité',
-      description: '30 jours satisfait ou remboursé + installation comprise'
+      description: 'Garantie constructeur 2 ans + installation comprise'
     }
   ];
 
@@ -150,7 +150,7 @@ const Tentes = () => {
           
           <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
             <div className="max-w-2xl">
-              <h1 className="text-hero font-display text-background mb-6 leading-tight">
+              <h1 className="text-hero font-display text-background mb-6 leading-tight mt-4 sm:mt-0">
                 STARZZ
               </h1>
               <p className="text-large text-background/90 mb-8 max-w-xl leading-relaxed">
@@ -171,7 +171,7 @@ const Tentes = () => {
                   </Link>
                   <Link to="/location">
                     <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
-                      Louer pour mon aventure
+                      Louer pour votre aventure
                     </Button>
                   </Link>
                 </div>
