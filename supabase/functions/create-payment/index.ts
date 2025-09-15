@@ -11,7 +11,10 @@ const getCorsHeaders = (req: Request) => {
     "http://localhost:5173", // For development
   ];
   
-  const allowedOrigin = allowedOrigins.includes(origin || "") ? origin : allowedOrigins[0];
+  // Allow any lovableproject.com subdomain
+  const isLovableProject = origin && origin.match(/^https:\/\/[a-f0-9\-]+\.lovableproject\.com$/);
+  
+  const allowedOrigin = allowedOrigins.includes(origin || "") || isLovableProject ? origin : allowedOrigins[0];
   
   return {
     "Access-Control-Allow-Origin": allowedOrigin,
@@ -36,7 +39,11 @@ const validateOrigin = (req: Request): boolean => {
     "https://endless-tents.com",
     "http://localhost:5173", // For development
   ];
-  return !origin || allowedOrigins.includes(origin);
+  
+  // Allow any lovableproject.com subdomain
+  const isLovableProject = origin && origin.match(/^https:\/\/[a-f0-9\-]+\.lovableproject\.com$/);
+  
+  return !origin || allowedOrigins.includes(origin) || !!isLovableProject;
 };
 
 // Helpers
