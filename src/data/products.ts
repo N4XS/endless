@@ -19,7 +19,7 @@ export const products: Product[] = [
       openSize: "140x240x125cm",
       materials: ["Aluminium", "Poly-Coton 280g/m²"],
       compatibility: "Barres de toit 65kg min",
-      maxLoad: "275kg"
+      maxLoad: "350kg"
     },
     images: [
       "/images/ST-camp.jpg",
@@ -52,7 +52,7 @@ export const products: Product[] = [
       "Échelle 'one-click', ajustable à la hauteur du véhicule"
     ],
     technicalSpecs: {
-      maxLoad: "275kg",
+      maxLoad: "350kg",
       material: "Poly-Coton respirant 280g/m²",
       warranty: "Garantie constructeur 2 ans",
       delivery: "3-5 jours ouvrables"
@@ -149,7 +149,7 @@ export const faqs: FAQ[] = [
   {
     id: "2", 
     question: "Mon véhicule peut-il supporter la tente STARZZ ?",
-    answer: "Oui, le toit de la voiture peut être suffisamment solide pour une tente de toit, à condition de respecter les charges indiquées par le constructeur. Distinguez bien la charge dynamique (véhicule en mouvement) de la charge statique (véhicule à l'arrêt). La charge dynamique acceptée se situe souvent entre 50 et 100 kg. Nos tentes pèsent 65 kg : assurez-vous donc que la charge dynamique de votre toit est d'au moins 65 kg. À l'arrêt, la charge statique admissible est bien plus élevée ; la structure du toit est en réalité conçue pour supporter le véhicule en position renversée.",
+    answer: "Oui, le toit de la voiture peut être suffisamment solide pour une tente de toit, à condition de respecter les charges indiquées par le constructeur. Distinguez bien la charge dynamique (véhicule en mouvement) de la charge statique (véhicule à l'arrêt). La charge dynamique acceptée se situe souvent entre 50 et 100 kg. Nos tentes pèsent 59 kg : assurez-vous donc que la charge dynamique de votre toit est d'au moins 59 kg. À l'arrêt, la charge statique admissible est bien plus élevée ; la structure du toit est en réalité conçue pour supporter le véhicule en position renversée.",
     category: "technique"
   },
   {

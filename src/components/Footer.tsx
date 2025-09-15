@@ -68,7 +68,7 @@ export const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link to="/tentes?filter=hard-shell" className="text-os/80 hover:text-os transition-colors">
-                  STARZZ 140x240
+                  STARZZ 140
                 </Link>
               </li>
             </ul>

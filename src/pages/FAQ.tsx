@@ -50,7 +50,7 @@ const FAQ = () => {
           answer: (
             <div>
               <p className="mb-3">Oui, le toit de la voiture est assez solide pour une tente de toit. Il faut faire la distinction entre la charge dynamique et la charge statique. La charge dynamique correspond à la charge autorisée pour un véhicule en mouvement. La charge statique correspond à la charge autorisée pour un véhicule à l'arrêt.</p>
-              <p className="mb-3">La charge dynamique est souvent située entre 50 et 100kg. Nos tentes pèsent 65 kg. Il faut donc vous assurer que votre toit a une charge dynamique de 65kg minimum.</p>
+              <p className="mb-3">La charge dynamique est souvent située entre 50 et 100kg. Nos tentes pèsent 59 kg. Il faut donc vous assurer que votre toit a une charge dynamique de 59kg minimum.</p>
               <p>Il faut savoir qu'à l'arrêt, la structure du toit supporte le poids de la voiture renversée.</p>
             </div>
           )
