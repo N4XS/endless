@@ -135,14 +135,30 @@ serve(async (req) => {
     const productMap = new Map<string, any>();
     for (const p of products) productMap.set(p.id, p);
 
+    console.log("[create-payment] Products found:", products.length);
+    console.log("[create-payment] Items received:", items);
+
     type ItemReq = { product_id?: string; id?: string; slug?: string; quantity: number };
-    const normalizedItems = items.map((i: ItemReq) => {
+    const normalizedItems = items.map((i: ItemReq, index: number) => {
+      console.log(`[create-payment] Processing item ${index}:`, i);
+      
       const pid = isUUID(String(i.product_id ?? i.id ?? ""))
         ? String(i.product_id ?? i.id)
         : undefined;
       const bySlug = !pid ? (products.find((p) => p.slug === i.slug)?.id) : undefined;
       const finalId = pid ?? bySlug;
-      if (!finalId) throw new Error("Produit introuvable");
+      
+      console.log(`[create-payment] Item ${index} - pid:`, pid, "bySlug:", bySlug, "finalId:", finalId);
+      
+      if (!finalId) {
+        console.error(`[create-payment] Product not found for item ${index}:`, {
+          product_id: i.product_id,
+          id: i.id,
+          slug: i.slug,
+          availableProducts: products.map(p => ({ id: p.id, slug: p.slug, name: p.name }))
+        });
+        throw new Error("Produit introuvable");
+      }
       const qty = Math.max(1, Number(i.quantity || 1));
       return { product_id: finalId, quantity: qty };
     });
