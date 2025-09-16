@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      discount_codes: {
+        Row: {
+          active: boolean | null
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          max_uses: number | null
+          min_order_cents: number | null
+          type: string
+          updated_at: string
+          used_count: number | null
+          valid_from: string | null
+          valid_until: string | null
+          value: number
+        }
+        Insert: {
+          active?: boolean | null
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_uses?: number | null
+          min_order_cents?: number | null
+          type: string
+          updated_at?: string
+          used_count?: number | null
+          valid_from?: string | null
+          valid_until?: string | null
+          value: number
+        }
+        Update: {
+          active?: boolean | null
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          max_uses?: number | null
+          min_order_cents?: number | null
+          type?: string
+          updated_at?: string
+          used_count?: number | null
+          valid_from?: string | null
+          valid_until?: string | null
+          value?: number
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           created_at: string
@@ -312,6 +360,10 @@ export type Database = {
         }
         Returns: boolean
       }
+      increment_discount_usage: {
+        Args: { discount_id: string }
+        Returns: undefined
+      }
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
@@ -330,6 +382,17 @@ export type Database = {
           _user_id: string
         }
         Returns: undefined
+      }
+      validate_discount_code: {
+        Args: { code_text: string; order_amount_cents: number }
+        Returns: {
+          discount_amount_cents: number
+          discount_id: string
+          discount_type: string
+          discount_value: number
+          message: string
+          valid: boolean
+        }[]
       }
     }
     Enums: {

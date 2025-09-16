@@ -13,10 +13,11 @@ import { useSecureStorage } from '@/hooks/useSecureStorage';
 import { supabase } from '@/integrations/supabase/client';
 import { detectBrowser } from '@/utils/browser';
 import { SafariPaymentFallback } from '@/components/SafariPaymentFallback';
+import { DiscountCodeInput } from '@/components/DiscountCodeInput';
 import { Loader2, Smartphone, AlertTriangle } from 'lucide-react';
 
 const Checkout = () => {
-  const { items, totalPrice, clearCart } = useCart();
+  const { items, totalPrice, finalPrice, clearCart, discountCode, setDiscountCode } = useCart();
   const { toast } = useToast();
   const { storeGuestToken } = useSecureStorage();
   const navigate = useNavigate();
@@ -268,13 +269,29 @@ const Checkout = () => {
                         <span>Sous-total</span>
                         <span>{formatPrice(totalPrice)}</span>
                       </div>
+                      
+                      <DiscountCodeInput
+                        orderAmountCents={Math.round(totalPrice * 100)}
+                        onDiscountApplied={setDiscountCode}
+                        appliedDiscount={discountCode}
+                      />
+                      
+                      {discountCode && (
+                        <div className="flex justify-between text-green-600">
+                          <span>Réduction ({discountCode.code})</span>
+                          <span>-{formatPrice(discountCode.discountAmountCents / 100)}</span>
+                        </div>
+                      )}
+                      
                       <div className="flex justify-between text-sm text-muted-foreground">
                         <span>Frais de livraison</span>
                         <span>Calculés automatiquement</span>
                       </div>
                       <div className="flex justify-between font-semibold text-lg border-t pt-2">
                         <span>Total</span>
-                        <span className="text-primary">{formatPrice(totalPrice)} + frais</span>
+                        <span className="text-primary">
+                          {formatPrice(finalPrice)} + frais
+                        </span>
                       </div>
                     </div>
 

@@ -93,7 +93,7 @@ serve(async (req) => {
     const supabaseAnon = createClient(SUPABASE_URL, SUPABASE_ANON);
     const supabaseService = createClient(SUPABASE_URL, SUPABASE_SERVICE, { auth: { persistSession: false } });
 
-    const { items, shipping_country, customer_email } = await req.json();
+    const { items, shipping_country, customer_email, discount_code_id } = await req.json();
     if (!Array.isArray(items) || items.length === 0) throw new Error("'items' est requis et ne peut pas être vide");
 
     // Auth (facultative) pour associer l'utilisateur si connecté
@@ -191,7 +191,32 @@ serve(async (req) => {
     }
 
     const shippingCents = computeShippingCostCents(shipping_country);
-    const totalCents = subtotalCents + shippingCents;
+    
+    // Apply discount code if provided
+    let discountAmountCents = 0;
+    let discountId: string | null = null;
+    
+    if (discount_code_id) {
+      const { data: discountData, error: discountError } = await supabaseService.rpc('validate_discount_code_by_id', {
+        discount_id: discount_code_id,
+        order_amount_cents: subtotalCents + shippingCents
+      });
+      
+      if (discountError) {
+        console.error("[create-payment] Discount validation error:", discountError);
+        throw new Error("Erreur lors de la validation du code de réduction");
+      }
+      
+      const discountResult = discountData?.[0];
+      if (discountResult?.valid) {
+        discountAmountCents = discountResult.discount_amount_cents;
+        discountId = discount_code_id;
+      } else {
+        throw new Error(discountResult?.message || "Code de réduction invalide");
+      }
+    }
+    
+    const totalCents = subtotalCents + shippingCents - discountAmountCents;
 
     // Stripe setup
     const stripe = new Stripe(stripeSecret, { apiVersion: "2023-10-16" });
@@ -278,6 +303,8 @@ serve(async (req) => {
         shipping_country: shipping_country ?? null,
         shipping_cost_cents: shippingCents,
         guest_access_token: guestToken,
+        discount_code_id: discountId,
+        discount_amount_cents: discountAmountCents,
       })
       .select("id, guest_access_token")
       .single();
@@ -297,6 +324,17 @@ serve(async (req) => {
 
     const { error: oiErr } = await supabaseService.from("order_items").insert(orderItems);
     if (oiErr) throw oiErr;
+
+    // Increment discount usage if discount was applied
+    if (discountId) {
+      const { error: incrementErr } = await supabaseService.rpc('increment_discount_usage', {
+        discount_id: discountId
+      });
+      if (incrementErr) {
+        console.error("[create-payment] Error incrementing discount usage:", incrementErr);
+        // Don't throw error as the order is already created
+      }
+    }
 
     return new Response(JSON.stringify({ 
       url: session.url,

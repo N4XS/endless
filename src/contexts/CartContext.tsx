@@ -6,6 +6,14 @@ interface CartItem {
   quantity: number;
 }
 
+interface DiscountCode {
+  id: string;
+  code: string;
+  type: string;
+  value: number;
+  discountAmountCents: number;
+}
+
 interface CartContextType {
   items: CartItem[];
   addToCart: (product: Product, quantity?: number) => void;
@@ -14,6 +22,9 @@ interface CartContextType {
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
+  discountCode: DiscountCode | null;
+  setDiscountCode: (discount: DiscountCode | null) => void;
+  finalPrice: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -22,6 +33,7 @@ const CART_STORAGE_KEY = 'endless-cart';
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [discountCode, setDiscountCode] = useState<DiscountCode | null>(null);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -77,10 +89,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearCart = () => {
     setItems([]);
+    setDiscountCode(null);
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+  const discountAmount = discountCode ? (discountCode.discountAmountCents / 100) : 0;
+  const finalPrice = Math.max(0, totalPrice - discountAmount);
 
   return (
     <CartContext.Provider value={{
@@ -90,7 +105,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       updateQuantity,
       clearCart,
       totalItems,
-      totalPrice
+      totalPrice,
+      discountCode,
+      setDiscountCode,
+      finalPrice
     }}>
       {children}
     </CartContext.Provider>
