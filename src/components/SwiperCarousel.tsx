@@ -115,6 +115,7 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
             {images.map((image, index) => (
               <div
                 key={index}
+                onClick={() => swiperInstance?.slideTo(index)}
                 className="relative flex-shrink-0 w-12 h-12 sm:w-16 sm:h-16 rounded-xl overflow-hidden border-2 border-border hover:border-primary/70 transition-all duration-300 cursor-pointer group"
               >
                 <LazyImage

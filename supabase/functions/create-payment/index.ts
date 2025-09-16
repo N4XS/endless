@@ -203,10 +203,22 @@ serve(async (req) => {
 
     const line_items = normalizedItems.map((it) => {
       const p = productMap.get(it.product_id);
+      // Create detailed order summary for the product description
+      const orderSummary = `📦 Récapitulatif de votre commande:
+• Produit: ${p.name}
+• Prix: ${(p.price_cents / 100).toFixed(2)}€ TTC
+• Quantité: ${it.quantity}
+• Installation comprise
+• Garantie constructeur 2 ans
+• Livraison: ${shipping_country || 'Belgique'}`;
+
       return {
         price_data: {
           currency: "eur",
-          product_data: { name: p.name },
+          product_data: { 
+            name: `${p.name} - Tente de Toit`,
+            description: orderSummary
+          },
           unit_amount: p.price_cents,
         },
         quantity: it.quantity,
@@ -238,7 +250,7 @@ serve(async (req) => {
       billing_address_collection: 'required',
       custom_text: {
         submit: {
-          message: "Livraison en 24–48h en Belgique"
+          message: "🚚 Livraison en 24–48h en Belgique | ✅ Installation comprise | 🛡️ Garantie 2 ans"
         }
       }
     });
