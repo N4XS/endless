@@ -19,7 +19,7 @@ export interface Product {
     maxLoad?: string;
   };
   images: string[];
-  stock: "in_stock" | "out_of_stock";
+  stock: number;
   sku?: string;
   description?: string;
   features?: string[];

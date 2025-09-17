@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { cardHover } from '@/lib/motion';
 import { LazyImage } from './LazyImage';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { PreorderDialog } from './PreorderDialog';
 
 interface ProductCardProps {
   product: Product;
@@ -31,6 +32,15 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
   };
 
   const handleAddToCart = () => {
+    if (product.stock <= 0) {
+      toast({
+        title: "Produit en rupture de stock",
+        description: "Ce produit est temporairement indisponible. Vous pouvez le précommander.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     addToCart(product);
     toast({
       title: "Produit ajouté au panier",
@@ -149,19 +159,30 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                     Voir les détails
                   </Button>
                 </Link>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  onClick={handleAddToCart}
-                  className="px-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                  disabled={product.stock === 'out_of_stock'}
-                >
-                  <ShoppingCart className="w-5 h-5" />
-                </Button>
+                {product.stock > 0 ? (
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    onClick={handleAddToCart}
+                    className="px-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                  >
+                    <ShoppingCart className="w-5 h-5" />
+                  </Button>
+                ) : (
+                  <PreorderDialog product={product}>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="px-6 border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white"
+                    >
+                      <Clock className="w-5 h-5" />
+                    </Button>
+                  </PreorderDialog>
+                )}
               </div>
 
               {/* Lien location */}
-              {product.category === 'tent' && (
+              {product.category === 'tent' && product.stock > 0 && (
                 <Link to="/location" className="block">
                   <Button
                     variant="ghost"
@@ -173,10 +194,32 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                 </Link>
               )}
 
+              {/* Précommande CTA pour produits en rupture */}
+              {product.stock <= 0 && (
+                <PreorderDialog product={product}>
+                  <Button
+                    variant="ghost"
+                    className="w-full text-amber-600 hover:text-amber-700 hover:bg-amber-50 font-medium"
+                    size="lg"
+                  >
+                    Précommander maintenant →
+                  </Button>
+                </PreorderDialog>
+              )}
+
               {/* Stock indicator */}
               <div className="flex items-center gap-2 text-sm">
-                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-muted-foreground">En stock • 24-48h ouvrables</span>
+                {product.stock > 0 ? (
+                  <>
+                    <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                    <span className="text-muted-foreground">En stock • 24-48h ouvrables</span>
+                  </>
+                ) : (
+                  <>
+                    <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                    <span className="text-muted-foreground">Rupture de stock • Livraison mi-mars 2024</span>
+                  </>
+                )}
               </div>
             </div>
           </div>

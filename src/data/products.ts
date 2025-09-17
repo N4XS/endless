@@ -34,7 +34,7 @@ export const products: Product[] = [
       "/images/ST9.jpg",
       "/images/ST10.jpg"
     ],
-    stock: "in_stock",
+    stock: 5,
     sku: "STARZZ-001",
     description: "La tente de toit STARZZ a été imaginée par notre équipe passionnée par ce type de voyage. Elle allie compacité et confort pour vos escapades en couple ou entre amis. Une toile résistante et aérée en Poly-Coton de haute qualité avec une fenêtre offrant une vue sur les étoiles.",
     features: [
@@ -80,7 +80,7 @@ export const accessories: Product[] = [
       compatibility: "Tentes soft-shell"
     },
     images: ["/api/placeholder/400/300"],
-    stock: "in_stock",
+    stock: 3,
     sku: "ACP-001",
     description: "Annexe spacieuse pour créer un espace de vie supplémentaire.",
     features: ["Montage autonome", "Sol étanche amovible", "Entrées multiples"]
@@ -103,7 +103,7 @@ export const accessories: Product[] = [
       compatibility: "Toutes tentes"
     },
     images: ["/api/placeholder/400/300"],
-    stock: "in_stock",
+    stock: 7,
     sku: "ETA-002",
     description: "Échelle télescopique de sécurité avec marches antidérapantes.",
     features: ["Réglage hauteur facile", "Marches larges 8cm", "Crochets sécurisés"]

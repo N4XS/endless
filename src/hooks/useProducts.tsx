@@ -53,7 +53,7 @@ export const useProducts = () => {
           badges: [], // You can add badges logic here
           specs,
           images: item.images || [],
-          stock: item.stock > 0 ? "in_stock" : "out_of_stock",
+          stock: item.stock,
           sku: item.sku,
           description: item.description,
           features: item.features || []
