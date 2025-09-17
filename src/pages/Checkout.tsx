@@ -152,7 +152,8 @@ const Checkout = () => {
         body: {
           items: paymentItems,
           shipping_country: formData.country,
-          customer_email: formData.email
+          customer_email: formData.email,
+          discount_code_id: discountCode?.id || null
         }
       });
 

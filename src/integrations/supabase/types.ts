@@ -113,6 +113,8 @@ export type Database = {
           created_at: string
           currency: string
           customer_email: string
+          discount_amount_cents: number | null
+          discount_code_id: string | null
           guest_access_token: string | null
           id: string
           shipping_address_line1: string | null
@@ -134,6 +136,8 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_email: string
+          discount_amount_cents?: number | null
+          discount_code_id?: string | null
           guest_access_token?: string | null
           id?: string
           shipping_address_line1?: string | null
@@ -155,6 +159,8 @@ export type Database = {
           created_at?: string
           currency?: string
           customer_email?: string
+          discount_amount_cents?: number | null
+          discount_code_id?: string | null
           guest_access_token?: string | null
           id?: string
           shipping_address_line1?: string | null
@@ -388,6 +394,16 @@ export type Database = {
         Returns: {
           discount_amount_cents: number
           discount_id: string
+          discount_type: string
+          discount_value: number
+          message: string
+          valid: boolean
+        }[]
+      }
+      validate_discount_code_by_id: {
+        Args: { discount_id: string; order_amount_cents: number }
+        Returns: {
+          discount_amount_cents: number
           discount_type: string
           discount_value: number
           message: string
