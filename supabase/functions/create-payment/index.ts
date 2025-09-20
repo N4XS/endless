@@ -186,7 +186,10 @@ serve(async (req) => {
     for (const it of normalizedItems) {
       const p = productMap.get(it.product_id);
       if (!p || !p.active) throw new Error("Produit inactif ou introuvable");
-      if (typeof p.stock === "number" && p.stock < it.quantity) throw new Error(`Stock insuffisant pour ${p.name}`);
+      // Allow preorders when stock is 0, but still check if stock exists and is sufficient for non-zero stock
+      if (typeof p.stock === "number" && p.stock > 0 && p.stock < it.quantity) {
+        throw new Error(`Stock insuffisant pour ${p.name}. Stock disponible: ${p.stock}`);
+      }
       subtotalCents += p.price_cents * it.quantity;
     }
 

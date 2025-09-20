@@ -7,9 +7,11 @@ import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { products, testimonials, faqs } from '@/data/products';
+import { testimonials, faqs } from '@/data/products';
+import { useProducts } from '@/hooks/useProducts';
 
 const Index = () => {
+  const { products, loading } = useProducts();
   const benefits = [
     {
       icon: MapPin,
@@ -95,9 +97,15 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 gap-6">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="text-large text-muted-foreground">Chargement des produits...</div>
+                </div>
+              ) : (
+                products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))
+              )}
             </div>
 
             {/* Service location barres de toit */}
