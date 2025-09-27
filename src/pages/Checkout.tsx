@@ -116,17 +116,14 @@ const Checkout = () => {
       }));
 
       // Call the create-payment edge function
-      // Définir le nom de la fonction de manière sûre
-const CREATE_PAYMENT_FUNC = "create-payment";
-
-const { data, error } = await supabase.functions.invoke(CREATE_PAYMENT_FUNC, {
-  body: {
-    items: paymentItems,
-    shipping_country: formData.country,
-    customer_email: formData.email,
-    discount_code_id: discountCode?.id || null
-  }
-});
+      const { data, error } = await supabase.functions.invoke('create-payment', {
+        body: {
+          items: paymentItems,
+          shipping_country: formData.country,
+          customer_email: formData.email,
+          discount_code_id: discountCode?.id || null
+        }
+      });
 
       if (error) throw error;
 
