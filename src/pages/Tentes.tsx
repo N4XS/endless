@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { SwiperCarousel } from '@/components/SwiperCarousel';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
+import { PreorderDialog } from '@/components/PreorderDialog';
 import { 
   Star, 
   Users, 
@@ -164,11 +165,19 @@ const Tentes = () => {
                   <div className="text-sm text-background/75">TTC, installation comprise</div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Link to="/checkout">
-                    <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
-                      Commander maintenant
-                    </Button>
-                  </Link>
+                  {starzz.stock > 0 ? (
+                    <Link to="/checkout">
+                      <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
+                        Commander maintenant
+                      </Button>
+                    </Link>
+                  ) : (
+                    <PreorderDialog product={starzz}>
+                      <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
+                        Précommander maintenant
+                      </Button>
+                    </PreorderDialog>
+                  )}
                   <Link to="/location">
                     <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
                       Louer pour votre aventure
@@ -292,11 +301,19 @@ const Tentes = () => {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-              <Link to="/checkout">
-                <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
-                  Commander maintenant - {starzz.price}€
-                </Button>
-              </Link>
+              {starzz.stock > 0 ? (
+                <Link to="/checkout">
+                  <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
+                    Commander maintenant - {starzz.price}€
+                  </Button>
+                </Link>
+              ) : (
+                <PreorderDialog product={starzz}>
+                  <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
+                    Précommander maintenant - {starzz.price}€
+                  </Button>
+                </PreorderDialog>
+              )}
               <Link to="/location">
                 <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
                   Tester en location

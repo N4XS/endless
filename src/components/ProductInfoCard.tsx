@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Clock } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Clock, AlertTriangle } from 'lucide-react';
+import { Product } from '@/types';
+import { PreorderDialog } from './PreorderDialog';
 
 interface ProductInfoCardProps {
-  product: {
-    name: string;
-    price: number;
-  };
+  product: Product;
   onAddToCart: () => void;
 }
 
@@ -22,13 +22,34 @@ export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) 
         <div className="text-4xl font-bold text-primary">{product.price}€</div>
         
         <div className="flex items-center gap-2 text-sm">
-          <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-          <span className="text-muted-foreground">En stock</span>
+          {product.stock > 0 ? (
+            <>
+              <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              <span className="text-muted-foreground">En stock ({product.stock} disponible{product.stock > 1 ? 's' : ''})</span>
+            </>
+          ) : (
+            <>
+              <div className="w-2 h-2 rounded-full bg-destructive"></div>
+              <span className="text-destructive font-medium">Rupture de stock</span>
+              <Badge variant="secondary" className="ml-2">
+                Précommande disponible
+              </Badge>
+            </>
+          )}
         </div>
         
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="w-4 h-4" />
-          <span>Livraison sous 24-48 heures ouvrables</span>
+          {product.stock > 0 ? (
+            <>
+              <Clock className="w-4 h-4" />
+              <span>Livraison sous 24-48 heures ouvrables</span>
+            </>
+          ) : (
+            <>
+              <AlertTriangle className="w-4 h-4 text-amber-500" />
+              <span>Livraison estimée : 3-4 semaines</span>
+            </>
+          )}
         </div>
         
         <div className="space-y-3 pt-4 border-t border-border">
@@ -46,12 +67,20 @@ export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) 
           </div>
         </div>
         
-        <Button 
-          className="w-full" 
-          onClick={onAddToCart}
-        >
-          Ajouter au panier
-        </Button>
+        {product.stock > 0 ? (
+          <Button 
+            className="w-full" 
+            onClick={onAddToCart}
+          >
+            Ajouter au panier
+          </Button>
+        ) : (
+          <PreorderDialog product={product}>
+            <Button className="w-full" variant="secondary">
+              Précommander maintenant
+            </Button>
+          </PreorderDialog>
+        )}
       </div>
     </div>
   );
