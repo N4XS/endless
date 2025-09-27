@@ -45,26 +45,6 @@ export const PreorderDialog: React.FC<PreorderDialogProps> = ({ product, childre
 
       if (error) throw error;
 
-      // Send email notification
-      try {
-        const { error: emailError } = await supabase.functions.invoke('send-preorder-notification', {
-          body: {
-            customerName: formData.name,
-            customerEmail: formData.email,
-            productName: product.name,
-            quantity: formData.quantity,
-          },
-        });
-
-        if (emailError) {
-          console.error('Error sending notification email:', emailError);
-          // Don't block success if email fails
-        }
-      } catch (emailError) {
-        console.error('Email notification failed:', emailError);
-        // Don't block success if email fails
-      }
-
       toast.success('Précommande enregistrée avec succès !', {
         description: 'Nous vous contacterons dès que le produit sera disponible.'
       });

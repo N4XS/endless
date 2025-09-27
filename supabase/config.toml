@@ -11,6 +11,3 @@ verify_jwt = false
 
 [functions.log-security-event]
 verify_jwt = false
-
-[functions.send-preorder-notification]
-verify_jwt = false
