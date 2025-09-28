@@ -17,7 +17,7 @@ const getCorsHeaders = (req: Request) => {
   const allowedOrigin = allowedOrigins.includes(origin || "") || isLovableProject ? origin : allowedOrigins[0];
   
   return {
-    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Origin": allowedOrigin || allowedOrigins[0],
     "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Max-Age": "86400",
@@ -47,13 +47,26 @@ const validateOrigin = (req: Request): boolean => {
 };
 
 // Helpers
-const isUUID = (v: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v);
+const isUUID = (v: string) => /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/.test(v);
 
 const computeShippingCostCents = (country?: string) => {
   const code = (country || "").toUpperCase();
   if (code === "BE") return 0; // Livraison gratuite en Belgique
   return 1500; // Par défaut 15€ ailleurs (ajustable)
 };
+
+// Fetch product by reference (UUID or slug)
+async function fetchProductByRef(ref: string, supabaseAdmin: any) {
+  const column = isUUID(ref) ? 'id' : 'slug';
+  const { data, error } = await supabaseAdmin
+    .from('products')
+    .select('id, slug, name, price_cents, currency, stock, active')
+    .eq(column, ref)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+}
 
 serve(async (req) => {
   const corsHeaders = getCorsHeaders(req);
@@ -109,88 +122,90 @@ serve(async (req) => {
       }
     }
 
-    // Charger les produits depuis la DB et construire les lignes Stripe
-    const ids: string[] = items.map((i: any) => String(i.product_id ?? i.id ?? ""));
-    const slugs: string[] = items.map((i: any) => String(i.slug ?? ""));
-
-    // Récupérer par id OU par slug
-    let productsRes = await supabaseService
-      .from("products")
-      .select("id,name,slug,price_cents,currency,stock,active")
-      .in("id", ids.filter((x) => isUUID(x)));
-
-    if (productsRes.error) throw productsRes.error;
-    let products = productsRes.data ?? [];
-
-    if (products.length < items.length) {
-      // Compléter via slug si nécessaire
-      const missingBySlug = slugs.filter(Boolean);
-      if (missingBySlug.length) {
-        const bySlug = await supabaseService
-          .from("products")
-          .select("id,name,slug,price_cents,currency,stock,active")
-          .in("slug", missingBySlug);
-        if (bySlug.error) throw bySlug.error;
-        const merged = new Map<string, any>();
-        for (const p of products) merged.set(p.id, p);
-        for (const p of bySlug.data ?? []) merged.set(p.id, p);
-        products = Array.from(merged.values());
-      }
+    // Validate and process items
+    if (!Array.isArray(items) || items.length === 0) {
+      return new Response(JSON.stringify({ error: 'Aucun article' }), { 
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 400 
+      });
     }
 
-    // Mapper produits et valider quantités/stock
+    const lineItems: Array<{ price_data: any; quantity: number }> = [];
+    const normalizedItems: Array<{ product_id: string; quantity: number }> = [];
     const productMap = new Map<string, any>();
-    for (const p of products) productMap.set(p.id, p);
 
-    console.log("[create-payment] Products found:", products.length);
-    console.log("[create-payment] Items received:", items);
-
-    type ItemReq = { product_id?: string; id?: string; slug?: string; quantity: number };
-    const normalizedItems = items.map((i: ItemReq, index: number) => {
-      console.log(`[create-payment] Processing item ${index}:`, i);
-      
-      const pid = isUUID(String(i.product_id ?? i.id ?? ""))
-        ? String(i.product_id ?? i.id)
-        : undefined;
-      
-      // Enhanced product lookup - try by ID first, then by slug from both product_id and slug fields
-      let product = pid ? productMap.get(pid) : undefined;
-      
-      if (!product) {
-        // Try to find by slug using product_id field
-        const searchSlug = String(i.product_id || i.slug || "");
-        product = products.find((p) => p.slug === searchSlug);
-      }
-      
-      console.log(`[create-payment] Item ${index} - pid:`, pid, "searchSlug:", String(i.product_id || i.slug || ""), "product found:", !!product);
-      
-      if (!product) {
-        console.error(`[create-payment] Product not found for item ${index}:`, {
-          product_id: i.product_id,
-          id: i.id, 
-          slug: i.slug,
-          searchAttempts: {
-            byId: pid,
-            bySlug: String(i.product_id || i.slug || "")
-          },
-          availableProducts: products.map(p => ({ id: p.id, slug: p.slug, name: p.name }))
+    for (let i = 0; i < items.length; i++) {
+      const it = items[i];
+      if (!it || typeof it.product_id !== 'string' || !it.product_id.trim()) {
+        return new Response(JSON.stringify({ error: `Item ${i}: product_id manquant` }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400 
         });
-        throw new Error("Produit introuvable");
       }
-      
-      const qty = Math.max(1, Number(i.quantity || 1));
-      return { product_id: product.id, quantity: qty };
-    });
+      if (!Number.isInteger(it.quantity) || it.quantity <= 0) {
+        return new Response(JSON.stringify({ error: `Item ${i}: quantity invalide` }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400 
+        });
+      }
 
+      const product = await fetchProductByRef(it.product_id, supabaseService);
+      if (!product) {
+        console.error('[create-payment] Product not found for item', i, it);
+        return new Response(JSON.stringify({ error: 'Produit introuvable' }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400 
+        });
+      }
+
+      // Store product in map for later use
+      productMap.set(product.id, product);
+
+      // Validate product is active and check stock
+      if (!product.active) {
+        return new Response(JSON.stringify({ error: 'Produit inactif' }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400 
+        });
+      }
+
+      // Allow preorders when stock is 0, but check stock if > 0
+      if (typeof product.stock === "number" && product.stock > 0 && product.stock < it.quantity) {
+        return new Response(JSON.stringify({ error: `Stock insuffisant pour ${product.name}. Stock disponible: ${product.stock}` }), { 
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 400 
+        });
+      }
+
+      normalizedItems.push({ product_id: product.id, quantity: it.quantity });
+      
+      // Create detailed order summary for the product description
+      const orderSummary = `📦 Récapitulatif de votre commande:
+• Produit: ${product.name}
+• Prix: ${(product.price_cents / 100).toFixed(2)}€ TTC
+• Quantité: ${it.quantity}
+• Installation comprise
+• Garantie constructeur 2 ans
+• Livraison: ${shipping_country || 'Belgique'}`;
+
+      lineItems.push({
+        price_data: {
+          currency: "eur",
+          product_data: { 
+            name: `${product.name} - Tente de Toit`,
+            description: orderSummary
+          },
+          unit_amount: product.price_cents,
+        },
+        quantity: it.quantity,
+      });
+    }
+
+    // Calculate subtotal
     let subtotalCents = 0;
     for (const it of normalizedItems) {
-      const p = productMap.get(it.product_id);
-      if (!p || !p.active) throw new Error("Produit inactif ou introuvable");
-      // Allow preorders when stock is 0, but still check if stock exists and is sufficient for non-zero stock
-      if (typeof p.stock === "number" && p.stock > 0 && p.stock < it.quantity) {
-        throw new Error(`Stock insuffisant pour ${p.name}. Stock disponible: ${p.stock}`);
-      }
-      subtotalCents += p.price_cents * it.quantity;
+      const product = productMap.get(it.product_id);
+      subtotalCents += product.price_cents * it.quantity;
     }
 
     const shippingCents = computeShippingCostCents(shipping_country);
@@ -229,46 +244,22 @@ serve(async (req) => {
     const customers = await stripe.customers.list({ email: effectiveEmail, limit: 1 });
     const customerId = customers.data[0]?.id;
 
-    const line_items = normalizedItems.map((it) => {
-      const p = productMap.get(it.product_id);
-      // Create detailed order summary for the product description
-      const orderSummary = `📦 Récapitulatif de votre commande:
-• Produit: ${p.name}
-• Prix: ${(p.price_cents / 100).toFixed(2)}€ TTC
-• Quantité: ${it.quantity}
-• Installation comprise
-• Garantie constructeur 2 ans
-• Livraison: ${shipping_country || 'Belgique'}`;
-
-      return {
-        price_data: {
-          currency: "eur",
-          product_data: { 
-            name: `${p.name} - Tente de Toit`,
-            description: orderSummary
-          },
-          unit_amount: p.price_cents,
-        },
-        quantity: it.quantity,
-      } as any;
-    });
-
-    // Optionnel: ajouter les frais de port en tant que ligne séparée si > 0
+    // Add shipping costs as separate line item if > 0
     if (shippingCents > 0) {
-      line_items.push({
+      lineItems.push({
         price_data: {
           currency: "eur",
           product_data: { name: "Frais de livraison" },
           unit_amount: shippingCents,
         },
         quantity: 1,
-      } as any);
+      });
     }
 
     const session = await stripe.checkout.sessions.create({
       customer: customerId,
       customer_email: customerId ? undefined : effectiveEmail,
-      line_items,
+      line_items: lineItems,
       mode: "payment",
       success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/payment-canceled`,
