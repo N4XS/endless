@@ -15,7 +15,7 @@ const Contact = () => {
       <main className="container mx-auto container-padding py-8">
         {/* En-tête */}
         <div className="text-center mb-12">
-          <h1 className="text-display text-sapin mb-4">Contactez-nous</h1>
+          <h1 className="text-display text-primary mb-4">Contactez-nous</h1>
           <p className="text-large text-muted-foreground max-w-2xl mx-auto">
             Une question ? Besoin d'un conseil ? Notre équipe d'experts est à votre disposition.
           </p>
@@ -24,9 +24,9 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Formulaire de contact */}
           <div>
-            <Card className="shadow-card">
+            <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="text-sapin">Envoyez-nous un message</CardTitle>
+                <CardTitle className="text-primary">Envoyez-nous un message</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-2 gap-4">
@@ -77,7 +77,7 @@ const Contact = () => {
                   />
                 </div>
 
-                <Button size="lg" className="w-full bg-sapin hover:bg-sapin/90">
+                <Button size="lg" className="w-full bg-primary hover:bg-primary/90">
                   Envoyer le message
                 </Button>
               </CardContent>
@@ -87,13 +87,13 @@ const Contact = () => {
           {/* Informations de contact */}
           <div className="space-y-6">
             {/* Coordonnées */}
-            <Card className="shadow-card">
+            <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="text-sapin">Nos coordonnées</CardTitle>
+                <CardTitle className="text-primary">Nos coordonnées</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="flex items-start gap-4">
-                  <MapPin className="w-5 h-5 text-ambre mt-1 flex-shrink-0" />
+                  <MapPin className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold mb-1">Adresse</h3>
                     <p className="text-muted-foreground">
@@ -106,25 +106,25 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Phone className="w-5 h-5 text-ambre mt-1 flex-shrink-0" />
+                  <Phone className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold mb-1">Téléphone</h3>
                     <a 
-                      href="tel:0497228743"
-                      className="text-muted-foreground hover:text-sapin transition-colors"
+                      href="tel:+32497228743"
+                      className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      0497 22 87 43
+                      +32 497 22 87 43
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Mail className="w-5 h-5 text-ambre mt-1 flex-shrink-0" />
+                  <Mail className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="font-semibold mb-1">Email</h3>
                     <a 
                       href="mailto:info@endless-tents.com"
-                      className="text-muted-foreground hover:text-sapin transition-colors"
+                      className="text-muted-foreground hover:text-primary transition-colors"
                     >
                       info@endless-tents.com
                     </a>
@@ -136,7 +136,7 @@ const Contact = () => {
 
 
             {/* Carte interactive */}
-            <Card className="shadow-card">
+            <Card className="shadow-lg">
               <CardContent className="p-0">
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2530.1234567890123!2d4.8666767!3d50.4654321!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTDCsDI3JzU1LjYiTiA0wrA1MSc1Ni4wIkU!5e0!3m2!1sfr!2sbe!4v1234567890123!5m2!1sfr!2sbe"
@@ -153,10 +153,10 @@ const Contact = () => {
             </Card>
 
             {/* Réponse rapide */}
-            <Card className="bg-olive text-secondary-foreground">
+            <Card className="bg-primary text-primary-foreground">
               <CardContent className="pt-6 text-center">
                 <h3 className="text-lg font-semibold mb-2">Réponse garantie</h3>
-                <p className="text-secondary-foreground/90 mb-4">
+                <p className="text-primary-foreground/90 mb-4">
                   Nous nous engageons à répondre à tous les messages dans les 24h
                 </p>
                 <div className="flex items-center justify-center gap-2 text-sm">

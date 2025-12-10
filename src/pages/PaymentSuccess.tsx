@@ -120,7 +120,7 @@ const PaymentSuccess = () => {
             </p>
 
             {orderDetails && (
-              <Card className="shadow-card max-w-md mx-auto mb-8">
+              <Card className="shadow-lg max-w-md mx-auto mb-8">
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-lg mb-4">Détails de la commande</h3>
                   <div className="space-y-2 text-sm">

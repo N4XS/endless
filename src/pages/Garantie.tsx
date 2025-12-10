@@ -25,7 +25,7 @@ const Garantie = () => {
       
       <main>
         {/* Hero Section */}
-        <section className="section-padding bg-gradient-nature">
+        <section className="section-padding bg-muted/30">
           <div className="container mx-auto container-padding">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-hero font-display text-primary mb-6">
@@ -43,10 +43,10 @@ const Garantie = () => {
           <div className="container mx-auto container-padding">
             <div className="grid md:grid-cols-2 gap-8 mb-16">
               {guaranteeFeatures.map((feature, index) => (
-                <Card key={index} className="text-center shadow-card hover:shadow-hero transition-shadow">
+                <Card key={index} className="text-center shadow-lg hover:shadow-xl transition-shadow">
                   <CardHeader>
-                    <div className="w-16 h-16 bg-gradient-sunset rounded-lg flex items-center justify-center mx-auto mb-4">
-                      <feature.icon className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-secondary rounded-lg flex items-center justify-center mx-auto mb-4">
+                      <feature.icon className="w-8 h-8 text-secondary-foreground" />
                     </div>
                     <CardTitle className="text-xl">{feature.title}</CardTitle>
                   </CardHeader>
@@ -63,7 +63,7 @@ const Garantie = () => {
         <section className="pb-16">
           <div className="container mx-auto container-padding">
             <div className="max-w-4xl mx-auto">
-              <Card className="shadow-card">
+              <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-2xl text-primary">Conditions de garantie détaillées</CardTitle>
                 </CardHeader>
@@ -111,23 +111,23 @@ const Garantie = () => {
         </section>
 
         {/* Service client */}
-        <section className="section-padding bg-gradient-hero text-primary-foreground">
+        <section className="section-padding bg-primary text-primary-foreground">
           <div className="container mx-auto container-padding text-center">
             <h2 className="text-display mb-6">Besoin d'aide ?</h2>
-            <p className="text-large mb-8 opacity-90 max-w-2xl mx-auto">
+            <p className="text-large mb-8 text-primary-foreground/80 max-w-2xl mx-auto">
               Notre équipe de service client belge est là pour vous accompagner dans vos démarches de garantie.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
               <Link to="/contact">
-                <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
+                <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
                   <Mail className="w-5 h-5 mr-2" />
                   Nous contacter
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
               </Link>
               <a href="tel:+32497228743">
-                <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
+                <Button size="lg" variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
                   <Phone className="w-5 h-5 mr-2" />
                   Appeler directement
                 </Button>

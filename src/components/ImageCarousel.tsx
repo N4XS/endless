@@ -58,7 +58,7 @@ export const ImageCarousel = ({ images, productName, className }: ImageCarouselP
 
         {/* Main Image */}
         <div className="lg:col-span-7 order-1 lg:order-2 w-full min-w-0">
-          <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-shadow duration-300 w-full">
+          <div className="relative group bg-muted rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 w-full">
             <div className="aspect-[4/3] w-full">
               <img
                 key={images[selectedImage]}

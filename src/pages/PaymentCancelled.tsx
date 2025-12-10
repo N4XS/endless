@@ -22,7 +22,7 @@ const PaymentCancelled = () => {
       <main className="section-padding">
         <div className="container mx-auto container-padding max-w-2xl">
           <div className="text-center">
-            <Card className="shadow-card border-destructive/20">
+            <Card className="shadow-lg border-destructive/20">
               <CardContent className="pt-8 pb-8">
                 <div className="flex flex-col items-center space-y-6">
                   <div className="w-16 h-16 bg-destructive/10 rounded-full flex items-center justify-center">

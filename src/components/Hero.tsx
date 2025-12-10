@@ -28,7 +28,7 @@ export const Hero = () => {
           >
             <span className="inline-flex items-center gap-2 text-sm text-white/80 font-medium tracking-wide">
               <span className="w-8 h-px bg-secondary" />
-              Marque belge • Garantie 2 ans
+              Marque belge • Garantie 1 an
             </span>
           </motion.div>
 

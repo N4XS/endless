@@ -235,7 +235,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-nature flex items-center justify-center p-4">
+    <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {/* Back to home */}
         <Link 
@@ -246,9 +246,9 @@ const Auth = () => {
           Retour à l'accueil
         </Link>
 
-        <Card className="shadow-card">
+        <Card className="shadow-lg">
           <CardHeader className="text-center">
-            <div className="w-12 h-12 bg-gradient-hero rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mx-auto mb-4">
               <span className="text-primary-foreground font-bold text-xl">E</span>
             </div>
             <CardTitle className="text-headline text-primary">

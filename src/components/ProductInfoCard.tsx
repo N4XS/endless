@@ -12,7 +12,7 @@ interface ProductInfoCardProps {
 
 export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) => {
   return (
-    <div className="bg-card rounded-xl shadow-card border border-border p-6">
+    <div className="bg-card rounded-xl shadow-lg border border-border p-6">
       <div className="space-y-6">
         <div>
           <h2 className="text-2xl font-bold text-primary mb-2">{product.name}</h2>

@@ -230,7 +230,7 @@ ${formData.message || 'Aucun message'}
       <main className="container mx-auto container-padding py-8">
         {/* En-tête */}
         <div className="text-center mb-12">
-          <h1 className="text-display text-sapin mb-4">Location de Tentes de Toit</h1>
+          <h1 className="text-display text-primary mb-4">Location de Tentes de Toit</h1>
           <p className="text-large text-muted-foreground max-w-2xl mx-auto">
             Testez nos tentes avant l'achat. Location avec service complet et installation sur votre véhicule.
           </p>
@@ -239,9 +239,9 @@ ${formData.message || 'Aucun message'}
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Formulaire de réservation */}
           <div className="space-y-6">
-            <Card className="shadow-card">
+            <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-sapin">
+                <CardTitle className="flex items-center gap-2 text-primary">
                   <Calendar className="w-5 h-5" />
                   Réservation
                 </CardTitle>
@@ -345,9 +345,9 @@ ${formData.message || 'Aucun message'}
 
                 {/* Récapitulatif prix */}
                 {days > 0 && (
-                  <Card className="bg-os border-sable">
+                  <Card className="bg-muted border-border">
                     <CardContent className="pt-6">
-                      <h3 className="font-semibold text-sapin mb-3">Récapitulatif</h3>
+                      <h3 className="font-semibold text-primary mb-3">Récapitulatif</h3>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span>Location ({days} jour{days > 1 ? 's' : ''})</span>
@@ -434,7 +434,7 @@ ${formData.message || 'Aucun message'}
 
                 <Button 
                   size="lg" 
-                  className="w-full bg-olive hover:bg-olive/90"
+                  className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
                   disabled={!startDate || !endDate || days === 0 || loading}
                   onClick={handleSubmitReservation}
                 >
@@ -457,15 +457,15 @@ ${formData.message || 'Aucun message'}
           {/* Informations et processus */}
           <div className="space-y-6">
             {/* Comment ça marche */}
-            <Card className="shadow-card">
+            <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="text-sapin">Comment ça marche ?</CardTitle>
+                <CardTitle className="text-primary">Comment ça marche ?</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
                   {steps.map((step, index) => (
                     <div key={step.number} className="flex gap-4">
-                      <div className="w-8 h-8 bg-olive text-secondary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-secondary text-secondary-foreground rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {step.number}
                       </div>
                       <div>
@@ -479,14 +479,14 @@ ${formData.message || 'Aucun message'}
             </Card>
 
             {/* Avantages location */}
-            <Card className="shadow-card">
+            <Card className="shadow-lg">
               <CardHeader>
-                <CardTitle className="text-sapin">Nos avantages</CardTitle>
+                <CardTitle className="text-primary">Nos avantages</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold">Installation comprise</h4>
                       <p className="text-sm text-muted-foreground">
@@ -496,7 +496,7 @@ ${formData.message || 'Aucun message'}
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold">Déduction à l'achat</h4>
                       <p className="text-sm text-muted-foreground">
@@ -506,7 +506,7 @@ ${formData.message || 'Aucun message'}
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold">Support 24/7</h4>
                       <p className="text-sm text-muted-foreground">
@@ -516,7 +516,7 @@ ${formData.message || 'Aucun message'}
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <h4 className="font-semibold">Matériel inclus</h4>
                       <p className="text-sm text-muted-foreground">
@@ -529,20 +529,20 @@ ${formData.message || 'Aucun message'}
             </Card>
 
             {/* Contact direct */}
-            <Card className="bg-gradient-nature border-olive">
+            <Card className="bg-primary text-primary-foreground">
               <CardContent className="pt-6">
                 <div className="text-center">
-                  <h3 className="text-lg font-semibold text-sapin mb-2">
+                  <h3 className="text-lg font-semibold mb-2">
                     Une question ?
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-primary-foreground/80 mb-4">
                     Contactez directement notre équipe
                   </p>
                   <div className="flex flex-col gap-2">
-                    <a href="tel:0497228743" className="inline-flex items-center justify-center">
-                      <Button variant="outline" className="border-olive text-olive">
+                    <a href="tel:+32497228743" className="inline-flex items-center justify-center">
+                      <Button variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
                         <Phone className="w-4 h-4 mr-2" />
-                        0497 22 87 43
+                        +32 497 22 87 43
                       </Button>
                     </a>
                      <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
@@ -558,7 +558,7 @@ ${formData.message || 'Aucun message'}
 
         {/* Tentes disponibles */}
         <section className="mt-16">
-          <h2 className="text-headline text-sapin mb-8 text-center">
+          <h2 className="text-headline text-primary mb-8 text-center">
             Nos tentes disponibles à la location
           </h2>
           <div className="grid grid-cols-1 gap-6">
