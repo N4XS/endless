@@ -406,18 +406,12 @@ export type Database = {
         Args: { discount_id: string }
         Returns: undefined
       }
-      is_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      is_admin: { Args: never; Returns: boolean }
       log_guest_order_access: {
         Args: { order_id: string; success: boolean }
         Returns: undefined
       }
-      log_unauthorized_admin_attempt: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      log_unauthorized_admin_attempt: { Args: never; Returns: undefined }
       remove_user_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]

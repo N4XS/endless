@@ -1,79 +1,105 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { ScrollReveal } from '@/components/ScrollReveal';
-import { fadeUp, staggerContainer } from '@/lib/motion';
+import { motion } from 'framer-motion';
 
 export const Hero = () => {
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-4 md:pt-0 pb-6 md:pb-0">
+    <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       {/* Image de fond */}
       <div className="absolute inset-0">
         <img
           src="/images/hero.jpg"
-          alt="Aventure en tente de toit dans les Ardennes belges"
+          alt="Aventure en tente de toit"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-charbon/60 via-charbon/30 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
       </div>
 
       {/* Contenu */}
-      <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
-        <ScrollReveal variants={staggerContainer}>
-          <div className="max-w-2xl">
-          {/* Badge */}
-          <ScrollReveal variants={fadeUp}>
-            <div className="inline-flex items-center gap-2 bg-background/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6 mt-4 md:mt-0 border border-background/30">
-              <div className="w-2 h-2 bg-ambre rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-background">
-                Marque belge • Garantie 2 ans • Livraison en 48H
-              </span>
-            </div>
-          </ScrollReveal>
+      <div className="relative z-10 container mx-auto container-padding">
+        <div className="max-w-2xl">
+          {/* Badge subtil */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6"
+          >
+            <span className="inline-flex items-center gap-2 text-sm text-white/80 font-medium tracking-wide">
+              <span className="w-8 h-px bg-secondary" />
+              Marque belge • Garantie 2 ans
+            </span>
+          </motion.div>
 
-          {/* Titre principal */}
-          <ScrollReveal variants={fadeUp}>
-            <h1 className="text-hero font-display text-background mb-6 leading-tight">
-              Explorez le monde avec 
-              <span className="text-ambre block md:inline md:ml-3">
-                style et confort
-              </span>
-            </h1>
-          </ScrollReveal>
+          {/* Titre */}
+          <motion.h1 
+            className="text-hero text-white mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            Dormez sous 
+            <br />
+            <span className="text-secondary">les étoiles</span>
+          </motion.h1>
 
           {/* Sous-titre */}
-          <ScrollReveal variants={fadeUp}>
-            <p className="text-large text-background/90 mb-8 max-w-xl leading-relaxed">
-              Découvrez notre tente Starzz. Pour les aventuriers qui ne veulent pas choisir entre confort et liberté.
-            </p>
-          </ScrollReveal>
+          <motion.p 
+            className="text-lg text-white/80 mb-10 max-w-lg leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Découvrez STARZZ, la tente de toit pensée pour les aventuriers 
+            qui refusent de choisir entre confort et liberté.
+          </motion.p>
 
           {/* CTAs */}
-          <ScrollReveal variants={fadeUp}>
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <Link to="/tentes">
-                <Button size="lg" className="bg-sapin hover:bg-sapin/90 text-primary-foreground shadow-hero group">
-                  Acheter une tente
-                  <ArrowRight className="ml-2 w-5 h-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              
-              <Link to="/location">
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="bg-background/10 backdrop-blur-sm border-background/30 text-background hover:bg-background/20 hover:text-background"
-                >
-                  Louez votre aventure
-                </Button>
-              </Link>
-            </div>
-          </ScrollReveal>
-
-          </div>
-        </ScrollReveal>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <Link to="/tentes">
+              <Button 
+                size="lg" 
+                className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-medium group"
+              >
+                Découvrir STARZZ
+                <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
+            
+            <Link to="/location">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20"
+              >
+                Essayer en location
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
       </div>
 
+      {/* Scroll indicator */}
+      <motion.div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+      >
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+          <motion.div 
+            className="w-1.5 h-3 bg-white/50 rounded-full mt-2"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+      </motion.div>
     </section>
   );
 };

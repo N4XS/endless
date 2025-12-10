@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User, LogOut, ShoppingCart } from 'lucide-react';
+import { Menu, X, ShoppingCart, User } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/contexts/CartContext';
-import { fadeUp, staggerContainer } from '@/lib/motion';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 const navigation = [
   { name: 'Accueil', href: '/' },
@@ -21,37 +19,37 @@ const navigation = [
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { user, signOut } = useAuth();
+  const { user } = useAuth();
   const { totalItems } = useCart();
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="container mx-auto container-padding">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center gap-2.5">
             <img 
               src="/lovable-uploads/85aa829a-09be-4004-835a-f02019132e69.png" 
-              alt="ENDLESS Logo" 
-              className="w-10 h-10 object-contain"
+              alt="ENDLESS" 
+              className="w-9 h-9 object-contain"
             />
-            <span className="font-display font-bold text-xl text-sapin">
+            <span className="font-display font-semibold text-lg text-foreground tracking-tight">
               ENDLESS
             </span>
           </Link>
 
           {/* Navigation desktop */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav className="hidden md:flex items-center gap-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
                 className={cn(
-                  "px-3 py-2 rounded-md text-sm font-medium transition-colors focus-outdoor",
+                  "px-3 py-2 text-sm font-medium transition-colors rounded-md",
                   isActive(item.href)
-                    ? "bg-muted text-sapin font-semibold"
+                    ? "text-foreground bg-muted"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                 )}
               >
@@ -60,121 +58,92 @@ export const Header = () => {
             ))}
           </nav>
 
-          {/* CTAs desktop */}
-          <div className="hidden md:flex items-center space-x-3">
-            <Link to="/location">
-              <Button variant="outline" size="sm" className="border-olive text-olive hover:bg-olive hover:text-olive-foreground">
-                Louer une tente
-              </Button>
-            </Link>
+          {/* Actions desktop */}
+          <div className="hidden md:flex items-center gap-2">
             <Link to="/tentes">
-              <Button size="sm" className="bg-sapin hover:bg-sapin/90 text-primary-foreground">
-                Acheter une tente
+              <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
+                Découvrir
               </Button>
             </Link>
             
-            {/* Cart Icon */}
-            <Link to="/cart" className="relative">
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                <ShoppingCart className="w-5 h-5" />
-                {totalItems > 0 && (
-                  <Badge className="absolute -top-2 -right-2 bg-primary text-primary-foreground text-xs w-5 h-5 flex items-center justify-center p-0">
-                    {totalItems}
-                  </Badge>
-                )}
-              </Button>
+            <Link to="/cart" className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
+              <ShoppingCart className="w-5 h-5" />
+              {totalItems > 0 && (
+                <Badge className="absolute -top-1 -right-1 bg-secondary text-secondary-foreground text-[10px] w-5 h-5 flex items-center justify-center p-0 font-semibold">
+                  {totalItems}
+                </Badge>
+              )}
             </Link>
             
-            {/* Auth buttons */}
-            {user ? (
-              <Link to="/mon-compte">
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                  <User className="w-4 h-4 mr-2" />
-                  Mon Espace
-                </Button>
-              </Link>
-            ) : (
-              <Link to="/auth">
-                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
-                  <User className="w-4 h-4 mr-2" />
-                  Connexion
-                </Button>
-              </Link>
-            )}
+            <Link 
+              to={user ? "/mon-compte" : "/auth"} 
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <User className="w-5 h-5" />
+            </Link>
           </div>
 
-          {/* Menu mobile */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted focus-outdoor"
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
+          {/* Menu mobile toggle */}
+          <div className="flex items-center gap-2 md:hidden">
+            <Link to="/cart" className="relative p-2 text-muted-foreground hover:text-foreground transition-colors">
+              <ShoppingCart className="w-5 h-5" />
+              {totalItems > 0 && (
+                <Badge className="absolute -top-1 -right-1 bg-secondary text-secondary-foreground text-[10px] w-5 h-5 flex items-center justify-center p-0 font-semibold">
+                  {totalItems}
+                </Badge>
+              )}
+            </Link>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Menu"
+            >
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
 
-        {/* Menu mobile ouvert */}
+        {/* Menu mobile */}
         <AnimatePresence>
           {isOpen && (
             <motion.div 
-              className="md:hidden border-t border-border mt-2 pt-4 pb-4"
-              variants={staggerContainer}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
+              className="md:hidden border-t border-border/50 py-4"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="space-y-2">
-                {navigation.map((item, index) => (
-                  <motion.div key={item.name} variants={fadeUp}>
-                    <Link
-                      to={item.href}
-                      onClick={() => setIsOpen(false)}
-                      className={cn(
-                        "block px-3 py-2 rounded-md text-base font-medium transition-colors",
-                        isActive(item.href)
-                          ? "bg-muted text-sapin font-semibold"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                      )}
-                    >
-                      {item.name}
-                    </Link>
-                  </motion.div>
+              <nav className="flex flex-col gap-1">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className={cn(
+                      "px-3 py-2.5 text-sm font-medium transition-colors rounded-md",
+                      isActive(item.href)
+                        ? "text-foreground bg-muted"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
                 ))}
-              </div>
-              <motion.div className="pt-4 space-y-2" variants={fadeUp}>
-                <Link to="/location" onClick={() => setIsOpen(false)}>
-                  <Button variant="outline" className="w-full border-olive text-olive">
-                    Louer une tente
-                  </Button>
-                </Link>
+              </nav>
+              
+              <div className="mt-4 pt-4 border-t border-border/50 flex flex-col gap-2">
                 <Link to="/tentes" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full bg-sapin hover:bg-sapin/90">
-                    Acheter une tente
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
+                    Découvrir STARZZ
                   </Button>
                 </Link>
-                <Link to="/cart" onClick={() => setIsOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start text-muted-foreground">
-                    <ShoppingCart className="w-4 h-4 mr-2" />
-                    Panier ({totalItems})
+                <Link to={user ? "/mon-compte" : "/auth"} onClick={() => setIsOpen(false)}>
+                  <Button variant="outline" className="w-full">
+                    <User className="w-4 h-4 mr-2" />
+                    {user ? "Mon compte" : "Connexion"}
                   </Button>
                 </Link>
-                
-                {/* Auth mobile */}
-                {user ? (
-                  <Link to="/mon-compte" onClick={() => setIsOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start text-muted-foreground">
-                      <User className="w-4 h-4 mr-2" />
-                      Mon Espace
-                    </Button>
-                  </Link>
-                ) : (
-                  <Link to="/auth" onClick={() => setIsOpen(false)}>
-                    <Button variant="ghost" className="w-full justify-start text-muted-foreground">
-                      <User className="w-4 h-4 mr-2" />
-                      Connexion
-                    </Button>
-                  </Link>
-                )}
-              </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

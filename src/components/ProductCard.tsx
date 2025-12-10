@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Users, Shield, Clock } from 'lucide-react';
+import { ShoppingCart, Users, Shield, Clock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Product } from '@/types';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
-import { cardHover } from '@/lib/motion';
 import { LazyImage } from './LazyImage';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { PreorderDialog } from './PreorderDialog';
@@ -34,180 +32,134 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
   const handleAddToCart = () => {
     addToCart(product);
     toast({
-      title: "Produit ajouté au panier",
+      title: "Ajouté au panier",
       description: `${product.name} a été ajouté à votre panier.`
     });
   };
 
-  const getShellIcon = (shell: 'hard' | 'soft') => {
-    return shell === 'hard' ? '🛡️' : '🏕️';
-  };
-
   const CardWrapper = prefersReducedMotion ? 'div' : motion.div;
   const cardProps = prefersReducedMotion ? {} : {
-    whileHover: cardHover,
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.3 }
+    transition: { duration: 0.4 }
   };
 
+  const specs = [
+    { icon: Users, label: 'Capacité', value: '2-3 pers.' },
+    { icon: Shield, label: 'Résistance', value: '350 kg' },
+    { icon: Clock, label: 'Installation', value: '60 sec' },
+  ];
+
   return (
-    <CardWrapper className={cn("w-full max-w-none group", className)} {...cardProps}>
-      <div className="bg-card rounded-xl overflow-hidden shadow-card hover:shadow-hero transition-all duration-300 border border-border">
-        <div className="grid md:grid-cols-12 gap-0 min-h-[400px]">
-          {/* Image Section */}
-          <div className="relative md:col-span-5 aspect-[4/3] md:aspect-auto md:h-full overflow-hidden">
+    <CardWrapper className={cn("w-full", className)} {...cardProps}>
+      <div className="bg-card rounded-lg overflow-hidden border border-border hover:border-border/80 transition-all duration-300 hover:shadow-lg">
+        <div className="grid md:grid-cols-2 gap-0">
+          {/* Image */}
+          <div className="relative aspect-[4/3] md:aspect-auto md:min-h-[400px] overflow-hidden group">
             <LazyImage
               src={product.images[0]}
               alt={product.name}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             
-            {/* Out of stock overlay */}
+            {/* Stock badge */}
             {product.stock === 0 && (
-              <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                <Badge variant="destructive" className="text-base font-semibold px-4 py-2">
+              <div className="absolute top-4 left-4">
+                <span className="px-3 py-1.5 bg-foreground/90 text-background text-xs font-medium rounded-full">
                   Rupture de stock
-                </Badge>
+                </span>
               </div>
             )}
-
-            {/* Actions rapides */}
-            <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button className="p-3 bg-background/95 backdrop-blur rounded-full shadow-soft hover:bg-background hover:shadow-hero transition-all">
-                <Heart className="w-5 h-5 text-muted-foreground hover:text-destructive transition-colors" />
-              </button>
-            </div>
-
-            {/* Overlay gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
 
-          {/* Content Section */}
-          <div className="p-6 md:p-8 md:col-span-7 flex flex-col justify-between min-h-[400px]">
+          {/* Content */}
+          <div className="p-6 md:p-8 flex flex-col justify-between">
             <div className="space-y-6">
               {/* Header */}
               <div>
-                <Link
-                  to={`/tentes`}
-                  className="block group-hover:text-primary transition-colors"
-                >
-                  <h2 className="font-display font-bold text-3xl lg:text-4xl mb-2 text-foreground">
+                <Link to="/tentes" className="group/link">
+                  <h2 className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-2 group-hover/link:text-primary transition-colors">
                     {product.name}
                   </h2>
                 </Link>
-                <p className="text-muted-foreground text-lg leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   {product.description}
                 </p>
               </div>
 
               {/* Specs */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                  <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
-                    <Users className="w-5 h-5 text-white" />
+              <div className="grid grid-cols-3 gap-3">
+                {specs.map((spec, index) => (
+                  <div key={index} className="text-center p-3 rounded-md bg-muted/50">
+                    <spec.icon className="w-5 h-5 mx-auto mb-1.5 text-primary" />
+                    <div className="text-sm font-medium text-foreground">{spec.value}</div>
+                    <div className="text-xs text-muted-foreground">{spec.label}</div>
                   </div>
-                  <div>
-                    <div className="font-semibold text-foreground">2-3 personnes</div>
-                    <div className="text-sm text-muted-foreground">Capacité</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                  <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground">350kg</div>
-                    <div className="text-sm text-muted-foreground">Résistance</div>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 col-span-2">
-                  <div className="w-10 h-10 rounded-full bg-gradient-sunset flex items-center justify-center">
-                    <Clock className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground">ouverture en 60 secondes</div>
-                    <div className="text-sm text-muted-foreground">Installation rapide</div>
-                  </div>
-                </div>
+                ))}
               </div>
 
-              {/* Prix */}
-              <div className="bg-gradient-nature rounded-lg p-6">
-                <div className="flex items-center justify-between">
-                   <div>
-                     <div className="text-4xl font-bold text-primary">
-                       {formatPrice(product.price)}
-                     </div>
-                     <div className="text-sm text-muted-foreground">TTC, installation comprise</div>
-                   </div>
+              {/* Price */}
+              <div className="pt-4 border-t border-border">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-display font-semibold text-foreground">
+                    {formatPrice(product.price)}
+                  </span>
+                  <span className="text-sm text-muted-foreground">TTC</span>
                 </div>
+                <p className="text-sm text-muted-foreground mt-1">Installation comprise</p>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="space-y-4 pt-6">
+            <div className="mt-6 space-y-3">
               <div className="flex gap-3">
                 <Link to="/tentes" className="flex-1">
-                  <Button
-                    size="lg"
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                  >
+                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 group">
                     Voir les détails
+                    <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
                 
                 {product.stock > 0 ? (
                   <Button
-                    size="lg"
                     variant="outline"
                     onClick={handleAddToCart}
-                    className="px-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                    className="px-4"
                   >
                     <ShoppingCart className="w-5 h-5" />
                   </Button>
                 ) : (
                   <PreorderDialog product={product}>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="px-6 border-orange-500 text-orange-600 hover:bg-orange-500 hover:text-white"
-                    >
+                    <Button variant="outline" className="px-4">
                       <Clock className="w-5 h-5" />
                     </Button>
                   </PreorderDialog>
                 )}
               </div>
 
-              {/* Lien location */}
-              {product.category === 'tent' && (
-                <Link to="/location" className="block">
-                  <Button
-                    variant="ghost"
-                    className="w-full text-olive hover:text-olive hover:bg-olive/10 font-medium"
-                    size="lg"
-                  >
-                    Ou essayer en location d'abord →
-                  </Button>
-                </Link>
-              )}
-
               {/* Stock indicator */}
               <div className="flex items-center gap-2 text-sm">
-                {product.stock > 0 ? (
-                  <>
-                    <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                    <span className="text-muted-foreground">En stock • 24-48h ouvrables</span>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-2 h-2 rounded-full bg-orange-500"></div>
-                    <span className="text-muted-foreground">Rupture de stock • Précommande disponible</span>
-                  </>
-                )}
+                <span className={cn(
+                  "w-2 h-2 rounded-full",
+                  product.stock > 0 ? "bg-green-500" : "bg-orange-500"
+                )} />
+                <span className="text-muted-foreground">
+                  {product.stock > 0 
+                    ? "En stock • Livraison 24-48h" 
+                    : "Précommande disponible"
+                  }
+                </span>
               </div>
+
+              {/* Rental link */}
+              {product.category === 'tent' && (
+                <Link 
+                  to="/location" 
+                  className="block text-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Ou essayez en location d'abord →
+                </Link>
+              )}
             </div>
           </div>
         </div>
