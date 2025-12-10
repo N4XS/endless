@@ -144,7 +144,7 @@ const PaymentSuccess = () => {
                   <li>• Vous recevrez un email de confirmation dans les prochaines minutes</li>
                   <li>• Notre équipe préparera votre commande sous 24-48h</li>
                   <li>• Vous recevrez un numéro de suivi dès l'expédition</li>
-                  <li>• Livraison estimée : 3-5 jours ouvrables</li>
+                  <li>• Livraison estimée : 24-48h (Belgique uniquement)</li>
                 </ul>
               </div>
 

@@ -79,8 +79,7 @@ const CGV = () => {
               <CardContent className="p-6">
                 <h2 className="font-display text-2xl font-semibold text-foreground mb-4">6. Livraison & Exécution</h2>
                 <ul className="list-disc list-inside space-y-2 text-foreground">
-                  <li><strong>Belgique</strong> : livraison <strong>sous 5 jours ouvrables si stock disponible</strong>.</li>
-                  <li><strong>Étranger</strong> : délais <strong>variables</strong> selon transporteur (affichés/communiqués à titre indicatif).</li>
+                  <li><strong>Belgique uniquement</strong> : livraison <strong>sous 24-48h ouvrables si stock disponible</strong>.</li>
                   <li><strong>Prestations (montage/démontage)</strong> : intervention <strong>dans toute la Belgique</strong>, sur rendez-vous confirmé.</li>
                 </ul>
                 <p className="text-foreground mt-4">

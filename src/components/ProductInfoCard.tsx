@@ -42,7 +42,7 @@ export const ProductInfoCard = ({ product, onAddToCart }: ProductInfoCardProps) 
           {product.stock > 0 ? (
             <>
               <Clock className="w-4 h-4" />
-              <span>Livraison sous 24-48 heures ouvrables</span>
+              <span>Livraison 24-48h (Belgique uniquement)</span>
             </>
           ) : (
             <>
