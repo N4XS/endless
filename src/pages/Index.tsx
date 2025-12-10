@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { faqs } from '@/data/products';
 import { useProducts } from '@/hooks/useProducts';
+import { SEO, generateFAQSchema } from '@/components/SEO';
 
 const Index = () => {
   const { products, loading } = useProducts();
@@ -35,8 +36,16 @@ const Index = () => {
     }
   ];
 
+  const faqSchemaData = generateFAQSchema(faqs.slice(0, 5));
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Accueil"
+        description="Endless - Vendeur de rêves étoilés. Découvrez STARZZ, notre tente de toit premium. Vente et location en Belgique. Installation gratuite & garantie 1 an."
+        canonical="/"
+        structuredData={faqSchemaData}
+      />
       <Header />
       <main>
         <Hero />

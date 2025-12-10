@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Clock, CheckCircle, Phone, Mail, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { SEO, generateBreadcrumbSchema } from '@/components/SEO';
 
 const Garantie = () => {
   const guaranteeFeatures = [
@@ -19,8 +20,19 @@ const Garantie = () => {
     }
   ];
 
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Accueil', url: '/' },
+    { name: 'Garantie', url: '/garantie' },
+  ]);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Garantie"
+        description="Découvrez la garantie fabricant 1 an sur nos tentes de toit ENDLESS. Service après-vente réactif et accompagnement personnalisé en Belgique."
+        canonical="/garantie"
+        structuredData={breadcrumbSchema}
+      />
       <Header />
       
       <main>

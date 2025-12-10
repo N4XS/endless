@@ -12,3 +12,15 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# Sitemap
+Sitemap: https://endless-tents.com/sitemap.xml
+
+# Disallow admin and private pages
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /checkout
+Disallow: /payment-success
+Disallow: /payment-cancelled
+Disallow: /payment-error
+Disallow: /my-orders

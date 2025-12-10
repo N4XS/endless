@@ -11,6 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { Calendar, Clock, Shield, MapPin, Phone, CheckCircle, Send } from 'lucide-react';
 import { products } from '@/data/products';
+import { SEO, generateServiceSchema, generateBreadcrumbSchema } from '@/components/SEO';
 
 const Location = () => {
   const { toast } = useToast();
@@ -223,8 +224,20 @@ ${formData.message || 'Aucun message'}
     }
   ];
 
+  const serviceSchema = generateServiceSchema();
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Accueil', url: '/' },
+    { name: 'Location', url: '/location' },
+  ]);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Location de Tentes de Toit"
+        description="Louez une tente de toit STARZZ à partir de 89€/weekend. Service complet avec installation sur votre véhicule. Location déductible à l'achat."
+        canonical="/location"
+        structuredData={[serviceSchema, breadcrumbSchema]}
+      />
       <Header />
 
       <main className="container mx-auto container-padding py-8">

@@ -4,6 +4,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { SEO, generateFAQSchema, generateBreadcrumbSchema } from '@/components/SEO';
 import { 
   Car, 
   Weight, 
@@ -330,8 +331,28 @@ const FAQ = () => {
     }
   ];
 
+  // Generate FAQ schema from all questions
+  const allFaqs = faqSections.flatMap(section => 
+    section.faqs.map(faq => ({
+      question: faq.question,
+      answer: typeof faq.answer === 'string' ? faq.answer : 'Consultez notre page FAQ pour plus de détails.'
+    }))
+  );
+  
+  const faqSchema = generateFAQSchema(allFaqs);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Accueil', url: '/' },
+    { name: 'FAQ', url: '/faq' },
+  ]);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="FAQ - Questions Fréquentes"
+        description="Retrouvez les réponses à toutes vos questions sur les tentes de toit ENDLESS : installation, compatibilité véhicule, location, garantie et livraison."
+        canonical="/faq"
+        structuredData={[faqSchema, breadcrumbSchema]}
+      />
       <Header />
       
       {/* Hero Section */}
