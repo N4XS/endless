@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +10,7 @@ import { Switch } from '@/components/ui/switch';
 import { Textarea } from '@/components/ui/textarea';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-import { Plus, Edit, Trash2, Tag } from 'lucide-react';
+import { Plus, Edit, Trash2, Tag, ShieldAlert } from 'lucide-react';
 
 interface DiscountCode {
   id: string;
@@ -27,8 +28,10 @@ interface DiscountCode {
 }
 
 const AdminDiscountCodes = () => {
+  const navigate = useNavigate();
   const [codes, setCodes] = useState<DiscountCode[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingCode, setEditingCode] = useState<DiscountCode | null>(null);
   const [formData, setFormData] = useState({
@@ -43,8 +46,35 @@ const AdminDiscountCodes = () => {
   });
 
   useEffect(() => {
-    fetchCodes();
+    checkAdminAccess();
   }, []);
+
+  const checkAdminAccess = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        toast.error('Veuillez vous connecter');
+        navigate('/auth');
+        return;
+      }
+
+      const { data: isAdmin, error } = await supabase.rpc('is_admin');
+      
+      if (error || !isAdmin) {
+        toast.error('Accès non autorisé');
+        navigate('/');
+        return;
+      }
+
+      setIsAuthorized(true);
+      fetchCodes();
+    } catch (error) {
+      console.error('Error checking admin access:', error);
+      toast.error('Erreur de vérification des droits');
+      navigate('/');
+    }
+  };
 
   const fetchCodes = async () => {
     try {
@@ -173,6 +203,16 @@ const AdminDiscountCodes = () => {
 
   if (loading) {
     return <div className="flex justify-center p-8">Chargement...</div>;
+  }
+
+  if (!isAuthorized) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[50vh] p-8">
+        <ShieldAlert className="w-16 h-16 text-destructive mb-4" />
+        <h2 className="text-xl font-semibold mb-2">Accès refusé</h2>
+        <p className="text-muted-foreground">Vous n'avez pas les droits pour accéder à cette page.</p>
+      </div>
+    );
   }
 
   return (
