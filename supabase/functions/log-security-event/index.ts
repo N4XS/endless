@@ -11,24 +11,89 @@ interface SecurityEventRequest {
   metadata?: Record<string, any>;
 }
 
-serve(async (req) => {
-  // Basic CORS for internal function calls
-  if (req.method === "OPTIONS") {
-    return new Response(null, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "content-type",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-      },
-    });
+// In-memory rate limiter (resets on function cold start, but provides basic protection)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 10;
+
+// Allowed origins for this project
+const ALLOWED_ORIGINS = [
+  'https://gbkpdgchdkkydpzycfkr.lovableproject.com',
+  'https://endless-tents.lovable.app',
+  'http://localhost:5173',
+  'http://localhost:8080'
+];
+
+function isRateLimited(clientIP: string): boolean {
+  const now = Date.now();
+  const entry = rateLimitMap.get(clientIP);
+  
+  if (!entry || now > entry.resetTime) {
+    rateLimitMap.set(clientIP, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return false;
   }
+  
+  entry.count++;
+  if (entry.count > MAX_REQUESTS_PER_WINDOW) {
+    return true;
+  }
+  
+  return false;
+}
+
+function isOriginAllowed(origin: string | null): boolean {
+  if (!origin) return false;
+  return ALLOWED_ORIGINS.some(allowed => origin.startsWith(allowed) || allowed === origin);
+}
+
+const VALID_EVENT_TYPES = [
+  'auth_failure', 'auth_success', 'auth_attempt', 
+  'suspicious_activity', 'rate_limit', 'invalid_access', 
+  'data_access', 'security_alert'
+];
+
+serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": isOriginAllowed(origin) ? origin! : ALLOWED_ORIGINS[0],
+    "Access-Control-Allow-Headers": "content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  // Extract client IP early for rate limiting
+  const clientIP = req.headers.get("x-forwarded-for")?.split(',')[0]?.trim() || 
+                   req.headers.get("x-real-ip") || 
+                   "unknown";
 
   try {
     // Only accept POST requests
     if (req.method !== "POST") {
       return new Response(JSON.stringify({ error: "Method not allowed" }), {
         status: 405,
-        headers: { "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Rate limiting check
+    if (isRateLimited(clientIP)) {
+      console.warn(`[log-security-event] Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(JSON.stringify({ error: "Rate limit exceeded. Try again later." }), {
+        status: 429,
+        headers: { ...corsHeaders, "Content-Type": "application/json", "Retry-After": "60" },
+      });
+    }
+
+    // Check content length to prevent oversized payloads (max 10KB)
+    const contentLength = parseInt(req.headers.get("content-length") || "0", 10);
+    if (contentLength > 10240) {
+      return new Response(JSON.stringify({ error: "Payload too large" }), {
+        status: 413,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
@@ -53,16 +118,30 @@ serve(async (req) => {
         JSON.stringify({ error: "Missing required fields: event_type, details" }),
         {
           status: 400,
-          headers: { "Content-Type": "application/json" },
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
         }
       );
     }
 
-    // Extract request metadata (no PII collected)
-    const clientIP = req.headers.get("x-forwarded-for") || 
-                     req.headers.get("x-real-ip") || 
-                     "unknown";
-    const userAgent = req.headers.get("user-agent") || "unknown";
+    // Validate event type
+    if (!VALID_EVENT_TYPES.includes(body.event_type)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid event_type" }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    // Validate and sanitize input lengths
+    const sanitizedDetails = String(body.details).slice(0, 1000);
+    const sanitizedMessage = body.message ? String(body.message).slice(0, 500) : null;
+    const sanitizedMetadata = body.metadata && typeof body.metadata === 'object' 
+      ? JSON.parse(JSON.stringify(body.metadata).slice(0, 2000))
+      : {};
+
+    const userAgent = (req.headers.get("user-agent") || "unknown").slice(0, 500);
 
     // Insert security log (service role bypasses RLS policies)
     const { error } = await supabase
@@ -70,11 +149,11 @@ serve(async (req) => {
       .insert({
         event_type: body.event_type,
         user_id: null, // Intentionally anonymized for security compliance
-        ip_address: clientIP,
+        ip_address: clientIP.slice(0, 45), // Max IPv6 length
         user_agent: userAgent,
-        details: body.details,
-        message: body.message || null,
-        metadata: body.metadata || {}
+        details: sanitizedDetails,
+        message: sanitizedMessage,
+        metadata: sanitizedMetadata
       });
 
     if (error) {
@@ -86,7 +165,7 @@ serve(async (req) => {
       JSON.stringify({ success: true }),
       {
         status: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
 
@@ -96,7 +175,7 @@ serve(async (req) => {
       JSON.stringify({ error: "Internal server error" }),
       {
         status: 500,
-        headers: { "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       }
     );
   }

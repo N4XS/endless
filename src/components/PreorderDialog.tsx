@@ -26,24 +26,50 @@ export const PreorderDialog: React.FC<PreorderDialogProps> = ({ product, childre
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.email || !formData.name) {
+    // Client-side validation (server also validates)
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim().toLowerCase();
+    
+    if (!trimmedEmail || !trimmedName) {
       toast.error('Veuillez remplir tous les champs');
+      return;
+    }
+
+    if (trimmedName.length < 2 || trimmedName.length > 100) {
+      toast.error('Le nom doit contenir entre 2 et 100 caractères');
+      return;
+    }
+
+    // Basic email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      toast.error('Veuillez entrer une adresse email valide');
+      return;
+    }
+
+    if (formData.quantity < 1 || formData.quantity > 10) {
+      toast.error('La quantité doit être comprise entre 1 et 10');
       return;
     }
 
     setLoading(true);
     try {
-      const { error } = await supabase
-        .from('preorders')
-        .insert({
+      // Use secure edge function with server-side validation
+      const { data, error } = await supabase.functions.invoke('create-preorder', {
+        body: {
           product_id: product.id,
-          customer_email: formData.email,
-          customer_name: formData.name,
-          quantity: formData.quantity,
-          estimated_delivery: 'Disponible sous 2-3 semaines'
-        });
+          customer_email: trimmedEmail,
+          customer_name: trimmedName,
+          quantity: formData.quantity
+        }
+      });
 
       if (error) throw error;
+      
+      if (data?.error) {
+        toast.error(data.error);
+        return;
+      }
 
       toast.success('Précommande enregistrée avec succès !', {
         description: 'Nous vous contacterons dès que le produit sera disponible.'
