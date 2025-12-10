@@ -170,7 +170,7 @@ const Checkout = () => {
             <div className="grid lg:grid-cols-2 gap-8">
               {/* Checkout Form */}
               <div>
-                <Card className="shadow-card">
+                <Card className="shadow-lg">
                   <CardHeader>
                     <CardTitle>Informations de livraison</CardTitle>
                   </CardHeader>
@@ -214,7 +214,7 @@ const Checkout = () => {
 
               {/* Order Summary */}
               <div>
-                <Card className="shadow-card">
+                <Card className="shadow-lg">
                   <CardHeader>
                     <CardTitle>Votre commande</CardTitle>
                   </CardHeader>

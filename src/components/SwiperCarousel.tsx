@@ -58,7 +58,7 @@ export const SwiperCarousel = ({ images, productName, className }: SwiperCarouse
             >
               {images.map((image, index) => (
                 <SwiperSlide key={index} className="!w-[280px] sm:!w-[320px] lg:!w-[380px]">
-                  <div className="bg-gradient-to-br from-background to-muted rounded-2xl overflow-hidden shadow-card hover:shadow-hero transition-all duration-500 group/slide">
+                  <div className="bg-gradient-to-br from-background to-muted rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 group/slide">
                     <div className="aspect-square w-full relative">
                       <LazyImage
                         src={image}

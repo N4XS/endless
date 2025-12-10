@@ -49,7 +49,7 @@ const Cart = () => {
                 Découvrez nos tentes de toit premium pour commencer votre aventure.
               </p>
               <Link to="/tentes">
-                <Button className="bg-sapin hover:bg-sapin/90">
+                <Button className="bg-primary hover:bg-primary/90">
                   Voir nos tentes
                 </Button>
               </Link>
@@ -75,7 +75,7 @@ const Cart = () => {
             {/* Cart Items */}
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
-                <Card key={item.product.id} className="shadow-card">
+                <Card key={item.product.id} className="shadow-lg">
                   <CardContent className="p-6">
                     <div className="flex gap-6">
                       {/* Product Image */}
@@ -149,7 +149,7 @@ const Cart = () => {
 
             {/* Order Summary */}
             <div>
-              <Card className="shadow-card">
+              <Card className="shadow-lg">
                 <CardContent className="p-6">
                   <h2 className="text-xl font-semibold text-primary mb-6">
                     Récapitulatif

@@ -335,10 +335,10 @@ const FAQ = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="bg-gradient-hero text-primary-foreground py-16">
+      <section className="bg-primary text-primary-foreground py-16">
         <div className="container mx-auto container-padding text-center">
           <h1 className="text-hero mb-4">FAQ</h1>
-          <p className="text-large max-w-3xl mx-auto opacity-90">
+          <p className="text-large max-w-3xl mx-auto text-primary-foreground/80">
             Vous trouverez ci-dessous les réponses aux questions les plus fréquemment posées concernant nos tentes de toit ENDLESS. Si vous ne trouvez pas la réponse à votre question, n'hésitez pas à nous contacter directement.
           </p>
         </div>
@@ -347,7 +347,7 @@ const FAQ = () => {
       <main className="container mx-auto container-padding py-12">
         {/* Table des matières */}
         <div className="mb-12">
-          <Card className="shadow-card">
+          <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="text-center">Sommaire</CardTitle>
             </CardHeader>
@@ -359,8 +359,8 @@ const FAQ = () => {
                     href={`#${section.id}`}
                     className="flex items-center gap-3 p-3 rounded-lg border border-border hover:bg-muted/50 transition-colors group"
                   >
-                    <div className="w-8 h-8 rounded-full bg-gradient-sunset flex items-center justify-center">
-                      <section.icon className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center">
+                      <section.icon className="w-4 h-4 text-secondary-foreground" />
                     </div>
                     <span className="font-medium text-foreground group-hover:text-primary">
                       {section.title}
@@ -385,7 +385,7 @@ const FAQ = () => {
 
               <div className="grid gap-6">
                 {section.faqs.map((faq, index) => (
-                  <Card key={index} className="shadow-card hover:shadow-hero transition-shadow">
+                  <Card key={index} className="shadow-lg hover:shadow-xl transition-shadow">
                     <CardContent className="p-0">
                       <Accordion type="single" collapsible>
                         <AccordionItem value={`faq-${section.id}-${index}`} className="border-none">
@@ -416,7 +416,7 @@ const FAQ = () => {
 
         {/* Contact Section */}
         <section className="mt-16">
-          <Card className="bg-gradient-nature shadow-card">
+          <Card className="bg-muted/50 shadow-lg">
             <CardContent className="p-8 text-center">
               <h2 className="text-title text-primary mb-4">Vous n'avez pas trouvé la réponse à votre question ?</h2>
               <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
@@ -430,9 +430,9 @@ const FAQ = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  <a href="mailto:info@endless-tents.be" className="flex items-center gap-2">
+                  <a href="mailto:info@endless-tents.com" className="flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    info@endless-tents.be
+                    info@endless-tents.com
                   </a>
                 </Button>
               </div>

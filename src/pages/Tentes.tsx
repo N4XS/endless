@@ -98,7 +98,7 @@ const Tentes = () => {
     },
     {
       icon: CheckCircle,
-      title: 'Garantie 2 ans',
+      title: 'Garantie 1 an',
       description: 'Garantie constructeur + installation comprise'
     }
   ];
