@@ -7,11 +7,12 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Loader2, AlertCircle, Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useSecureStorage } from '@/hooks/useSecureStorage';
-
+import { useCart } from '@/contexts/CartContext';
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { getGuestToken, clearGuestToken } = useSecureStorage();
+  const { clearCart } = useCart();
   const [verificationStatus, setVerificationStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [orderDetails, setOrderDetails] = useState<any>(null);
 
@@ -65,6 +66,9 @@ const PaymentSuccess = () => {
         }
       }
 
+      // Vider le panier après paiement réussi
+      clearCart();
+      
       setVerificationStatus('success');
     } catch (error) {
       console.error('Payment verification error:', error);
@@ -144,7 +148,7 @@ const PaymentSuccess = () => {
                   <li>• Vous recevrez un email de confirmation dans les prochaines minutes</li>
                   <li>• Notre équipe préparera votre commande sous 24-48h</li>
                   <li>• Vous recevrez un numéro de suivi dès l'expédition</li>
-                  <li>• Livraison estimée : 24-48h (Belgique uniquement)</li>
+                  <li>• Belgique : livraison 24-48h • International : délai variable selon destination</li>
                 </ul>
               </div>
 
