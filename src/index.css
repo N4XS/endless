@@ -1,86 +1,84 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Design system pour une marque belge de tentes de toit outdoor */
+/* Design system épuré et professionnel */
 @layer base {
   :root {
-    /* Couleurs principales - Thème nature belge */
-    --sapin: 147 37% 20%;        /* #1F3E2E - Vert sapin profond */
-    --olive: 49 97% 64%;         /* #FDD44F - Jaune doré principal */
-    --sable: 45 27% 76%;         /* #D9C8A9 - Beige sable chaud */
-    --os: 48 36% 96%;            /* #F7F3EC - Crème naturel */
-    --charbon: 0 0% 13%;         /* #222222 - Charbon profond */
-    --ambre: 38 78% 56%;         /* #E9A63A - Ambre chaleureux */
+    /* Palette simplifiée - 3 couleurs principales */
+    --forest: 160 25% 18%;           /* #1F352E - Vert forêt profond */
+    --amber: 38 92% 50%;             /* #F59E0B - Ambre CTA */
+    --cream: 40 33% 97%;             /* #FAF9F6 - Fond crème */
+    
+    /* Neutres raffinés */
+    --slate-900: 220 13% 13%;        /* #1E1E24 - Texte principal */
+    --slate-600: 220 9% 46%;         /* #6B7280 - Texte secondaire */
+    --slate-400: 220 9% 65%;         /* #9CA3AF - Texte tertiaire */
+    --slate-200: 220 14% 92%;        /* #E5E7EB - Bordures */
+    --slate-100: 220 14% 96%;        /* #F3F4F6 - Fond secondaire */
+    --white: 0 0% 100%;              /* #FFFFFF */
 
-    /* Système de couleurs sémantiques */
-    --background: 48 36% 96%;    /* os - fond principal */
-    --foreground: 0 0% 13%;      /* charbon - texte principal */
+    /* Système sémantique */
+    --background: 40 33% 97%;
+    --foreground: 220 13% 13%;
 
-    --card: 0 0% 100%;           /* blanc pur pour les cartes */
-    --card-foreground: 0 0% 13%; /* charbon */
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 13%;
+    --popover-foreground: 220 13% 13%;
 
-    --primary: 38 78% 56%;       /* ambre - CTA principal */
-    --primary-foreground: 48 36% 96%; /* os */
+    --primary: 160 25% 18%;          /* Forest - CTA principal */
+    --primary-foreground: 40 33% 97%;
 
-    --secondary: 106 19% 32%;    /* olive - CTA secondaire */
-    --secondary-foreground: 48 36% 96%; /* os */
+    --secondary: 38 92% 50%;         /* Amber - CTA secondaire */
+    --secondary-foreground: 220 13% 13%;
 
-    --muted: 45 27% 88%;         /* sable clair */
-    --muted-foreground: 0 0% 45%; /* gris moyen */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 38 78% 56%;        /* ambre - accents */
-    --accent-foreground: 0 0% 13%; /* charbon */
-
-    --success: 38 78% 56%;       /* ambre */
-    --success-foreground: 48 36% 96%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 220 13% 13%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 48 36% 96%;
+    --destructive-foreground: 0 0% 100%;
 
-    --warning: 38 78% 56%;       /* ambre */
-    --warning-foreground: 0 0% 13%;
+    --border: 220 14% 90%;
+    --input: 220 14% 90%;
+    --ring: 160 25% 18%;
 
-    --border: 45 27% 85%;        /* sable très clair */
-    --input: 45 27% 85%;
-    --ring: 38 78% 56%;          /* ambre pour focus */
+    --radius: 0.5rem;
 
-    --radius: 1rem;              /* bordures arrondies 16px */
+    /* Ombres élégantes */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
 
-    /* Gradients outdoor */
-    --gradient-hero: linear-gradient(135deg, hsl(var(--ambre)), hsl(var(--olive)));
-    --gradient-nature: linear-gradient(180deg, hsl(var(--olive) / 0.1), hsl(var(--sable) / 0.2));
-    --gradient-sunset: linear-gradient(135deg, hsl(var(--ambre)), hsl(var(--sable)));
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Ombres douces */
-    --shadow-soft: 0 4px 20px hsl(var(--ambre) / 0.08);
-    --shadow-card: 0 8px 32px hsl(var(--charbon) / 0.06);
-    --shadow-hero: 0 20px 60px hsl(var(--ambre) / 0.15);
-
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-fast: all 0.2s ease-out;
-
+    /* Sidebar (conservé) */
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Legacy colors pour compatibilité */
+    --sapin: 160 25% 18%;
+    --olive: 38 92% 50%;
+    --sable: 40 20% 88%;
+    --os: 40 33% 97%;
+    --charbon: 220 13% 13%;
+    --ambre: 38 92% 50%;
   }
 }
 
@@ -90,117 +88,100 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 18px;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-size: 16px;
     line-height: 1.6;
+    letter-spacing: -0.01em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', system-ui, sans-serif;
+    font-family: 'Playfair Display', Georgia, serif;
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
   }
 
-  /* Conteneur principal max 1200px */
   .container {
     max-width: 1200px;
   }
 }
 
 @layer components {
-  /* Boutons avec variants outdoor */
-  .btn-hero {
-    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  /* Boutons épurés */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-3 rounded-md font-medium transition-all duration-200;
+    @apply hover:bg-primary/90 hover:shadow-md;
   }
 
   .btn-secondary {
-    @apply border-2 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground px-8 py-4 rounded-lg font-semibold transition-all duration-300;
+    @apply bg-secondary text-secondary-foreground px-6 py-3 rounded-md font-medium transition-all duration-200;
+    @apply hover:bg-secondary/90 hover:shadow-md;
   }
 
   .btn-outline {
-    @apply border border-border text-foreground hover:bg-muted px-6 py-3 rounded-lg transition-all duration-200;
+    @apply border border-border text-foreground px-6 py-3 rounded-md font-medium transition-all duration-200;
+    @apply hover:bg-muted hover:border-muted-foreground/20;
   }
 
-  /* Cards avec style outdoor */
-  .card-product {
-    @apply bg-card border border-border rounded-lg overflow-hidden shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-hero)] transition-all duration-300 hover:-translate-y-1;
+  /* Cards minimalistes */
+  .card-minimal {
+    @apply bg-card rounded-lg border border-border p-6 transition-all duration-200;
+    @apply hover:shadow-lg hover:border-border/80;
   }
 
-  .card-feature {
-    @apply bg-card border border-border rounded-lg p-6 text-center shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-card)] transition-all duration-300;
-  }
-
-  /* Gradients utilitaires */
-  .bg-gradient-hero {
-    background: var(--gradient-hero);
-  }
-
-  .bg-gradient-nature {
-    background: var(--gradient-nature);
-  }
-
-  .bg-gradient-sunset {
-    background: var(--gradient-sunset);
-  }
-
-  /* Animations outdoor */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  .animate-scale-hover:hover {
-    transform: scale(1.02);
-  }
-
-  /* Scrollbar styling */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
-  
-  /* Hover scale utilities */
-  .hover\:scale-102:hover {
-    transform: scale(1.02);
-  }
-}
-
-@layer utilities {
-  /* Spacing système */
+  /* Sections */
   .section-padding {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-28;
   }
 
   .container-padding {
     @apply px-4 sm:px-6 lg:px-8;
   }
+}
 
-  /* Typography scale 1.25 */
+@layer utilities {
+  /* Typography scale */
   .text-hero {
-    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
   .text-display {
-    @apply text-3xl md:text-4xl font-bold;
+    @apply text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
   .text-headline {
-    @apply text-2xl md:text-3xl font-semibold;
+    @apply text-2xl md:text-3xl font-semibold tracking-tight;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
   .text-title {
     @apply text-xl md:text-2xl font-semibold;
+    font-family: 'Playfair Display', Georgia, serif;
   }
 
   .text-large {
     @apply text-lg md:text-xl;
   }
 
+  .text-body {
+    @apply text-base leading-relaxed;
+  }
+
+  .text-small {
+    @apply text-sm;
+  }
+
   /* Couleurs utilitaires */
+  .text-forest { color: hsl(var(--forest)); }
+  .text-amber { color: hsl(var(--amber)); }
+  .bg-forest { background-color: hsl(var(--forest)); }
+  .bg-amber { background-color: hsl(var(--amber)); }
+  .bg-cream { background-color: hsl(var(--cream)); }
+
+  /* Legacy */
   .text-sapin { color: hsl(var(--sapin)); }
   .text-olive { color: hsl(var(--olive)); }
   .text-ambre { color: hsl(var(--ambre)); }
@@ -212,55 +193,60 @@
 }
 
 /* Animations keyframes */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Optimisations Safari */
-@supports (-webkit-backdrop-filter: blur(1px)) {
-  .safari-backdrop {
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-  }
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
 }
 
-/* Fallbacks pour propriétés modernes */
-.gradient-fallback {
-  background: linear-gradient(135deg, #E9A63A, #FDD44F);
-  background: linear-gradient(135deg, hsl(var(--ambre)), hsl(var(--olive)));
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
 }
 
-.shadow-fallback {
-  box-shadow: 0 10px 30px -10px rgba(233, 166, 58, 0.3);
-  box-shadow: 0 10px 30px -10px hsl(var(--ambre) / 0.3);
+/* Scrollbar styling */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-/* SwiperJS Expo Slider Custom Styles */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* SwiperJS Custom Styles */
 .expo-swiper .swiper-slide {
   transition: all 0.3s ease;
 }
 
 .expo-swiper .swiper-slide:not(.swiper-slide-active) {
-  filter: brightness(0.8) saturate(0.8);
+  filter: brightness(0.9);
 }
 
 .expo-swiper .swiper-slide-active {
-  filter: brightness(1) saturate(1);
+  filter: brightness(1);
 }
 
 .expo-swiper .swiper-pagination {
   bottom: 0 !important;
 }
 
-@media (max-width: 640px) {
-  .expo-swiper .swiper-slide {
-    margin-left: 10px;
-    margin-right: 10px;
+/* Focus states accessibles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2;
+}
+
+/* Safari optimizations */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .backdrop-blur-safari {
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
   }
 }

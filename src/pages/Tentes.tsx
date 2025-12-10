@@ -1,48 +1,39 @@
-import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { SwiperCarousel } from '@/components/SwiperCarousel';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
 import { PreorderDialog } from '@/components/PreorderDialog';
 import { 
-  Star, 
   Users, 
   Weight, 
   Ruler, 
-  Shield, 
-  Zap, 
   Clock,
   Phone,
   Mail,
-  MapPin,
-  Truck,
   CheckCircle,
-  ZoomIn
+  Zap,
+  Shield,
+  ArrowRight
 } from 'lucide-react';
 import { useProducts } from '@/hooks/useProducts';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from '@/hooks/use-toast';
 
-
 const Tentes = () => {
   const { products, loading } = useProducts();
   const { addToCart } = useCart();
   const { toast } = useToast();
-  const [selectedImage, setSelectedImage] = useState(0);
   
-  // Get the STARZZ product from Supabase
   const starzz = products.find(product => product.name === 'STARZZ') || products[0];
 
   const handleAddToCart = () => {
     if (starzz) {
       addToCart(starzz);
       toast({
-        title: "Produit ajouté au panier",
+        title: "Ajouté au panier",
         description: `${starzz.name} a été ajouté à votre panier.`
       });
     }
@@ -51,7 +42,6 @@ const Tentes = () => {
   const handleBuyNow = () => {
     if (starzz) {
       addToCart(starzz);
-      // Navigate to checkout will be handled by the Link
     }
   };
 
@@ -60,10 +50,8 @@ const Tentes = () => {
       <div className="min-h-screen bg-background">
         <Header />
         <main className="section-padding">
-          <div className="container mx-auto container-padding">
-            <div className="text-center">
-              <div className="text-display text-primary">Chargement...</div>
-            </div>
+          <div className="container mx-auto container-padding text-center">
+            <div className="text-muted-foreground">Chargement...</div>
           </div>
         </main>
         <Footer />
@@ -76,10 +64,8 @@ const Tentes = () => {
       <div className="min-h-screen bg-background">
         <Header />
         <main className="section-padding">
-          <div className="container mx-auto container-padding">
-            <div className="text-center">
-              <div className="text-display text-primary">Produit non trouvé</div>
-            </div>
+          <div className="container mx-auto container-padding text-center">
+            <div className="text-foreground">Produit non trouvé</div>
           </div>
         </main>
         <Footer />
@@ -88,33 +74,17 @@ const Tentes = () => {
   }
 
   const highlights = [
-    {
-      icon: Users,
-      label: 'Capacité',
-      value: '2-3 personnes (350 KG)'
-    },
-    {
-      icon: Weight,
-      label: 'Poids',
-      value: `${starzz.specs.weightKg} kg`
-    },
-    {
-      icon: Ruler,
-      label: 'Dimensions',
-      value: starzz.specs.openSize
-    },
-    {
-      icon: Clock,
-      label: 'Temps',
-      value: '60 secondes'
-    }
+    { icon: Users, label: 'Capacité', value: '2-3 personnes' },
+    { icon: Weight, label: 'Poids', value: `${starzz.specs.weightKg} kg` },
+    { icon: Ruler, label: 'Dimensions', value: starzz.specs.openSize },
+    { icon: Clock, label: 'Installation', value: '60 secondes' }
   ];
 
   const advantages = [
     {
       icon: Zap,
       title: 'Installation Express',
-      description: 'La tente se déploie en 60 secondes grâce à son système innovant'
+      description: 'Déploiement en 60 secondes grâce au système innovant'
     },
     {
       icon: Shield,
@@ -128,8 +98,8 @@ const Tentes = () => {
     },
     {
       icon: CheckCircle,
-      title: 'Garantie & Sérénité',
-      description: 'Garantie constructeur 2 ans + installation comprise'
+      title: 'Garantie 2 ans',
+      description: 'Garantie constructeur + installation comprise'
     }
   ];
 
@@ -138,198 +108,215 @@ const Tentes = () => {
       <Header />
       
       <main>
-        {/* Hero Section avec background image optimisé Safari */}
-        <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden">
+        {/* Hero */}
+        <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <LazyImage
               src="/images/ST1.jpg"
-              alt="STARZZ - Tente de toit premium en action"
+              alt="STARZZ - Tente de toit premium"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-charbon/80 via-charbon/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
           
-          <div className="relative z-10 container mx-auto container-padding text-center md:text-left">
-            <div className="max-w-2xl">
-              <h1 className="text-hero font-display text-background mb-6 leading-tight mt-4 sm:mt-0">
-                STARZZ
-              </h1>
-              <p className="text-large text-background/90 mb-8 max-w-xl leading-relaxed">
-                La tente de toit STARZZ a été pensée dans les moindres détails pour rendre le voyage simple et agréable. 
-                Elle allie compacité et confort pour vos escapades en couple ou entre amis.
+          <div className="relative z-10 container mx-auto container-padding">
+            <div className="max-w-xl">
+              <span className="inline-flex items-center gap-2 text-sm text-white/80 font-medium mb-4">
+                <span className="w-8 h-px bg-secondary" />
+                Tente de toit premium
+              </span>
+              
+              <h1 className="text-hero text-white mb-4">STARZZ</h1>
+              
+              <p className="text-lg text-white/80 mb-8 leading-relaxed">
+                Pensée dans les moindres détails pour rendre le voyage simple et agréable. 
+                Compacité et confort pour vos escapades.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <div className="text-center sm:text-left">
-                  <div className="text-4xl font-bold text-background mb-1">{starzz.price}€</div>
-                  <div className="text-sm text-background/75">TTC, installation comprise</div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  {starzz.stock > 0 ? (
-                    <Link to="/checkout">
-                      <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
-                        Commander maintenant
-                      </Button>
-                    </Link>
-                  ) : (
-                    <PreorderDialog product={starzz}>
-                      <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
-                        Précommander maintenant
-                      </Button>
-                    </PreorderDialog>
-                  )}
-                  <Link to="/location">
-                    <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
-                      Louer pour votre aventure
+              <div className="flex items-baseline gap-3 mb-6">
+                <span className="text-4xl font-display font-semibold text-white">{starzz.price}€</span>
+                <span className="text-white/60">TTC, installation comprise</span>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-3">
+                {starzz.stock > 0 ? (
+                  <Link to="/checkout">
+                    <Button 
+                      size="lg" 
+                      className="bg-secondary text-secondary-foreground hover:bg-secondary/90" 
+                      onClick={handleBuyNow}
+                    >
+                      Commander maintenant
+                      <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
+                ) : (
+                  <PreorderDialog product={starzz}>
+                    <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                      Précommander
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Button>
+                  </PreorderDialog>
+                )}
+                <Link to="/location">
+                  <Button 
+                    size="lg" 
+                    variant="outline" 
+                    className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white/20"
+                  >
+                    Essayer en location
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Gallery */}
+        <section className="section-padding">
+          <div className="container mx-auto container-padding">
+            <SwiperCarousel 
+              images={starzz.images} 
+              productName="STARZZ" 
+              className="mb-8"
+            />
+            
+            <div className="mt-8">
+              <ProductInfoCard 
+                product={starzz}
+                onAddToCart={handleAddToCart}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Specs */}
+        <section className="py-12">
+          <div className="container mx-auto container-padding">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {highlights.map((highlight, index) => (
+                <div key={index} className="bg-card border border-border rounded-lg p-5 text-center">
+                  <highlight.icon className="w-6 h-6 mx-auto mb-3 text-primary" />
+                  <div className="font-semibold text-foreground mb-1">{highlight.value}</div>
+                  <div className="text-sm text-muted-foreground">{highlight.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Advantages */}
+        <section className="py-16 bg-muted/30">
+          <div className="container mx-auto container-padding">
+            <h2 className="text-display text-foreground text-center mb-12">
+              Pourquoi choisir STARZZ ?
+            </h2>
+            
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              {advantages.map((advantage, index) => (
+                <div key={index} className="bg-card border border-border rounded-lg p-6">
+                  <advantage.icon className="w-8 h-8 text-primary mb-4" />
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-2">
+                    {advantage.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {advantage.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section className="section-padding">
+          <div className="container mx-auto container-padding">
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-display text-foreground text-center mb-4">
+                Description technique
+              </h2>
+              <p className="text-center text-muted-foreground mb-10">
+                {starzz.description}
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-4">
+                    Caractéristiques
+                  </h3>
+                  <ul className="space-y-3">
+                    {starzz.features.slice(0, 6).map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-semibold text-foreground mb-4">
+                    Équipements inclus
+                  </h3>
+                  <ul className="space-y-3">
+                    {starzz.features.slice(6).map((feature, index) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                        <span className="text-muted-foreground">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Section Carrousel d'images */}
-        <section className="section-padding">
-          <div className="container mx-auto container-padding">
-            <div className="max-w-7xl mx-auto">
-              <SwiperCarousel 
-                images={starzz.images} 
-                productName="STARZZ" 
-                className="mb-8"
-              />
-              
-              {/* Product Info Card - Now using secure React component */}
-              <div className="mt-8">
-                <ProductInfoCard 
-                  product={starzz}
-                  onAddToCart={handleAddToCart}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Caractéristiques clés */}
-        <div className="container mx-auto container-padding">
-          <div className="grid md:grid-cols-4 gap-6 mb-16">
-            {highlights.map((highlight, index) => (
-              <Card key={index} className="text-center shadow-card hover:shadow-hero transition-shadow">
-                <CardContent className="pt-6">
-                  <div className="w-12 h-12 bg-gradient-sunset rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <highlight.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="font-semibold text-primary mb-1">{highlight.value}</div>
-                  <div className="text-sm text-muted-foreground">{highlight.label}</div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Description détaillée */}
-        <section className="py-8">
-          <div className="container mx-auto container-padding">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-display text-primary mb-8 text-center">
-                Pourquoi choisir la STARZZ ?
-              </h2>
-              
-              <div className="grid md:grid-cols-2 gap-8 mb-12">
-                {advantages.map((advantage, index) => (
-                  <Card key={index} className="shadow-card hover:shadow-hero transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 bg-gradient-hero rounded-lg flex items-center justify-center">
-                          <advantage.icon className="w-5 h-5 text-primary-foreground" />
-                        </div>
-                        <CardTitle className="text-lg">{advantage.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground">{advantage.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              <Card className="shadow-card">
-                <CardHeader>
-                  <CardTitle className="text-xl text-primary">Description technique</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {starzz.description}
-                  </p>
-                  
-                  <div className="grid md:grid-cols-2 gap-6 mt-6">
-                    <div>
-                      <h4 className="font-semibold mb-3 text-primary">Caractéristiques principales</h4>
-                      <ul className="space-y-2 text-muted-foreground">
-                        {starzz.features.slice(0, 6).map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-semibold mb-3 text-primary">Équipements inclus</h4>
-                      <ul className="space-y-2 text-muted-foreground">
-                        {starzz.features.slice(6).map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Call to action */}
-        <section className="section-padding bg-gradient-hero text-primary-foreground">
+        {/* CTA */}
+        <section className="py-20 bg-primary text-primary-foreground">
           <div className="container mx-auto container-padding text-center">
-            <h2 className="text-display mb-6">Prêt pour l'aventure ?</h2>
-            <p className="text-large mb-8 opacity-90 max-w-2xl mx-auto">
-              Rejoignez les aventuriers qui ont fait confiance à ENDLESS pour leurs escapades.
+            <h2 className="text-display mb-4">Prêt pour l'aventure ?</h2>
+            <p className="text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto">
+              Rejoignez les aventuriers qui ont fait confiance à ENDLESS.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               {starzz.stock > 0 ? (
                 <Link to="/checkout">
-                  <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90" onClick={handleBuyNow}>
-                    Commander maintenant - {starzz.price}€
+                  <Button 
+                    size="lg" 
+                    className="bg-secondary text-secondary-foreground hover:bg-secondary/90" 
+                    onClick={handleBuyNow}
+                  >
+                    Commander - {starzz.price}€
                   </Button>
                 </Link>
               ) : (
                 <PreorderDialog product={starzz}>
-                  <Button size="lg" variant="secondary" className="bg-os text-primary hover:bg-os/90">
-                    Précommander maintenant - {starzz.price}€
+                  <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+                    Précommander - {starzz.price}€
                   </Button>
                 </PreorderDialog>
               )}
               <Link to="/location">
-                <Button size="lg" variant="outline" className="border-os text-primary hover:bg-os hover:text-primary">
+                <Button 
+                  size="lg" 
+                  variant="outline" 
+                  className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+                >
                   Tester en location
                 </Button>
               </Link>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-8 justify-center items-center text-sm opacity-90">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm text-primary-foreground/70">
+              <a href="tel:+32497228743" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
                 <Phone className="w-4 h-4" />
-                <span>+32 497 22 87 43</span>
-              </div>
-              <div className="flex items-center gap-2">
+                +32 497 22 87 43
+              </a>
+              <a href="mailto:info@endless-tents.com" className="flex items-center gap-2 hover:text-primary-foreground transition-colors">
                 <Mail className="w-4 h-4" />
-                <span>info@endless-tents.com</span>
-              </div>
+                info@endless-tents.com
+              </a>
             </div>
           </div>
         </section>

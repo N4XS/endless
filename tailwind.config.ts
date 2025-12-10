@@ -7,31 +7,34 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1.5rem",
       screens: {
         sm: "640px",
         md: "768px", 
         lg: "1024px",
         xl: "1200px",
-        "2xl": "1200px", // Conteneur max 1200px
+        "2xl": "1200px",
       },
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Poppins', 'system-ui', 'sans-serif'],
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Georgia', 'serif'],
       },
       fontSize: {
-        base: ['18px', { lineHeight: '1.6' }], // Base 18px
-        // Scale typographique 1.25
-        'hero': ['3.5rem', { lineHeight: '1.1', fontWeight: '700' }], // 56px
-        'display': ['2.8rem', { lineHeight: '1.2', fontWeight: '600' }], // 45px
-        'headline': ['2.25rem', { lineHeight: '1.25', fontWeight: '600' }], // 36px
-        'title': ['1.8rem', { lineHeight: '1.3', fontWeight: '600' }], // 29px
-        'large': ['1.44rem', { lineHeight: '1.4', fontWeight: '500' }], // 23px
+        'hero': ['4.5rem', { lineHeight: '1.05', fontWeight: '600', letterSpacing: '-0.02em' }],
+        'display': ['3rem', { lineHeight: '1.1', fontWeight: '600', letterSpacing: '-0.02em' }],
+        'headline': ['2rem', { lineHeight: '1.2', fontWeight: '600', letterSpacing: '-0.01em' }],
+        'title': ['1.5rem', { lineHeight: '1.3', fontWeight: '600' }],
+        'large': ['1.25rem', { lineHeight: '1.5', fontWeight: '400' }],
       },
       colors: {
-        // Couleurs principales outdoor
+        // Nouvelles couleurs épurées
+        forest: "hsl(var(--forest))",
+        amber: "hsl(var(--amber))",
+        cream: "hsl(var(--cream))",
+        
+        // Legacy colors
         sapin: "hsl(var(--sapin))",
         olive: "hsl(var(--olive))",
         sable: "hsl(var(--sable))",
@@ -52,14 +55,6 @@ export default {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
-        },
-        success: {
-          DEFAULT: "hsl(var(--success))",
-          foreground: "hsl(var(--success-foreground))",
-        },
-        warning: {
-          DEFAULT: "hsl(var(--warning))",
-          foreground: "hsl(var(--warning-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -82,15 +77,14 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
       },
-      backgroundImage: {
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-nature': 'var(--gradient-nature)',
-        'gradient-sunset': 'var(--gradient-sunset)',
-      },
       boxShadow: {
-        'soft': 'var(--shadow-soft)',
-        'card': 'var(--shadow-card)',
-        'hero': 'var(--shadow-hero)',
+        'sm': 'var(--shadow-sm)',
+        'md': 'var(--shadow-md)',
+        'lg': 'var(--shadow-lg)',
+        'xl': 'var(--shadow-xl)',
+        'soft': '0 2px 8px -2px rgb(0 0 0 / 0.08)',
+        'card': '0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04)',
+        'hero': '0 4px 12px -2px rgb(0 0 0 / 0.08)',
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -99,25 +93,22 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "fade-in": {
+          from: { opacity: "0", transform: "translateY(8px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.4s ease-out forwards",
       },
     },
   },
