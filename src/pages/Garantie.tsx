@@ -9,8 +9,8 @@ const Garantie = () => {
   const guaranteeFeatures = [
     {
       icon: Shield,
-      title: "Garantie fabricant 2 ans",
-      description: "Tous nos produits sont couverts par une garantie fabricant de 2 ans contre les défauts de fabrication."
+      title: "Garantie fabricant 1 an",
+      description: "Tous nos produits sont couverts par une garantie fabricant de 1 an contre les défauts de fabrication."
     },
     {
       icon: CheckCircle,
@@ -69,9 +69,9 @@ const Garantie = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-primary mb-3">Garantie fabricant (2 ans)</h3>
+                    <h3 className="text-lg font-semibold text-primary mb-3">Garantie fabricant (1 an)</h3>
                     <p className="text-muted-foreground mb-4">
-                      Nos tentes de toit STARZZ sont couvertes par une garantie fabricant de 2 ans à compter de la date d'achat. 
+                      Nos tentes de toit STARZZ sont couvertes par une garantie fabricant de 1 an à compter de la date d'achat. 
                       Cette garantie couvre :
                     </p>
                     <ul className="space-y-2 text-muted-foreground">
