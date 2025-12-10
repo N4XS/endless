@@ -37,6 +37,12 @@ const Checkout = () => {
     { code: 'LU', name: 'Luxembourg' }
   ];
 
+  const getShippingCost = (country: string) => {
+    return country === 'BE' ? 0 : 15;
+  };
+
+  const shippingCost = getShippingCost(formData.country);
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-BE', {
       style: 'currency',
@@ -252,14 +258,26 @@ const Checkout = () => {
                         </div>
                       )}
                       
-                      <div className="flex justify-between text-sm text-muted-foreground">
+                      <div className="flex justify-between text-sm">
                         <span>Frais de livraison</span>
-                        <span>Calculés automatiquement</span>
+                        <span className={shippingCost === 0 ? "text-green-600 font-medium" : ""}>
+                          {shippingCost === 0 ? "Gratuit (Belgique)" : formatPrice(shippingCost)}
+                        </span>
                       </div>
+                      {formData.country !== 'BE' && (
+                        <p className="text-xs text-muted-foreground">
+                          Belgique : 24-48h • International : délai variable
+                        </p>
+                      )}
+                      {formData.country === 'BE' && (
+                        <p className="text-xs text-green-600">
+                          🚚 Livraison gratuite en 24-48h
+                        </p>
+                      )}
                       <div className="flex justify-between font-semibold text-lg border-t pt-2">
                         <span>Total</span>
                         <span className="text-primary">
-                          {formatPrice(finalPrice)} + frais
+                          {formatPrice(finalPrice + shippingCost)}
                         </span>
                       </div>
                     </div>
