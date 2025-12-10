@@ -145,7 +145,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
                 )} />
                 <span className="text-muted-foreground">
                   {product.stock > 0 
-                    ? "En stock • Livraison 24-48h" 
+                    ? "En stock • Livraison 24-48h (Belgique)" 
                     : "Précommande disponible"
                   }
                 </span>
