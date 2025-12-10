@@ -186,7 +186,7 @@ const FAQ = () => {
                 <li>La <strong>toile</strong> est fabriquée en polycoton de haute qualité (280g/m²) avec un traitement anti-UV et imperméabilisant qui lui confère une excellente résistance aux éléments.</li>
                 <li>Les <strong>fermetures éclair</strong> sont de qualité marine, spécialement conçues pour résister à l'eau salée et aux conditions difficiles.</li>
               </ul>
-              <p>Nous offrons une garantie de 2 ans sur tous nos produits, mais avec un entretien approprié, votre tente ENDLESS peut facilement durer 5 à 10 ans, voire plus.</p>
+              <p>Nous offrons une garantie de 1 an sur tous nos produits, mais avec un entretien approprié, votre tente ENDLESS peut facilement durer 5 à 10 ans, voire plus.</p>
             </div>
           )
         }
@@ -249,7 +249,7 @@ const FAQ = () => {
           question: 'Quelle garantie offrez-vous sur vos produits ?',
           answer: (
             <div>
-              <p className="mb-3">Tous nos produits ENDLESS bénéficient d'une <strong>garantie de 2 ans</strong> contre les défauts de fabrication.</p>
+              <p className="mb-3">Tous nos produits ENDLESS bénéficient d'une <strong>garantie de 1 an</strong> contre les défauts de fabrication.</p>
               <p className="mb-3">Cette garantie couvre :</p>
               <ul className="list-disc list-inside space-y-1 mb-3">
                 <li>Les défauts structurels (cadre, charnières, supports)</li>
