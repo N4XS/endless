@@ -6,6 +6,7 @@ import { SwiperCarousel } from '@/components/SwiperCarousel';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
 import { PreorderDialog } from '@/components/PreorderDialog';
+import { SEO, generateProductSchema, generateBreadcrumbSchema } from '@/components/SEO';
 import { 
   Users, 
   Weight, 
@@ -103,8 +104,31 @@ const Tentes = () => {
     }
   ];
 
+  const productSchema = generateProductSchema({
+    name: 'STARZZ - Tente de Toit Premium',
+    description: starzz.description,
+    price: starzz.price,
+    image: 'https://endless-tents.com/images/ST1.jpg',
+    sku: 'STARZZ-001',
+    availability: starzz.stock > 0 ? 'InStock' : 'PreOrder',
+  });
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Accueil', url: '/' },
+    { name: 'Tentes de Toit', url: '/tentes' },
+  ]);
+
+  const combinedSchema = [productSchema, breadcrumbSchema];
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="STARZZ - Tente de Toit Premium"
+        description={`Découvrez STARZZ, notre tente de toit premium à ${starzz.price}€. Installation en 60 secondes, capacité 2-3 personnes. Livraison en Belgique et international.`}
+        canonical="/tentes"
+        type="product"
+        structuredData={combinedSchema}
+      />
       <Header />
       
       <main>

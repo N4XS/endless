@@ -6,10 +6,22 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Phone, Mail, Clock, Car } from 'lucide-react';
+import { SEO, generateBreadcrumbSchema } from '@/components/SEO';
 
 const Contact = () => {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Accueil', url: '/' },
+    { name: 'Contact', url: '/contact' },
+  ]);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Contact"
+        description="Contactez l'équipe ENDLESS pour toute question sur nos tentes de toit. Conseil personnalisé, installation et service après-vente à Namur, Belgique."
+        canonical="/contact"
+        structuredData={breadcrumbSchema}
+      />
       <Header />
 
       <main className="container mx-auto container-padding py-8">
