@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { SwiperCarousel } from '@/components/SwiperCarousel';
+import { FadeCarousel } from '@/components/FadeCarousel';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
 import { PreorderDialog } from '@/components/PreorderDialog';
@@ -123,8 +123,8 @@ const Tentes = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="STARZZ - Tente de Toit Premium"
-        description={`Découvrez STARZZ, notre tente de toit premium à ${starzz.price}€. Installation en 60 secondes, capacité 2-3 personnes. Livraison en Belgique et international.`}
+        title="STARZZ Édition 2026 - Tente de Toit Premium"
+        description={`Découvrez la STARZZ Édition 2026, notre tente de toit premium à ${starzz.price}€. Dépliage simplifié, double point de vue, installation en 60 secondes. Livraison en Belgique.`}
         canonical="/tentes"
         type="product"
         structuredData={combinedSchema}
@@ -150,11 +150,11 @@ const Tentes = () => {
                 Tente de toit premium
               </span>
               
-              <h1 className="text-hero text-white mb-4">STARZZ</h1>
+              <h1 className="text-hero text-white mb-4">STARZZ <span className="text-secondary">Édition 2026</span></h1>
               
               <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                Pensée dans les moindres détails pour rendre le voyage simple et agréable. 
-                Compacité et confort pour vos escapades.
+                Repensée pour plus de simplicité. Dépliage facilité, double point de vue 
+                et confort premium pour vos escapades.
               </p>
               
               <div className="flex items-baseline gap-3 mb-6">
@@ -199,9 +199,9 @@ const Tentes = () => {
         {/* Gallery */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
-            <SwiperCarousel 
+            <FadeCarousel 
               images={starzz.images} 
-              productName="STARZZ" 
+              productName="STARZZ Édition 2026" 
               className="mb-8"
             />
             
