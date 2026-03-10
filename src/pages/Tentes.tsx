@@ -199,9 +199,9 @@ const Tentes = () => {
         {/* Gallery */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
-            <SwiperCarousel 
+            <FadeCarousel 
               images={starzz.images} 
-              productName="STARZZ" 
+              productName="STARZZ Édition 2026" 
               className="mb-8"
             />
             
