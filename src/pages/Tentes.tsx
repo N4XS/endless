@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { SwiperCarousel } from '@/components/SwiperCarousel';
+import { ProductGallery } from '@/components/ProductGallery';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
 import { PreorderDialog } from '@/components/PreorderDialog';
@@ -150,11 +150,12 @@ const Tentes = () => {
                 Tente de toit premium
               </span>
               
-              <h1 className="text-hero text-white mb-4">STARZZ</h1>
+              <h1 className="text-hero text-white mb-2">STARZZ</h1>
+              <span className="inline-block text-sm font-medium text-secondary mb-4 tracking-wider uppercase">Édition 2026</span>
               
               <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                Pensée dans les moindres détails pour rendre le voyage simple et agréable. 
-                Compacité et confort pour vos escapades.
+                Plus robuste, plus rapide à déplier et replier. Double point de vue 
+                grâce à la suppression de l'extension échelle. Confort repensé.
               </p>
               
               <div className="flex items-baseline gap-3 mb-6">
@@ -199,9 +200,9 @@ const Tentes = () => {
         {/* Gallery */}
         <section className="section-padding">
           <div className="container mx-auto container-padding">
-            <SwiperCarousel 
+            <ProductGallery 
               images={starzz.images} 
-              productName="STARZZ" 
+              productName="STARZZ Édition 2026" 
               className="mb-8"
             />
             
