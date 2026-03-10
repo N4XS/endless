@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { SwiperCarousel } from '@/components/SwiperCarousel';
+import { ProductGallery } from '@/components/ProductGallery';
 import { ProductInfoCard } from '@/components/ProductInfoCard';
 import { LazyImage } from '@/components/LazyImage';
 import { PreorderDialog } from '@/components/PreorderDialog';
