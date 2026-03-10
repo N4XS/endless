@@ -6,7 +6,7 @@ export const products: Product[] = [
   {
     id: "6805191a-5757-4d22-92e0-cc9709dc6d8b",
     name: "STARZZ",
-    slug: "starzz",
+    slug: "starzz-edition-2026",
     price: 1249,
     currency: "EUR",
     category: "tent",
