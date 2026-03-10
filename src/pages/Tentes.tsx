@@ -150,11 +150,11 @@ const Tentes = () => {
                 Tente de toit premium
               </span>
               
-              <h1 className="text-hero text-white mb-4">STARZZ</h1>
+              <h1 className="text-hero text-white mb-4">STARZZ <span className="text-secondary">Édition 2026</span></h1>
               
               <p className="text-lg text-white/80 mb-8 leading-relaxed">
-                Pensée dans les moindres détails pour rendre le voyage simple et agréable. 
-                Compacité et confort pour vos escapades.
+                Repensée pour plus de simplicité. Dépliage facilité, double point de vue 
+                et confort premium pour vos escapades.
               </p>
               
               <div className="flex items-baseline gap-3 mb-6">
