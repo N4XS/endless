@@ -123,8 +123,8 @@ const Tentes = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO 
-        title="STARZZ - Tente de Toit Premium"
-        description={`Découvrez STARZZ, notre tente de toit premium à ${starzz.price}€. Installation en 60 secondes, capacité 2-3 personnes. Livraison en Belgique et international.`}
+        title="STARZZ Édition 2026 - Tente de Toit Premium"
+        description={`Découvrez la STARZZ Édition 2026, notre tente de toit premium à ${starzz.price}€. Dépliage simplifié, double point de vue, installation en 60 secondes. Livraison en Belgique.`}
         canonical="/tentes"
         type="product"
         structuredData={combinedSchema}
