@@ -61,66 +61,23 @@ const Location = () => {
     setLoading(true);
 
     try {
-      // Prepare reservation data
       const reservationData = {
-        dates: {
-          start: startDate,
-          end: endDate,
-          days: calculateDays()
-        },
+        dates: { start: startDate, end: endDate, days: calculateDays() },
         selectedTent: selectedProduct ? products.find(p => p.id === selectedProduct)?.name : 'Non spécifiée',
-        options: {
-          insurance,
-          annexe,
-          roofBars
-        },
+        options: { insurance, annexe, roofBars },
         pricing: calculatePrice(),
         contact: formData,
-        type: 'reservation'
       };
 
-      // Create email body
-      const emailBody = `
-Nouvelle demande de réservation de tente de toit
+      const { error } = await supabase.functions.invoke('send-contact-email', {
+        body: { type: 'reservation', data: reservationData },
+      });
 
-DATES:
-- Début: ${startDate}
-- Fin: ${endDate}
-- Durée: ${calculateDays()} jour(s)
-
-MODÈLE DE TENTE:
-${reservationData.selectedTent}
-
-OPTIONS:
-- Assurance tous risques: ${insurance ? 'Oui' : 'Non'}
-- Annexe: ${annexe ? 'Oui' : 'Non'}
-- Barres de toit: ${roofBars ? 'Oui' : 'Non'}
-
-TARIFICATION:
-- Location: ${reservationData.pricing.base}€
-- Assurance: ${reservationData.pricing.insurance}€
-- Annexe: ${reservationData.pricing.annexe}€
-- Barres de toit: ${reservationData.pricing.roofBars}€
-- Total: ${reservationData.pricing.total}€
-- Caution: ${reservationData.pricing.deposit}€
-
-CONTACT:
-- Nom: ${formData.name}
-- Téléphone: ${formData.phone}
-- Email: ${formData.email}
-
-MESSAGE:
-${formData.message || 'Aucun message'}
-      `;
-
-      // For now, we'll create a mailto link since there's no contact form endpoint
-      const mailtoLink = `mailto:info@endless-tents.com?subject=Demande de réservation de tente de toit&body=${encodeURIComponent(emailBody)}`;
-      window.open(mailtoLink, '_blank');
+      if (error) throw error;
 
       toast({
-        title: "Demande de réservation envoyée",
-        description: "Votre client email s'est ouvert avec votre demande. Nous vous recontacterons rapidement !",
-        variant: "default"
+        title: "Demande de réservation envoyée ✓",
+        description: "Nous vous recontacterons rapidement pour confirmer votre réservation.",
       });
 
       // Reset form
