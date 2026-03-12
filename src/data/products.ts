@@ -40,8 +40,8 @@ export const products: Product[] = [
     features: [
       "Édition 2026 : plus robuste grâce à des renforts structurels supplémentaires",
       "Dépliage et repliage encore plus rapide que la version précédente",
-      "Double point de vue sans extension recouvrant l'échelle",
-      "Housse lavable du matelas repensée, beaucoup plus facile à manipuler",
+      "Double point de vue, pas de compromis",
+      "Housse lavable du matelas repensée, beaucoup plus facile à entretenir et manipuler",
       "Toile résistante et aérée en Poly-Coton de haute qualité 280g/m²",
       "Fenêtre offrant une vue sur les étoiles en étant protégé des éléments",
       "Plancher en aluminium, ultra résistant et léger",
