@@ -27,7 +27,7 @@ export const ProductGallery = ({ images, productName, className }: ProductGaller
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_120px] gap-4">
         
         {/* Main image */}
-        <div className="relative group rounded-xl overflow-hidden bg-muted aspect-[4/3] lg:aspect-[3/2]">
+        <div className="relative group rounded-xl overflow-hidden bg-muted aspect-square">
           <LazyImage
             src={images[activeIndex]}
             alt={`${productName} - Vue ${activeIndex + 1}`}
