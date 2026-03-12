@@ -28,7 +28,7 @@ export const Footer = () => {
               </span>
             </Link>
             <p className="text-primary-foreground/70 text-sm max-w-xs leading-relaxed">
-              Tentes de toit premium conçues en Belgique pour les aventuriers modernes.
+              Tentes de toit premium pour les aventuriers modernes.
             </p>
             <div className="flex gap-3">
               <a 
