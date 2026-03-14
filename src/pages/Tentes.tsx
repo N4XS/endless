@@ -136,7 +136,7 @@ const Tentes = () => {
         <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
             <LazyImage
-              src="/images/ST1.jpg"
+              src="/images/ST-new11.jpg"
               alt="STARZZ - Tente de toit premium"
               className="w-full h-full object-cover"
             />
