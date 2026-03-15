@@ -21,8 +21,6 @@ const contactSchema = z.object({
 });
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstname: '', lastname: '', email: '', phone: '', subject: '', vehicle: '', message: ''
   });
