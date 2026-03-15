@@ -396,20 +396,11 @@ const Location = () => {
                 <Button 
                   size="lg" 
                   className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                  disabled={!startDate || !endDate || days === 0 || loading}
+                  disabled={!startDate || !endDate || days === 0}
                   onClick={handleSubmitReservation}
                 >
-                  {loading ? (
-                    <>
-                      <Send className="w-4 h-4 mr-2 animate-pulse" />
-                      Envoi en cours...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4 mr-2" />
-                      Demander une réservation
-                    </>
-                  )}
+                  <Send className="w-4 h-4 mr-2" />
+                  Demander une réservation
                 </Button>
               </CardContent>
             </Card>
