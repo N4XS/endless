@@ -8,8 +8,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { SEO, generateBreadcrumbSchema } from '@/components/SEO';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 
 const contactSchema = z.object({
