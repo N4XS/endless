@@ -22,7 +22,7 @@ const Location = () => {
   const [insurance, setInsurance] = useState(false);
   const [annexe, setAnnexe] = useState(false);
   const [roofBars, setRoofBars] = useState(false);
-  const [loading, setLoading] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
