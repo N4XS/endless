@@ -58,47 +58,37 @@ const Location = () => {
       return;
     }
 
-    setLoading(true);
+    const pricing = calculatePrice();
+    const tentName = selectedProduct ? products.find(p => p.id === selectedProduct)?.name : 'Non spécifiée';
+    const days = calculateDays();
 
-    try {
-      const reservationData = {
-        dates: { start: startDate, end: endDate, days: calculateDays() },
-        selectedTent: selectedProduct ? products.find(p => p.id === selectedProduct)?.name : 'Non spécifiée',
-        options: { insurance, annexe, roofBars },
-        pricing: calculatePrice(),
-        contact: formData,
-      };
+    const subjectLine = `[Réservation] Location tente de toit - ${formData.name}`;
+    const body = [
+      `Nom: ${formData.name}`,
+      `Téléphone: ${formData.phone}`,
+      `Email: ${formData.email}`,
+      '',
+      `--- Réservation ---`,
+      `Dates: du ${startDate} au ${endDate} (${days} jour(s))`,
+      `Modèle: ${tentName}`,
+      '',
+      `Options:`,
+      `  Assurance tous risques: ${insurance ? 'Oui' : 'Non'}`,
+      `  Annexe: ${annexe ? 'Oui' : 'Non'}`,
+      `  Barres de toit: ${roofBars ? 'Oui' : 'Non'}`,
+      '',
+      `Tarification:`,
+      `  Location: ${pricing.base}€`,
+      pricing.insurance > 0 ? `  Assurance: ${pricing.insurance}€` : '',
+      pricing.annexe > 0 ? `  Annexe: ${pricing.annexe}€` : '',
+      pricing.roofBars > 0 ? `  Barres de toit: ${pricing.roofBars}€` : '',
+      `  Total: ${pricing.total}€`,
+      `  Caution: ${pricing.deposit}€`,
+      formData.message ? `\nMessage:\n${formData.message}` : '',
+    ].filter(Boolean).join('\n');
 
-      const { error } = await supabase.functions.invoke('send-contact-email', {
-        body: { type: 'reservation', data: reservationData },
-      });
-
-      if (error) throw error;
-
-      toast({
-        title: "Demande de réservation envoyée ✓",
-        description: "Nous vous recontacterons rapidement pour confirmer votre réservation.",
-      });
-
-      // Reset form
-      setFormData({ name: '', phone: '', email: '', message: '' });
-      setStartDate('');
-      setEndDate('');
-      setSelectedProduct('');
-      setInsurance(false);
-      setAnnexe(false);
-      setRoofBars(false);
-
-    } catch (error) {
-      console.error('Reservation error:', error);
-      toast({
-        title: "Erreur d'envoi",
-        description: "Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
+    const mailtoUrl = `mailto:info@endless-tents.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
   };
 
   const tents = products.filter(product => product.category === 'tent');
