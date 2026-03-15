@@ -8,8 +8,6 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { SEO, generateBreadcrumbSchema } from '@/components/SEO';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
 import { z } from 'zod';
 
 const contactSchema = z.object({
@@ -23,8 +21,6 @@ const contactSchema = z.object({
 });
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstname: '', lastname: '', email: '', phone: '', subject: '', vehicle: '', message: ''
   });
@@ -49,29 +45,30 @@ const Contact = () => {
       return;
     }
 
-    setLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('send-contact-email', {
-        body: { type: 'contact', data: result.data },
-      });
+    const subjectLabels: Record<string, string> = {
+      info: "Demande d'informations",
+      conseil: 'Conseil pour choisir',
+      installation: 'Installation / Montage',
+      location: 'Location',
+      sav: 'Service après-vente',
+      autre: 'Autre',
+    };
 
-      if (error) throw error;
+    const d = result.data;
+    const subjectLine = `[Contact] ${subjectLabels[d.subject || ''] || 'Nouveau message'} - ${d.firstname} ${d.lastname}`;
+    const body = [
+      `Nom: ${d.firstname} ${d.lastname}`,
+      `Email: ${d.email}`,
+      d.phone ? `Téléphone: ${d.phone}` : '',
+      `Sujet: ${subjectLabels[d.subject || ''] || 'Non spécifié'}`,
+      d.vehicle ? `Véhicule: ${d.vehicle}` : '',
+      '',
+      'Message:',
+      d.message,
+    ].filter(Boolean).join('\n');
 
-      toast({
-        title: "Message envoyé ✓",
-        description: "Nous vous répondrons dans les 24h.",
-      });
-      setFormData({ firstname: '', lastname: '', email: '', phone: '', subject: '', vehicle: '', message: '' });
-    } catch (error) {
-      console.error('Contact form error:', error);
-      toast({
-        title: "Erreur d'envoi",
-        description: "Une erreur est survenue. Veuillez réessayer ou nous contacter directement.",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
+    const mailtoUrl = `mailto:info@endless-tents.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
   };
 
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -153,12 +150,8 @@ const Contact = () => {
                     {errors.message && <p className="text-sm text-destructive mt-1">{errors.message}</p>}
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                    {loading ? (
-                      <><Send className="w-4 h-4 mr-2 animate-pulse" />Envoi en cours...</>
-                    ) : (
-                      <><Send className="w-4 h-4 mr-2" />Envoyer le message</>
-                    )}
+                  <Button type="submit" size="lg" className="w-full">
+                    <Send className="w-4 h-4 mr-2" />Envoyer le message
                   </Button>
                 </form>
               </CardContent>
