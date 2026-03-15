@@ -41,20 +41,12 @@ const Location = () => {
     e.preventDefault();
     
     if (!startDate || !endDate) {
-      toast({
-        title: "Dates requises",
-        description: "Veuillez sélectionner les dates de début et de fin.",
-        variant: "destructive"
-      });
+      alert("Veuillez sélectionner les dates de début et de fin.");
       return;
     }
 
     if (!formData.name || !formData.email || !formData.phone) {
-      toast({
-        title: "Informations manquantes",
-        description: "Veuillez remplir tous les champs obligatoires.",
-        variant: "destructive"
-      });
+      alert("Veuillez remplir tous les champs obligatoires.");
       return;
     }
 
