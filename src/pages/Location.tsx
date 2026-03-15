@@ -15,7 +15,7 @@ import { products } from '@/data/products';
 import { SEO, generateServiceSchema, generateBreadcrumbSchema } from '@/components/SEO';
 
 const Location = () => {
-  const { toast } = useToast();
+  
   const [selectedProduct, setSelectedProduct] = useState<string>('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
