@@ -150,12 +150,8 @@ const Contact = () => {
                     {errors.message && <p className="text-sm text-destructive mt-1">{errors.message}</p>}
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full" disabled={loading}>
-                    {loading ? (
-                      <><Send className="w-4 h-4 mr-2 animate-pulse" />Envoi en cours...</>
-                    ) : (
-                      <><Send className="w-4 h-4 mr-2" />Envoyer le message</>
-                    )}
+                  <Button type="submit" size="lg" className="w-full">
+                    <Send className="w-4 h-4 mr-2" />Envoyer le message
                   </Button>
                 </form>
               </CardContent>
