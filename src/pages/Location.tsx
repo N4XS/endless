@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useToast } from '@/hooks/use-toast';
+
 import { Calendar, Clock, Shield, MapPin, Phone, CheckCircle, Send } from 'lucide-react';
 import { products } from '@/data/products';
 import { SEO, generateServiceSchema, generateBreadcrumbSchema } from '@/components/SEO';
