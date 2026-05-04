@@ -13,6 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Calendar, Clock, Shield, MapPin, Phone, CheckCircle, Send } from 'lucide-react';
 import { products } from '@/data/products';
 import { SEO, generateServiceSchema, generateBreadcrumbSchema } from '@/components/SEO';
+import { supabase } from '@/integrations/supabase/client';
 
 const Location = () => {
   
@@ -22,6 +23,7 @@ const Location = () => {
   const [insurance, setInsurance] = useState(false);
   const [annexe, setAnnexe] = useState(false);
   const [roofBars, setRoofBars] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -50,37 +52,52 @@ const Location = () => {
       return;
     }
 
-    const pricing = calculatePrice();
-    const tentName = selectedProduct ? products.find(p => p.id === selectedProduct)?.name : 'Non spécifiée';
-    const days = calculateDays();
+    setLoading(true);
 
-    const subjectLine = `[Réservation] Location tente de toit - ${formData.name}`;
-    const body = [
-      `Nom: ${formData.name}`,
-      `Téléphone: ${formData.phone}`,
-      `Email: ${formData.email}`,
-      '',
-      `--- Réservation ---`,
-      `Dates: du ${startDate} au ${endDate} (${days} jour(s))`,
-      `Modèle: ${tentName}`,
-      '',
-      `Options:`,
-      `  Assurance tous risques: ${insurance ? 'Oui' : 'Non'}`,
-      `  Annexe: ${annexe ? 'Oui' : 'Non'}`,
-      `  Barres de toit: ${roofBars ? 'Oui' : 'Non'}`,
-      '',
-      `Tarification:`,
-      `  Location: ${pricing.base}€`,
-      pricing.insurance > 0 ? `  Assurance: ${pricing.insurance}€` : '',
-      pricing.annexe > 0 ? `  Annexe: ${pricing.annexe}€` : '',
-      pricing.roofBars > 0 ? `  Barres de toit: ${pricing.roofBars}€` : '',
-      `  Total: ${pricing.total}€`,
-      `  Caution: ${pricing.deposit}€`,
-      formData.message ? `\nMessage:\n${formData.message}` : '',
-    ].filter(Boolean).join('\n');
+    try {
+      const pricing = calculatePrice();
+      const tentName = selectedProduct ? products.find(p => p.id === selectedProduct)?.name : 'Non spécifiée';
+      const days = calculateDays();
 
-    const mailtoUrl = `mailto:info@endless-tents.com?subject=${encodeURIComponent(subjectLine)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoUrl;
+      const { data, error } = await supabase.functions.invoke('create-rental', {
+        body: {
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          message: formData.message,
+          startDate,
+          endDate,
+          selectedProduct,
+          tentName,
+          insurance,
+          annexe,
+          roofBars,
+          pricing,
+          days
+        }
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      alert("Votre demande de réservation a été envoyée avec succès ! Nous vous contacterons bientôt.");
+      
+      // Reset form
+      setFormData({ name: '', phone: '', email: '', message: '' });
+      setStartDate('');
+      setEndDate('');
+      setSelectedProduct('');
+      setInsurance(false);
+      setAnnexe(false);
+      setRoofBars(false);
+      
+    } catch (err) {
+      console.error('Error submitting reservation:', err);
+      alert("Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const tents = products.filter(product => product.category === 'tent');
@@ -388,11 +405,20 @@ const Location = () => {
                 <Button 
                   size="lg" 
                   className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
-                  disabled={!startDate || !endDate || days === 0}
+                  disabled={!startDate || !endDate || days === 0 || loading}
                   onClick={handleSubmitReservation}
                 >
-                  <Send className="w-4 h-4 mr-2" />
-                  Demander une réservation
+                  {loading ? (
+                    <>
+                      <div className="w-4 h-4 mr-2 border-2 border-secondary-foreground border-t-transparent rounded-full animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Demander une réservation
+                    </>
+                  )}
                 </Button>
               </CardContent>
             </Card>
