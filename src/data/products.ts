@@ -7,7 +7,7 @@ export const products: Product[] = [
     id: "6805191a-5757-4d22-92e0-cc9709dc6d8b",
     name: "STARZZ",
     slug: "starzz-edition-2026",
-    price: 1249,
+    price: 1589,
     currency: "EUR",
     category: "tent",
     badges: ["Hard-shell", "Best-seller"],
@@ -23,7 +23,6 @@ export const products: Product[] = [
     },
     images: [
       "/images/ST-new1.jpg",
-      "/images/ST1.jpg",
       "/images/ST2.jpg", 
       "/images/ST-new4.jpg",
       "/images/ST4.jpg",
