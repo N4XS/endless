@@ -24,6 +24,7 @@ const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const MyOrders = lazy(() => import("@/pages/MyOrders"));
 const MobileDiagnostic = lazy(() => import("@/pages/MobileDiagnostic"));
 const AdminDiscountCodes = lazy(() => import("@/pages/AdminDiscountCodes"));
+const AdminOrders = lazy(() => import("@/pages/AdminOrders"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
 const PageWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -70,6 +71,7 @@ export const AnimatedRoutes = () => {
           <Route path="/mon-compte/commandes" element={<PageWrapper><MyOrders /></PageWrapper>} />
           <Route path="/mobile-diagnostic" element={<PageWrapper><MobileDiagnostic /></PageWrapper>} />
           <Route path="/admin/discount-codes" element={<PageWrapper><AdminDiscountCodes /></PageWrapper>} />
+          <Route path="/admin/orders" element={<PageWrapper><AdminOrders /></PageWrapper>} />
           <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
         </Routes>
       </Suspense>
