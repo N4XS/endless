@@ -6,13 +6,12 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0";
 const getCorsHeaders = (req: Request) => {
   const origin = req.headers.get("origin");
   const allowedOrigins = [
-    "https://gbkpdgchdkkydpzycfkr.lovable.app",
     "https://endless-tents.com",
     "http://localhost:5173", // For development
   ];
   
   // Allow any lovableproject.com subdomain
-  const isLovableProject = origin && origin.match(/^https:\/\/[a-f0-9\-]+\.lovableproject\.com$/);
+  const isLovableProject = origin && origin.match(/^https:\/\/[a-f0-9-]+.lovableproject.com$/);
   
   const allowedOrigin = allowedOrigins.includes(origin || "") || isLovableProject ? origin : allowedOrigins[0];
   
@@ -35,13 +34,12 @@ const generateGuestToken = () => {
 const validateOrigin = (req: Request): boolean => {
   const origin = req.headers.get("origin");
   const allowedOrigins = [
-    "https://gbkpdgchdkkydpzycfkr.lovable.app",
     "https://endless-tents.com",
     "http://localhost:5173", // For development
   ];
   
   // Allow any lovableproject.com subdomain
-  const isLovableProject = origin && origin.match(/^https:\/\/[a-f0-9\-]+\.lovableproject\.com$/);
+  const isLovableProject = origin && origin.match(/^https:\/\/[a-f0-9-]+.lovableproject.com$/);
   
   return !origin || allowedOrigins.includes(origin) || !!isLovableProject;
 };
@@ -56,7 +54,7 @@ const computeShippingCostCents = (country?: string) => {
 };
 
 // Fetch product by reference (UUID or slug)
-async function fetchProductByRef(ref: string, supabaseAdmin: any) {
+async function fetchProductByRef(ref: string, supabaseAdmin: ReturnType<typeof createClient>) {
   const column = isUUID(ref) ? 'id' : 'slug';
   const { data, error } = await supabaseAdmin
     .from('products')
@@ -130,9 +128,9 @@ serve(async (req) => {
       });
     }
 
-    const lineItems: Array<{ price_data: any; quantity: number }> = [];
+    const lineItems: Array<{ price_data: Stripe.Checkout.SessionCreateParams.LineItem['price_data']; quantity: number }> = [];
     const normalizedItems: Array<{ product_id: string; quantity: number }> = [];
-    const productMap = new Map<string, any>();
+    const productMap = new Map<string, { id: string; slug: string; name: string; price_cents: number; currency: string; stock: number; active: boolean }>();
 
     for (let i = 0; i < items.length; i++) {
       const it = items[i];
@@ -179,20 +177,17 @@ serve(async (req) => {
 
       normalizedItems.push({ product_id: product.id, quantity: it.quantity });
       
-      // Create detailed order summary for the product description
-      const orderSummary = `📦 Récapitulatif de votre commande:
-• Produit: ${product.name}
-• Prix: ${(product.price_cents / 100).toFixed(2)}€ TTC
-• Quantité: ${it.quantity}
-• Installation comprise
-• Garantie constructeur 2 ans
-• Livraison: ${shipping_country || 'Belgique'}`;
+      const orderSummary = [
+        `✓ Installation comprise`,
+        `✓ Garantie constructeur 2 ans`,
+        `✓ Livraison : ${shipping_country || 'BE'}`,
+      ].join("  •  ");
 
       lineItems.push({
         price_data: {
           currency: "eur",
-          product_data: { 
-            name: `${product.name} - Tente de Toit`,
+          product_data: {
+            name: `Tente de Toit ${product.name}`,
             description: orderSummary
           },
           unit_amount: product.price_cents,
@@ -337,9 +332,9 @@ serve(async (req) => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
-  } catch (e: any) {
-    console.error("[create-payment] Error:", e?.message || e);
-    return new Response(JSON.stringify({ error: String(e?.message || e) }), {
+  } catch (e: unknown) {
+    console.error("[create-payment] Error:", e instanceof Error ? e.message : String(e));
+    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : String(e) }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,
     });
